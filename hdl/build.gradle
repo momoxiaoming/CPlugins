@@ -1,0 +1,26 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation gradleApi()
+    implementation localGroovy()
+}
+repositories {
+    mavenCentral()
+}
+group = 'com.peceoqicka.cog'
+version = '1.0.3'
+uploadArchives  {
+    repositories {
+        mavenDeployer  {
+            repository(url: uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')) {
+                authentication(userName: 'vapp-deployment', password: 'pwd123456')
+            }
+        }
+    }
+}
+
+
