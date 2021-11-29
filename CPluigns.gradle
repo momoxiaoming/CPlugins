@@ -1,0 +1,30 @@
+ext {
+    main_module = "app"
+
+    cPlugins = [
+            hdl:[
+                    group : 'com.android.plugin',
+                    versionName : '1.0.3',
+                    artifactId : 'hdl',
+            ]
+    ]
+
+    AES = [
+            MODE    : "AES/CBC/PKCS5Padding",
+            KEY     : "1234567890123456",
+            IV      : "1234"
+    ]
+
+    hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
+
+    modules = [
+            aos: [
+                    moduleName   : "testapp",
+                    modulePath   : ":testapp",
+                    versionCode  : 1,
+                    versionName  : '1.0.0',
+                    applicationid: "com.m.c.aos.app",
+            ]
+    ]
+
+}

@@ -4,27 +4,16 @@ plugins {
 }
 
 android {
-
-    signingConfigs {
-        release {
-            storeFile file('cdyb.jks')
-            keyAlias 'cdyb'
-            keyPassword 'dn123456'
-            storePassword 'dn123456'
-        }
-    }
-
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.android.plugins"
+        applicationId "com.android.testapp"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "aes_key","\"${rootProject.AES.KEY}\""
-        buildConfigField "String", "aes_iv","\"${rootProject.AES.IV}\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -45,7 +34,6 @@ android {
 }
 
 dependencies {
-    println("----------->"+rootProject.getProperties().get("AES").getAt("KEY"))
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
@@ -54,12 +42,4 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-}
-
-project.exec {
-    List<String> args = new ArrayList<>()
-    args.add("D:\\jdk1.8.0_31\\bin\\java.exe")
-    args.add("-version")
-    commandLine(args.toArray())
-
 }

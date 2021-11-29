@@ -11,16 +11,31 @@ dependencies {
 repositories {
     mavenCentral()
 }
-group = 'com.peceoqicka.cog'
-version = '1.0.3'
+
 uploadArchives  {
     repositories {
         mavenDeployer  {
             repository(url: uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')) {
                 authentication(userName: 'vapp-deployment', password: 'pwd123456')
             }
+            pom {
+                groupId=rootProject.cPlugins.hdl.group
+                artifactId=rootProject.cPlugins.hdl.artifactId
+                version=rootProject.cPlugins.hdl.versionName
+            }
         }
     }
 }
-
+//uploadArchives  {
+//    repositories {
+//        mavenDeployer  {
+//            repository(url: uri('../repo'))
+//            pom {
+//                groupId=rootProject.cPlugins.hdl.group
+//                artifactId=rootProject.cPlugins.hdl.artifactId
+//                version=rootProject.cPlugins.hdl.versionName
+//            }
+//        }
+//    }
+//}
 
