@@ -9,4 +9,10 @@ package res.gradle.plugin;
 public class Constans
 {
     public static String merge_mapping_path="";
+
+    public static String sign_storeFile_path="";
+    public static String sign_storePassword="";
+    public static String sign_keyAlias="";
+    public static String sign_keyPassword="";
+
 }

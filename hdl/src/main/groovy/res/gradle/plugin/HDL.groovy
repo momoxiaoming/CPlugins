@@ -22,14 +22,14 @@ class HDL implements Plugin<Project> {
         hookTask(project)
     }
 
-    private void initConfig(Project project){
-        pluginAppModuleName=project.rootProject.modules.aos.moduleName
-        pluginAppPath=project.rootProject.modules.aos.modulePath
-        appModuleName=project.rootProject.main_module
-        def mode=project.rootProject.AES.MODE;
-        def key=project.rootProject.AES.KEY;
-        def iv=project.rootProject.AES.IV;
-        AESUtils.init(mode,key,iv)
+    private void initConfig(Project project) {
+        pluginAppModuleName = project.rootProject.modules.aos.moduleName
+        pluginAppPath = project.rootProject.modules.aos.modulePath
+        appModuleName = project.rootProject.main_module
+        def mode = project.rootProject.AES.MODE;
+        def key = project.rootProject.AES.KEY;
+        def iv = project.rootProject.AES.IV;
+        AESUtils.init(mode, key, iv)
     }
 
     /**
@@ -41,6 +41,8 @@ class HDL implements Plugin<Project> {
             target.afterEvaluate { pro ->
                 if (pro.hasProperty("android") && pro != rootProject) {
                     addAppProguardRules(pro)
+                    addPluginMappingRules(pro)
+                    getBuildSign(pro)
                     assembleAppTask(pro)
                     assemblePluginTask(pro)
                 }
@@ -60,16 +62,38 @@ class HDL implements Plugin<Project> {
                 for (Map.Entry<Project, Set<Task>> projectSetEntry : allTasks.entrySet()) {
                     Set<Task> value = projectSetEntry.getValue()
                     for (Task task : value) {
-                        if (task.name.matches("^generate\\S*ReleaseBuildConfig\$") && pro.name == pluginAppModuleName) {
+                        if (task.name.matches("^generate\\S*ReleaseBuildConfig\$") && pro.name == appModuleName) {
                             task.doFirst {
                                 println(">> generateReleaseBuildConfig")
                             }
                             task.doLast {
-                                addPluginProguardRules(pro)
+//                                getBuildSign(pro)
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * 获取签名
+     * @param pro
+     */
+    private void getBuildSign(Project project) {
+        if (project.plugins.hasPlugin("com.android.application") && project.name == appModuleName) {
+            def signingConfig = project.android.buildTypes.release.signingConfig
+            if(signingConfig!=null&&signingConfig.storeFile!=null){
+                println("sign--->${signingConfig.storeFile.path}")
+                println("sign--->${signingConfig.storePassword}")
+                println("sign--->${signingConfig.keyAlias}")
+                println("sign--->${signingConfig.keyPassword}")
+
+                Constans.sign_storeFile_path=signingConfig.storeFile.path
+                Constans.sign_storePassword=signingConfig.storePassword
+                Constans.sign_keyPassword=signingConfig.keyPassword
+                Constans.sign_keyAlias=signingConfig.keyAlias
+
             }
         }
     }
@@ -86,10 +110,10 @@ class HDL implements Plugin<Project> {
                 buildType = "Release"
             }
             if (buildType != null) {
-                AppAssembleTask interceptorAssembleTask = pro.tasks.create(name: "InterceptorAssembleTask${buildType}", type: AppAssembleTask)
+                AppAssembleTask interceptorAssembleTask = pro.tasks.create(name: "AppAssembleTask${buildType}", type: AppAssembleTask)
                 interceptorAssembleTask.buildType = buildType
                 interceptorAssembleTask.finalizedBy(":${pluginAppPath}:assemble${buildType}")
-                interceptorAssembleTask.rootProj = project
+                interceptorAssembleTask.rootProj = pro
                 task.finalizedBy(interceptorAssembleTask)
             }
         }
@@ -117,7 +141,7 @@ class HDL implements Plugin<Project> {
 
     private void addAppProguardRules(Project project) {
         if (project.plugins.hasPlugin("com.android.application") && project.name == appModuleName) {
-            def file = new File("${project.projectDir}")
+            def file = new File("${project.rootProject.projectDir}", "app/build/hdl/proguard")
             if (!file.exists()) {
                 file.mkdirs()
             }
@@ -126,29 +150,47 @@ class HDL implements Plugin<Project> {
                 file2.delete()
             }
             file2.createNewFile()
-            def fileStr = "-keep class androidx.databinding.**{*;}\n-keep class androidx.startup.**{*;}\n-keep class com.google.android.material.imageview.ShapeableImageView{*;}\n"
+            def fileStr = "-dontshrink\n-keep class androidx.databinding.**{*;}\n-keep class androidx.startup.**{*;}\n-keep class com.google.android.material.imageview.ShapeableImageView{*;}\n"
             file2.write(fileStr)
 
             def proguardList = new ArrayList(project.android.buildTypes.release.proguardFiles)
             proguardList.add(file2.path)
-            println("proguardList-->" + file2.path)
             project.android.buildTypes.release.proguardFiles = proguardList
         }
     }
 
     /**
      * 添加plugin mapping
+     * 1.引用hdl-proguard-rules.pro文件,并追加mapping
      * @param project
      */
-    private void addPluginProguardRules(Project project) {
-        def file = new File("${project.rootProject.projectDir}/app/build/outputs/release/mapping/mapping.txt")
-        if (!file.exists()) {
-            println("未找到plugin mapping--->" + file.path)
-            return
+    private void addPluginMappingRules(Project project) {
+        //
+        if (project.plugins.hasPlugin("com.android.application") && project.name == pluginAppModuleName) {
+            def proguard = new File("${project.rootProject.projectDir}", "app/build/hdl/proguard/hdl-proguard-rules.pro")
+            if (!proguard.exists()) {
+                throw Exception("${proguard.path}文件未生成,请检查")
+            }
+            def proguard2 = new File("${project.rootProject.projectDir}", "app/build/hdl/proguard/hdl-${pluginAppModuleName}-proguard-rules.pro")
+            if (proguard2.exists()) {
+                proguard2.delete()
+            }
+            proguard2.createNewFile()
+            def mappingFile = new File("${project.rootProject.projectDir}/app/build/hdl/mapping/mapping.txt")
+//            if (!mappingFile.exists()) {
+//                throw Exception("未找到plugin mapping")
+//            }
+            proguard2.withDataOutputStream {
+                it.write(proguard.readBytes())
+                it.write("-applymapping  ${mappingFile.path}\n".getBytes())
+            }
+
+            def proguardList = new ArrayList(project.android.buildTypes.release.proguardFiles)
+            proguardList.add(proguard2.path)
+            println("proguardList-->" + proguard2.path)
+            project.android.buildTypes.release.proguardFiles = proguardList
         }
-        def proguardList = new ArrayList(project.android.buildTypes.release.proguardFiles)
-        proguardList.add(file.path)
-        println("proguardList-->" + file.path)
-        project.android.buildTypes.release.proguardFiles = proguardList
+
+
     }
 }

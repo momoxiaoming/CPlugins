@@ -4,7 +4,7 @@ ext {
     cPlugins = [
             hdl:[
                     group : 'com.android.plugin',
-                    versionName : '1.0.3',
+                    versionName : '1.0.7',
                     artifactId : 'hdl',
             ]
     ]

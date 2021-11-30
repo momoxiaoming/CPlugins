@@ -2,3 +2,4 @@ rootProject.name = "CPlugins"
 include ':app'
 include ':hdl'
 include ':testapp'
+include ':common'

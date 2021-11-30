@@ -4,6 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import res.gradle.plugin.Constans
 import res.gradle.plugin.utils.AESUtils
 
 /**
@@ -22,7 +23,7 @@ public class PluginAssembleTask extends DefaultTask {
     @Input
     String buildType
 
-    private static String apkToolPath              = "D:\\zhangjinming\\apktool\\apktool.jar"
+    private static String apkToolPath              = "D:\\apktool.jar"
     private static String jdkPath                  ="D:\\jdk1.8.0_31\\bin\\java.exe"
 
     //定义几个主要路径
@@ -31,9 +32,17 @@ public class PluginAssembleTask extends DefaultTask {
     private static String MAIN_APP_APK_PATH        = ""  //最终的宿主apk路径
     private static String MAIN_APP_APK_DUMP_PATH   = ""  //dump 路径
 
+    static boolean isLinux() {
+        return org.gradle.internal.os.OperatingSystem.current().isLinux()
+    }
+    static boolean isWindows() {
+        return org.gradle.internal.os.OperatingSystem.current().isWindows()
+    }
     @TaskAction
     void confuse() {
-
+        if(isLinux()){
+            apkToolPath="/var/jenkins_home/apktool/apktool.jar"
+        }
         initDirPath()
         // 取出宿主apk
         def appApk = getApk("${project.rootProject.projectDir}\\app\\build\\outputs\\apk\\${buildType.toLowerCase()}/")
@@ -41,7 +50,66 @@ public class PluginAssembleTask extends DefaultTask {
         dumpApk(appApk)
 
         //回编宿主apk
-        createApk(appApk.name)
+        def file=createApk(appApk.name)
+
+       def zipalignFile= zipalign(file)
+        //尝试签名
+        signApk(zipalignFile)
+    }
+
+
+    private File zipalign(File apk){
+        println("开始apk对齐")
+        def alignApk=new File(apk.parentFile,"${apk.name}-align.apk")
+        rootProj.exec {
+            List<String> args = new ArrayList<>()
+            args.add("cmd")
+            args.add("/c")
+            args.add("zipalign")
+            args.add("-v")
+            args.add("-p")
+            args.add("4")
+            args.add("${apk.path}")
+            args.add("${alignApk.path}")
+            println("dump 命令-->"+args.toArray().join(" "))
+            commandLine(args.toArray())
+        }
+        apk.delete()
+        return alignApk
+    }
+
+    private void signApk(File apk){
+        println("开始apk签名")
+        def sign=false
+        if(!Constans.sign_storeFile_path.isEmpty()){
+//            apksigner sign --ks wifi_dzg.jks --ks-key-alias wifidzg --ks-pass pass:mckj2020 --key-pass pass:mckj2020 38023999_com.mc.cpyr.wifidzg_1.0.0_hwcsj_20211130.apk
+            rootProj.exec {
+                List<String> args = new ArrayList<>()
+                args.add("cmd")
+                args.add("/c")
+                args.add("apksigner")
+                args.add("sign")
+                args.add("--ks")
+                args.add("${Constans.sign_storeFile_path}")
+                args.add("--ks-key-alias")
+                args.add("${Constans.sign_keyAlias}")
+                args.add("--ks-pass")
+                args.add("pass:${Constans.sign_storePassword}")
+                args.add("--key-pass")
+                args.add("pass:${Constans.sign_keyPassword}")
+                args.add("${apk.path}")
+                println("dump 命令-->"+args.toArray().join(" "))
+                commandLine(args.toArray())
+            }
+        }
+        def name=apk.name.replace(".apk","")
+        def newName=name
+        if(sign){
+            newName= "${name}-unsign.apk"
+        }else{
+            newName= "${name}-sign.apk"
+        }
+        apk.renameTo(new File(apk.parentFile,"$newName"))
     }
     /**
      * 初始化各种路径
@@ -97,7 +165,9 @@ public class PluginAssembleTask extends DefaultTask {
         }
         rootProj.exec {
             List<String> args = new ArrayList<>()
-            args.add(jdkPath)
+            args.add("cmd")
+            args.add("/c")
+            args.add("java")
             args.add("-jar")
             args.add(apkToolPath)
             args.add("d")
@@ -109,7 +179,7 @@ public class PluginAssembleTask extends DefaultTask {
             commandLine(args.toArray())
         }
     }
-    private void createApk(String name) {
+    private File createApk(String name) {
         println("开始将插件apk加密并复制到assets")
         //取出插件apk
         def encPluginApk=encodeApk()
@@ -128,7 +198,9 @@ public class PluginAssembleTask extends DefaultTask {
 
         rootProj.exec {
             List<String> args = new ArrayList<>()
-            args.add(jdkPath)
+            args.add("cmd")
+            args.add("/c")
+            args.add("java")
             args.add("-jar")
             args.add(apkToolPath)
             args.add("b")
@@ -140,6 +212,8 @@ public class PluginAssembleTask extends DefaultTask {
         }
 
         println("宿主apk重打包成功")
+
+        return file
     }
 
     private File getApk(String path) {
