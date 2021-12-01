@@ -4,7 +4,7 @@ ext {
     cPlugins = [
             hdl:[
                     group : 'com.android.plugin',
-                    versionName : '1.0.7',
+                    versionName : '2.0.2',
                     artifactId : 'hdl',
             ]
     ]
@@ -17,8 +17,11 @@ ext {
 
     hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
 
+
+
     modules = [
             aos: [
+                    sourceId     : '0x6f',
                     moduleName   : "testapp",
                     modulePath   : ":testapp",
                     versionCode  : 1,

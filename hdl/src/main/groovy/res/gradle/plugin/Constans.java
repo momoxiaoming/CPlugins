@@ -14,5 +14,4 @@ public class Constans
     public static String sign_storePassword="";
     public static String sign_keyAlias="";
     public static String sign_keyPassword="";
-
 }

@@ -17,9 +17,11 @@ class HDL implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
+        println("HDL,插件脚本允许运行")
         initConfig(project)
         addTask(project)
         hookTask(project)
+
     }
 
     private void initConfig(Project project) {
