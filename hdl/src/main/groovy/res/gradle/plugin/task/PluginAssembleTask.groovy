@@ -23,8 +23,10 @@ public class PluginAssembleTask extends DefaultTask {
     @Input
     String buildType
 
-    private static String apkToolPath              = "D:\\apktool.jar"
-    private static String jdkPath                  ="D:\\jdk1.8.0_31\\bin\\java.exe"
+    private static String apkToolPath              = ""
+    private static String zipalignPath             =""
+    private static String apksignerPath            =""
+
 
     //定义几个主要路径
     private static String MAIN_PATH                = ""
@@ -40,12 +42,11 @@ public class PluginAssembleTask extends DefaultTask {
     }
     @TaskAction
     void confuse() {
-        if(isLinux()){
-            apkToolPath="/var/jenkins_home/apktool/apktool.jar"
-        }
+        initCmdPath()
+
         initDirPath()
         // 取出宿主apk
-        def appApk = getApk("${project.rootProject.projectDir}\\app\\build\\outputs\\apk\\${buildType.toLowerCase()}/")
+        def appApk = getApk("${project.rootProject.projectDir}/app/build/outputs/apk/${buildType.toLowerCase()}/")
         //dump宿主apk
         dumpApk(appApk)
 
@@ -57,15 +58,31 @@ public class PluginAssembleTask extends DefaultTask {
         signApk(zipalignFile)
     }
 
+    /**
+     * 初始化各种命令路径
+     */
+    private void initCmdPath(){
+        if(isLinux()){
+            apkToolPath=rootProj.rootProject.paths.linuxPath.apktool
+            zipalignPath=rootProj.rootProject.paths.linuxPath.zipalign
+            apksignerPath=rootProj.rootProject.paths.linuxPath.apksigner
+        }else{
+            apkToolPath=rootProj.rootProject.paths.defaultPath.apktool
+            zipalignPath=rootProj.rootProject.paths.defaultPath.zipalign
+            apksignerPath=rootProj.rootProject.paths.defaultPath.apksigner
+        }
+    }
 
     private File zipalign(File apk){
         println("开始apk对齐")
         def alignApk=new File(apk.parentFile,"${apk.name}-align.apk")
+        if(alignApk.exists()){
+            alignApk.delete()
+        }
         rootProj.exec {
+            args("-c")
             List<String> args = new ArrayList<>()
-            args.add("cmd")
-            args.add("/c")
-            args.add("zipalign")
+            args.add(zipalignPath)
             args.add("-v")
             args.add("-p")
             args.add("4")
@@ -84,10 +101,11 @@ public class PluginAssembleTask extends DefaultTask {
         if(!Constans.sign_storeFile_path.isEmpty()){
 //            apksigner sign --ks wifi_dzg.jks --ks-key-alias wifidzg --ks-pass pass:mckj2020 --key-pass pass:mckj2020 38023999_com.mc.cpyr.wifidzg_1.0.0_hwcsj_20211130.apk
             rootProj.exec {
+                args("-c")
                 List<String> args = new ArrayList<>()
-                args.add("cmd")
-                args.add("/c")
-                args.add("apksigner")
+                args.add("java")
+                args.add("-jar")
+                args.add(apksignerPath)
                 args.add("sign")
                 args.add("--ks")
                 args.add("${Constans.sign_storeFile_path}")
@@ -115,10 +133,10 @@ public class PluginAssembleTask extends DefaultTask {
      * 初始化各种路径
      */
     private void initDirPath(){
-        MAIN_PATH                = "${project.rootProject.projectDir}\\app\\build\\hdl"
-        MAIN_PLUGIN_APK_PATH     = "$MAIN_PATH\\plugin"  //加密后的插件路径
-        MAIN_APP_APK_PATH        = "$MAIN_PATH\\apk"  //最终的宿主apk路径
-        MAIN_APP_APK_DUMP_PATH   = "$MAIN_PATH\\dump"  //dump 路径
+        MAIN_PATH                = "${project.rootProject.projectDir}/app/build/hdl"
+        MAIN_PLUGIN_APK_PATH     = "$MAIN_PATH/plugin"  //加密后的插件路径
+        MAIN_APP_APK_PATH        = "$MAIN_PATH/apk"  //最终的宿主apk路径
+        MAIN_APP_APK_DUMP_PATH   = "$MAIN_PATH/dump"  //dump 路径
 
         def file1=new File(MAIN_APP_APK_PATH)
         if(!file1.exists()){
@@ -134,7 +152,7 @@ public class PluginAssembleTask extends DefaultTask {
  * 加密apk
  */
     private File encodeApk() {
-        def appApk = getApk("${project.buildDir}\\outputs\\apk\\${buildType.toLowerCase()}/")
+        def appApk = getApk("${project.buildDir}/outputs/apk/${buildType.toLowerCase()}/")
         def byteArr= AESUtils.encrypt(appApk.readBytes())
         if(byteArr==null){
             throw new Exception("${appApk.absolutePath} 加密失败")
@@ -164,9 +182,8 @@ public class PluginAssembleTask extends DefaultTask {
             dumpDir.deleteDir()
         }
         rootProj.exec {
+            args("-c")
             List<String> args = new ArrayList<>()
-            args.add("cmd")
-            args.add("/c")
             args.add("java")
             args.add("-jar")
             args.add(apkToolPath)
@@ -183,7 +200,7 @@ public class PluginAssembleTask extends DefaultTask {
         println("开始将插件apk加密并复制到assets")
         //取出插件apk
         def encPluginApk=encodeApk()
-        def assetsDir=new File(MAIN_APP_APK_DUMP_PATH,"assets\\hdl\\")
+        def assetsDir=new File(MAIN_APP_APK_DUMP_PATH,"assets/hdl/")
         if(!assetsDir.exists()){
             assetsDir.mkdirs()
         }
@@ -197,9 +214,8 @@ public class PluginAssembleTask extends DefaultTask {
 
 
         rootProj.exec {
+            args("-c")
             List<String> args = new ArrayList<>()
-            args.add("cmd")
-            args.add("/c")
             args.add("java")
             args.add("-jar")
             args.add(apkToolPath)
