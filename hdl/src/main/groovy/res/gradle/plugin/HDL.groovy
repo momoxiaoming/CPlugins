@@ -152,7 +152,7 @@ class HDL implements Plugin<Project> {
                 file2.delete()
             }
             file2.createNewFile()
-            def fileStr = "-dontshrink\n-keep class androidx.databinding.**{*;}\n-keep class androidx.startup.**{*;}\n-keep class com.google.android.material.imageview.ShapeableImageView{*;}\n"
+            def fileStr = "${project.rootProject.main_proguard}"
             file2.write(fileStr)
 
             def proguardList = new ArrayList(project.android.buildTypes.release.proguardFiles)
@@ -168,6 +168,7 @@ class HDL implements Plugin<Project> {
      */
     private void addPluginMappingRules(Project project) {
         //
+        println("添加aos插件pro")
         if (project.plugins.hasPlugin("com.android.application") && project.name == pluginAppModuleName) {
             def proguard = new File("${project.rootProject.projectDir}", "app/build/hdl/proguard/hdl-proguard-rules.pro")
             if (!proguard.exists()) {
@@ -183,7 +184,7 @@ class HDL implements Plugin<Project> {
 //                throw Exception("未找到plugin mapping")
 //            }
             proguard2.withDataOutputStream {
-                it.write(proguard.readBytes())
+                it.write("${project.rootProject.modules.aos.proguard}".getBytes())
                 it.write("-applymapping  ${mappingFile.path}\n".getBytes())
             }
 
