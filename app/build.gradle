@@ -57,10 +57,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
-project.exec {
-    List<String> args = new ArrayList<>()
-    args.add("D:\\jdk1.8.0_31\\bin\\java.exe")
-    args.add("-version")
-    commandLine(args.toArray())
-
-}
+//project.exec {
+//    List<String> args = new ArrayList<>()
+//    args.add("D:\\jdk1.8.0_31\\bin\\java.exe")
+//    args.add("-version")
+//    commandLine(args.toArray())
+//}
