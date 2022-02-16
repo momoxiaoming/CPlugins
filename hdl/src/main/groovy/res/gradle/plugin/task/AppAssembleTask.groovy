@@ -34,7 +34,7 @@ public class AppAssembleTask extends DefaultTask {
             //开始合并mapping
 
 
-            mergeMapping()
+//            mergeMapping()
         }
 
     }

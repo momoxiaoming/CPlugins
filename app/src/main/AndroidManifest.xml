@@ -10,7 +10,14 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CPlugins" >
 
-		<activity android:name="com.android.MainActivity">
+<!--		<activity android:name="com.android.MainActivity">-->
+<!--			<intent-filter>-->
+<!--				<action android:name="android.intent.action.MAIN" />-->
+<!--				<category android:name="android.intent.category.LAUNCHER" />-->
+<!--			</intent-filter>-->
+<!--		</activity>-->
+
+		<activity android:name="com.android.MainActivity2">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />

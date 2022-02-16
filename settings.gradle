@@ -1,5 +1,8 @@
 rootProject.name = "CPlugins"
 include ':app'
 include ':hdl'
+include ':encrypt_string'
 include ':testapp'
 include ':common'
+include ':byteEncrypt-interface'
+include ':testEnc'

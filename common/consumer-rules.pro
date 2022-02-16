@@ -1,1 +1,1 @@
--keep class com.android.common.*{}
+#-keep class com.android.common.*{}

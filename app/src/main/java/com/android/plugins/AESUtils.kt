@@ -19,9 +19,7 @@ object AESUtils {
 
     private val DEFULT_PASSWORD = BuildConfig.aes_key  //和copyPlugin.gradle定义一致
 
-
-    private val IV = BuildConfig.aes_iv.padEnd(16).toByteArray()
-
+    private val IV = byteArrayOf(10,30,40,50,60,70,80,11,22,33,44,55,66,77,88,99)
 
     private val cipher by lazy {
         Cipher.getInstance(MODE)

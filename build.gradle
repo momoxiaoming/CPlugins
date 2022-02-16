@@ -1,10 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 //
 
-apply plugin:'hdl'
+//apply plugin:'hdl'
+
 buildscript {
     apply from:'CPluigns.gradle'
-
+    apply from:'byteEncrypt.gradle'
 
     ext.kotlin_version = "1.5.0"
     repositories {
@@ -22,7 +23,8 @@ buildscript {
         classpath "com.android.tools.build:gradle:4.2.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.didiglobal.booster:booster-aapt2:3.1.0"
-        classpath rootProject.hdl_plugin
+//        classpath rootProject.hdl_plugin
+        classpath rootProject.string_encrypt
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradlePLUGIN files
     }
@@ -51,4 +53,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
 

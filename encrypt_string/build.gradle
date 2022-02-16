@@ -1,0 +1,61 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'kotlin'
+apply plugin: 'java-gradle-plugin'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:4.2.1'
+    implementation 'org.ow2.asm:asm-all:5.0.4'
+    implementation 'com.squareup:javapoet:1.9.0'
+//    implementation project(path: ':byteEncrypt-interface')
+    implementation 'com.dn.encrypt:byteInterface:1.1.5-bate1'
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+}
+repositories {
+    mavenCentral()
+    maven{
+        url 'https://dl.bintray.com/android/android-tools'
+    }
+    maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
+    maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
+}
+
+def isLocal=true
+
+if(!isLocal){
+    uploadArchives  {
+        repositories {
+            mavenDeployer  {
+                repository(url: uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')) {
+                    authentication(userName: 'vapp-deployment', password: 'pwd123456')
+                }
+                pom {
+                    groupId=rootProject.cPlugins.string_encrypt.group
+                    artifactId=rootProject.cPlugins.string_encrypt.artifactId
+                    version=rootProject.cPlugins.string_encrypt.versionName
+                }
+            }
+        }
+    }
+}else{
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: uri('../repo'))
+                pom {
+                    groupId = rootProject.cPlugins.string_encrypt.group
+                    artifactId = rootProject.cPlugins.string_encrypt.artifactId
+                    version = rootProject.cPlugins.string_encrypt.versionName
+                }
+            }
+        }
+    }
+}
+
+
+
+

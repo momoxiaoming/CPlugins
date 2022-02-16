@@ -3,10 +3,11 @@ package com.android
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.android.common.MyApplication
 import com.android.common.Test
+
 import com.android.plugins.AESUtils
 import com.android.plugins.PluginClassLoader
 import com.android.plugins.R
@@ -21,13 +22,15 @@ import java.io.File
  * @date 2021/11/29 14:15
  */
 class MainActivity : AppCompatActivity() {
-
+    companion object{
+        val mMax:String="123123"
+    }
     private var pluginClassLoader: DexClassLoader? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        Test().test1()
 
         findViewById<Button>(R.id.btn).setOnClickListener {
             loadPlugin()
@@ -36,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn2).setOnClickListener {
             loadCls()
         }
+        var maxNum="10000"
+
+        Log.d("allen","----->${maxNum}---$mMax")
     }
 
     fun loadPlugin() {
@@ -48,10 +54,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadCls() {
-        Test.test=20
+//        Test.test=20
         val appCls = pluginClassLoader!!.loadClass("com.android.testapp.PluginApp")
         ReflectUtils.invokeMethod(appCls.newInstance(),"attach", arrayOf(), arrayOf())
-        Log.d("allen","宿主--->${Test.test}")
+//        Log.d("allen","宿主--->${Test.test}")
     }
 
     /**

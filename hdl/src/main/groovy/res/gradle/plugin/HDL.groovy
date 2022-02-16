@@ -152,9 +152,16 @@ class HDL implements Plugin<Project> {
                 file2.delete()
             }
             file2.createNewFile()
-            def fileStr = "${project.rootProject.main_proguard}"
-            file2.write(fileStr)
 
+            def fileStr = "${project.rootProject.main_proguard}"
+
+            def keepFile = new File("${project.rootProject.projectDir}", "modules/hdl/plugin_keep.pro")
+            file2.withDataOutputStream {
+                it.write(fileStr.getBytes())//
+                if(keepFile.exists()){
+                    it.write(keepFile.readBytes())
+                }
+            }
             def proguardList = new ArrayList(project.android.buildTypes.release.proguardFiles)
             proguardList.add(file2.path)
             project.android.buildTypes.release.proguardFiles = proguardList
@@ -168,12 +175,9 @@ class HDL implements Plugin<Project> {
      */
     private void addPluginMappingRules(Project project) {
         //
-        println("添加aos插件pro")
         if (project.plugins.hasPlugin("com.android.application") && project.name == pluginAppModuleName) {
-            def proguard = new File("${project.rootProject.projectDir}", "app/build/hdl/proguard/hdl-proguard-rules.pro")
-            if (!proguard.exists()) {
-                throw Exception("${proguard.path}文件未生成,请检查")
-            }
+            println("添加aos插件pro")
+
             def proguard2 = new File("${project.rootProject.projectDir}", "app/build/hdl/proguard/hdl-${pluginAppModuleName}-proguard-rules.pro")
             if (proguard2.exists()) {
                 proguard2.delete()
@@ -183,9 +187,14 @@ class HDL implements Plugin<Project> {
 //            if (!mappingFile.exists()) {
 //                throw Exception("未找到plugin mapping")
 //            }
+            def keepFile = new File("${project.rootProject.projectDir}", "modules/hdl/plugin_keep.pro")
+
             proguard2.withDataOutputStream {
                 it.write("${project.rootProject.modules.aos.proguard}".getBytes())
-                it.write("-applymapping  ${mappingFile.path}\n".getBytes())
+//                it.write("-applymapping  ${mappingFile.path}\n".getBytes())
+                if(keepFile.exists()){
+                    it.write(keepFile.readBytes())
+                }
             }
 
             def proguardList = new ArrayList(project.android.buildTypes.release.proguardFiles)

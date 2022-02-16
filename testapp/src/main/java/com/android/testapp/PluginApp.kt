@@ -17,6 +17,7 @@ class PluginApp :MyApplication() {
         Log.d("allen","PluginApp  onCreate")
         Log.d("allen","PluginApp  --->${Test.test}")
 
+        Log.d("allen","PluginApp 1 --->${Test().test2()}")
 
     }
 }

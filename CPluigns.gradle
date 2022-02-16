@@ -25,10 +25,19 @@ ext {
     cPlugins = [
             hdl: [
                     group      : 'com.android.plugin',
-                    versionName: '2.0.6',
+                    versionName: '2.0.7-bate8',
                     artifactId : 'hdl',
+            ],
+            string_encrypt: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.0-bate3',
+                    artifactId : 'string_encrypt',
             ]
     ]
+
+    hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
+    string_encrypt = "${cPlugins.string_encrypt.group}:${cPlugins.string_encrypt.artifactId}:${cPlugins.string_encrypt.versionName}"
+
 
     AES = [
             MODE: "AES/CBC/PKCS5Padding",
@@ -36,10 +45,9 @@ ext {
             IV  : "1234"
     ]
 
-    hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
 
-    common_proguard="-keep class androidx.databinding.**{*;}\n-keep class androidx.startup.**{*;}\n-keep class com.google.android.material.imageview.ShapeableImageView{*;}\n"
-    main_proguard = "-dontshrink\n${rootProject.common_proguard}"
+    common_proguard="-keepattributes InnerClasses\n-keep class androidx.databinding.**{*;}\n-keep class androidx.startup.**{*;}\n-keep class com.google.android.material.imageview.ShapeableImageView{*;}\n"
+    main_proguard = "${rootProject.common_proguard}"
 
     modules = [
             aos: [
@@ -49,7 +57,7 @@ ext {
                     versionCode  : 1,
                     versionName  : '1.0.0',
                     applicationid: "com.m.c.aos.app",
-                    proguard     : "-dontshrink\n${rootProject.common_proguard}"
+                    proguard     : "-flattenpackagehierarchy aos.hdl\n${rootProject.common_proguard}"
             ]
     ]
 

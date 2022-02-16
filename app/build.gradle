@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
 }
 
+
+
 android {
 
     signingConfigs {
@@ -23,8 +25,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "aes_key","\"${rootProject.AES.KEY}\""
-        buildConfigField "String", "aes_iv","\"${rootProject.AES.IV}\""
+        buildConfigField "String", "aes_key", "\"${rootProject.AES.KEY}\""
+        buildConfigField "String", "aes_iv", "\"${rootProject.AES.IV}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -46,7 +48,6 @@ android {
 }
 
 dependencies {
-    println("----------->"+rootProject.getProperties().get("AES").getAt("KEY"))
     implementation project(":common")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
@@ -55,6 +56,9 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+//    implementation project(path: ':byteEncrypt-interface')
+    implementation 'com.github.megatronking.stringfog:xor:1.1.0'
+
 }
 
 //project.exec {
@@ -62,4 +66,30 @@ dependencies {
 //    args.add("D:\\jdk1.8.0_31\\bin\\java.exe")
 //    args.add("-version")
 //    commandLine(args.toArray())
+//}
+
+apply plugin: 'string_encrypt'
+//byteEncrypt {
+//    /**
+//     * 开关
+//     */
+//    enable true
+//
+//    /**
+//     * 是否开启debug
+//     */
+//    debug true
+//    /**
+//     * 默认使用aes加密,可更改key值
+//     */
+//    encryptKey ""
+//    /**
+//     * 自定义加密实现类(需要实现IByteEncrypt接口),若未定义,将使用默认key值的aes加密
+//     * 注意: 自定义的加密类需要在编译期也能找到,必须添加classpath
+//     */
+////    encryptImplCls "com.android.TestImpl"
+//    /**
+//     * 包名过滤,若此项为空,将默认全部
+//     */
+////    encryptPackages =["com.android.plugins"]
 //}
