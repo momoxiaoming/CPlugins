@@ -68,21 +68,14 @@ dependencies {
 //    commandLine(args.toArray())
 //}
 
-apply plugin: 'string_encrypt'
+//apply plugin: 'com.gradle.plugin.byteEncrypt'
 //byteEncrypt {
-//    /**
-//     * 开关
-//     */
-//    enable true
 //
 //    /**
 //     * 是否开启debug
 //     */
 //    debug true
 //    /**
-//     * 默认使用aes加密,可更改key值
-//     */
-//    encryptKey ""
 //    /**
 //     * 自定义加密实现类(需要实现IByteEncrypt接口),若未定义,将使用默认key值的aes加密
 //     * 注意: 自定义的加密类需要在编译期也能找到,必须添加classpath

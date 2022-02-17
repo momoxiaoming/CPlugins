@@ -24,7 +24,10 @@ class MainActivity2 :AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.btn).setOnClickListener {
-            Log.d(TAG,"----->---")
+            out("AES/CBC/PKCS5Padding")
+            out("1234567890123456")
+            out("AES")
+            out("6543210987654321")
         }
         println("---->$test3")
 //       val bt= RuntimeByteEncryptImpl.encrypt("allen")
@@ -39,5 +42,13 @@ class MainActivity2 :AppCompatActivity(){
 //
 //        val de1= AESUtils.decrypt(bt1!!)
 //        Log.d("allen","----->---${de1!!.decodeToString()}")
+    }
+
+    fun out(str:String){
+        str.toByteArray().forEach {
+            print("${it},")
+        }
+
+        println("-------------")
     }
 }

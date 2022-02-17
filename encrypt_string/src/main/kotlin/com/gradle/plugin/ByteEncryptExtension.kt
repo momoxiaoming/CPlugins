@@ -9,8 +9,6 @@ package com.gradle.plugin
 open class ByteEncryptExtension {
     var key: String? = null
     var debug: Boolean = false
-    var enable: Boolean = true
-    var encryptKey: String? = null
     var encryptImplCls: String? = null
     var encryptPackages: Array<String>? = null
 }

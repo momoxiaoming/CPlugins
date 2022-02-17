@@ -15,11 +15,11 @@ import org.gradle.api.Project
  * @author mmxm
  * @date 2022/1/21 15:11
  */
-class StringEncrypt : Plugin<Project> {
+class ByteEncrypt : Plugin<Project> {
 
 
     override fun apply(project: Project) {
-        project.dependencies.add("implementation","com.dn.encrypt:byteInterface:1.1.5-bate1")
+        project.dependencies.add("implementation","com.dn.encrypt:byteInterface:1.1.6")
 
         val byteEncryptExtension =
             project.extensions.create("byteEncrypt", ByteEncryptExtension::class.java)

@@ -30,8 +30,8 @@ ext {
             ],
             string_encrypt: [
                     group      : 'com.android.plugin',
-                    versionName: '1.0.0-bate3',
-                    artifactId : 'string_encrypt',
+                    versionName: '1.0.3',
+                    artifactId : 'byteEncrypt',
             ]
     ]
 

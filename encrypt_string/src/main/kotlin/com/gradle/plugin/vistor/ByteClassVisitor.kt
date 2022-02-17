@@ -1,6 +1,7 @@
 package com.gradle.plugin.vistor
 
 import com.dn.encrypt.IByteEncrypt
+import com.dn.encrypt.annotation.IgnoreByteEncrypt
 import com.gradle.plugin.bean.FieldBean
 import com.gradle.plugin.log.GLog
 import jdk.internal.org.objectweb.asm.*
@@ -17,11 +18,12 @@ class ByteClassVisitor(val cw: ClassWriter, val impl: IByteEncrypt) :
 
     companion object {
         const val STRING_DESC = "Ljava/lang/String;"
-        const val IGNORE_ANN_DESC = "Lcom/gradle/plugin/annotation/IgnoreStringEncrypt;"
+        var IGNORE_ANN_DESC = "${IgnoreByteEncrypt::class.java.simpleName.replace(".","/")};"
         const val CINIT_METHOD = "<clinit>"  //类构造方法,创建类,以及类静态变量
         const val INIT_METHOD = "<init>"  //实例构造方法,主要创建实例
 
     }
+
 
     /**
      * 是否忽略该类
@@ -68,7 +70,10 @@ class ByteClassVisitor(val cw: ClassWriter, val impl: IByteEncrypt) :
      * @return AnnotationVisitor
      */
     override fun visitAnnotation(desc: String?, visible: Boolean): AnnotationVisitor {
-        ignoreAnnCls = IGNORE_ANN_DESC == desc
+        GLog.d("visitAnnotation-->$desc--->$IGNORE_ANN_DESC")
+        if(desc!=null){
+            ignoreAnnCls = desc.endsWith(IGNORE_ANN_DESC)
+        }
         return super.visitAnnotation(desc, visible)
     }
 
@@ -118,6 +123,8 @@ class ByteClassVisitor(val cw: ClassWriter, val impl: IByteEncrypt) :
         }
         return ByteMethodVisitor(impl,asmField, name!!, mClassName, mv)
     }
+
+
     class ASMField {
         val mStaticFinalField = mutableListOf<FieldBean>()
     }

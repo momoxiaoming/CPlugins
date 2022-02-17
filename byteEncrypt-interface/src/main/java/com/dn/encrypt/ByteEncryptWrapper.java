@@ -13,43 +13,27 @@ import org.jetbrains.annotations.Nullable;
 public final class ByteEncryptWrapper implements IByteEncrypt
 {
     private IByteEncrypt impl;
-    private String encryptCls;
 
     public ByteEncryptWrapper(String encryptCls)
     {
-        this.encryptCls=encryptCls;
-//        try
-//        {
-//            impl = (IByteEncrypt) Class.forName(encryptCls).newInstance();
-//        } catch (ClassNotFoundException e) {
-//            throw new IllegalArgumentException(encryptCls+" implementation class not found: " + encryptCls);
-//        } catch (InstantiationException e) {
-//            throw new IllegalArgumentException(encryptCls+" implementation class new instance failed: "
-//                    + e.getMessage());
-//        } catch (IllegalAccessException e) {
-//            throw new IllegalArgumentException(encryptCls+" implementation class access failed: "
-//                    + e.getMessage());
-//        }
+        try
+        {
+            impl = (IByteEncrypt) Class.forName(encryptCls).newInstance();
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException(encryptCls+" implementation class not found: " + encryptCls);
+        } catch (InstantiationException e) {
+            throw new IllegalArgumentException(encryptCls+" implementation class new instance failed: "
+                    + e.getMessage());
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException(encryptCls+" implementation class access failed: "
+                    + e.getMessage());
+        }
     }
 
     @Nullable
     @Override
     public byte[] encrypt(@NotNull String value)
     {
-        try
-        {
-            impl = (IByteEncrypt) Class.forName(encryptCls).newInstance();
-        } catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        } catch (IllegalAccessException e)
-        {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
 
         return impl==null?null:impl.encrypt(value);
     }
@@ -58,20 +42,6 @@ public final class ByteEncryptWrapper implements IByteEncrypt
     @Override
     public String decrypt(@NotNull byte[] value)
     {
-
-        try
-        {
-            impl = (IByteEncrypt) Class.forName(encryptCls).newInstance();
-        } catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        } catch (IllegalAccessException e)
-        {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
 
         return impl==null?"":impl.decrypt(value);
     }

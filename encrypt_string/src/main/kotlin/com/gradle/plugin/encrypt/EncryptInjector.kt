@@ -57,7 +57,7 @@ object EncryptInjector {
         return "${applicationId}.${byteEncryptImpl}"
     }
 
-    fun getEncryptPackages():Array<String>?{
+    fun getEncryptPackages(): Array<String>? {
         return encryptPackages
     }
 

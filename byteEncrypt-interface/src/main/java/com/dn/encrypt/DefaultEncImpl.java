@@ -17,15 +17,15 @@ import javax.crypto.spec.SecretKeySpec;
 @IgnoreByteEncrypt
 public class DefaultEncImpl implements IByteEncrypt
 {
-    public static final String MODE = "AES/CBC/PKCS5Padding";
-    public static final String TRANSFORMATION = "AES";
-    public static final String DEFULT_PASSWORD = "1234567890123456";
-    public static final String IV = "1234567890123456";
+    public static final byte[] MODE = new byte[]{65,69,83,47,67,66,67,47,80,75,67,83,53,80,97,100,100,105,110,103};
+    public static final byte[] TRANSFORMATION = new byte[]{65,69,83};
+    public static final byte[] DEFULT_PASSWORD = new byte[]{49,50,51,52,53,54,55,56,57,48,49,50,51,52,53,54};
+    public static final byte[] IV = new byte[]{54,53,52,51,50,49,48,57,56,55,54,53,52,51,50,49};
 
     @Override
     public boolean canEncrypt(@NotNull String value)
     {
-        return false;
+        return true;
     }
 
     @NotNull
@@ -34,9 +34,9 @@ public class DefaultEncImpl implements IByteEncrypt
     {
         try
         {
-            Cipher cipher = Cipher.getInstance(MODE);
-            SecretKeySpec key = new SecretKeySpec(DEFULT_PASSWORD.getBytes(), TRANSFORMATION);
-            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
+            Cipher cipher = Cipher.getInstance(new String(MODE));
+            SecretKeySpec key = new SecretKeySpec(DEFULT_PASSWORD, new String(TRANSFORMATION));
+            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(IV));
             byte[] bt = cipher.doFinal(value.getBytes("UTF-8"));
             return bt;
         } catch (Exception e)
@@ -52,9 +52,9 @@ public class DefaultEncImpl implements IByteEncrypt
     {
         try
         {
-            Cipher cipher = Cipher.getInstance(MODE);
-            SecretKeySpec key = new SecretKeySpec(DEFULT_PASSWORD.getBytes(), TRANSFORMATION);
-            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
+            Cipher cipher = Cipher.getInstance(new String(MODE));
+            SecretKeySpec key = new SecretKeySpec(DEFULT_PASSWORD, new String(TRANSFORMATION));
+            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV));
             byte[] bt = cipher.doFinal(value);
             return new String(bt);
         } catch (Exception e)

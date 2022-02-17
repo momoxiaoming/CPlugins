@@ -4,6 +4,7 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.gradle.plugin.encrypt.EncryptInjector
 import com.gradle.plugin.injector.ClassInjector
+import com.gradle.plugin.log.GLog
 import com.gradle.plugin.utils.eachFileRecurse
 import org.gradle.api.Project
 import java.io.File
@@ -53,7 +54,7 @@ abstract class EncryptTransform(project: Project) : Transform() {
 
     override fun transform(transformInvocation: TransformInvocation?) {
         super.transform(transformInvocation)
-        println("---------transform")
+        GLog.d("---------transform")
         val inputs = transformInvocation?.inputs
         val output = transformInvocation?.outputProvider
 
@@ -67,11 +68,11 @@ abstract class EncryptTransform(project: Project) : Transform() {
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
         val dirOutput = output.getContentLocation("classes", outputTypes, scopes, Format.DIRECTORY)
 
-        println("dirOutput----->${dirOutput.absolutePath}")
+        GLog.d("dirOutput----->${dirOutput.absolutePath}")
         inputs.forEach {
             it.directoryInputs.forEach { dit ->
                 dit.file.eachFileRecurse { file ->
-                    println("directoryInputs----->${file.name}")
+                    GLog.d("directoryInputs----->${file.name}")
                     val fileOutput = File(
                         file.absolutePath.replace(
                             dit.file.absolutePath,
@@ -96,7 +97,7 @@ abstract class EncryptTransform(project: Project) : Transform() {
             }
             it.jarInputs.forEach { jarInput ->
                 val jarInputFile = jarInput.file
-                println("jarInputs----->${jarInputFile.name}-->${jarInputFile.absolutePath}")
+                GLog.d("jarInputs----->${jarInputFile.name}-->${jarInputFile.absolutePath}")
                 val jarOutputFile =
                     output.getContentLocation(jarInputFile.name, outputTypes, scopes, Format.JAR)
                 if (!jarInputFile.parentFile.exists()) {
