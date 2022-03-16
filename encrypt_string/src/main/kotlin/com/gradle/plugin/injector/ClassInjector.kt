@@ -2,7 +2,9 @@ package com.gradle.plugin.injector
 
 import com.android.builder.utils.zipEntry
 import com.dn.encrypt.ByteEncryptWrapper
+import com.gradle.plugin.encrypt.EncryptInjector
 import com.gradle.plugin.log.GLog
+import com.gradle.plugin.vistor.ByteClassVisitor
 import com.gradle.plugin.vistor.ClassVisitorFactory
 import jdk.internal.org.objectweb.asm.ClassReader
 import jdk.internal.org.objectweb.asm.ClassWriter
@@ -45,12 +47,6 @@ class ClassInjector(implCls: String) {
      * @param output OutputStream
      */
     fun doJumpJar(input: File, output: File) {
-        GLog.d("处理jar-input--->${input.name}")
-        if(input.name.startsWith("byteInterface")){
-            GLog.d("屏蔽加密jar")
-            output.writeBytes(input.readBytes())
-            return
-        }
         val jarFile = JarFile(input)
         val enum = jarFile.entries()
         val jaros = JarOutputStream(FileOutputStream(output))
@@ -62,11 +58,9 @@ class ClassInjector(implCls: String) {
             val zipEntry = zipEntry(entityName)
             val inputIs = jarFile.getInputStream(zipEntry)
             jaros.putNextEntry(zipEntry)
-            GLog.d("处理jar-class--->$entityName")
-            if (!ignoreJar(entityName) && entityName.endsWith(
-                    ".class"
-                )
-            ) {
+            val splitName = entityName.replace("/", ".")
+            if (!ignoreJar(splitName) && splitName.endsWith(".class")) {
+                GLog.d("处理jar class--->$entityName")
                 processClass(inputIs, jaros)
             } else {
                 jaros.write(inputIs.readBytes())
@@ -79,16 +73,13 @@ class ClassInjector(implCls: String) {
 
 
     private fun processClass(input: InputStream, output: OutputStream) {
-
         val cr = ClassReader(input)  //用来解析编译过的class字节码文件。
         val cw = ClassWriter(0)   //用来重新构建编译后的类，比如说修改类名、属性以及方法，甚至可以生成新的类的字节码文件
-        val clsName = cr.className
+        val clsName =cr.className
         val cv = ClassVisitorFactory.create(impl = byteEncryptWrapper, clsName, cw)
         cr.accept(cv, 0)  //接受新的改动
         output.write(cw.toByteArray()) //并写入源文件  ,这里读取的顺序别错了
         output.flush()
-
-
     }
 
     /**
@@ -97,11 +88,25 @@ class ClassInjector(implCls: String) {
      * @return Boolean
      */
     fun ignoreJar(name: String): Boolean {
-        val ignorelist =
-            listOf<String>("androidx", "android", "kotlin", "com/google/android/material","META-INF")
-        val rlt = ignorelist.find {
-            name.startsWith(it)
+        val fliterPkgs = EncryptInjector.getEncryptPackages()
+        if (!fliterPkgs.isNullOrEmpty()) {
+            //只加密指定的包名下
+            val rlt = fliterPkgs.find {
+                name.startsWith(it)
+            }
+            return rlt == null
+        }else{
+            val ignorelist =
+                listOf(
+                    "androidx",
+                    "android",
+                    "kotlin",
+                    "com.google.android.material",
+                    "META-INF"
+                )
+            return ignorelist.find {
+                name.startsWith(it)
+            } != null
         }
-        return rlt != null
     }
 }

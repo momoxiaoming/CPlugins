@@ -28,7 +28,6 @@ object ClassVisitorFactory {
             val rlt=EncryptInjector.getEncryptPackages()!!.find {
                 parseClassName(className).startsWith(it)
             }
-            GLog.d("指定包名--->$rlt")
             if(rlt!=null){
                 ByteClassVisitor(cw,impl)
             }else{

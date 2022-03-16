@@ -35,7 +35,7 @@ object EncryptInjector {
                 mKey = it.key!!
             }
             if (!it.encryptPackages.isNullOrEmpty()) {
-                GLog.d("检测到包名加密-->${it.encryptPackages}")
+                GLog.d("encryptPackages不为空,开始按需加密")
                 this.encryptPackages = it.encryptPackages
             }
             if (!it.encryptImplCls.isNullOrEmpty()) {

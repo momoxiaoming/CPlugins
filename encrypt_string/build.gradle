@@ -7,7 +7,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation gradleApi()
     implementation localGroovy()
-    implementation 'com.android.tools.build:gradle:4.2.1'
+    implementation 'com.android.tools.build:gradle:4.1.3'
     implementation 'org.ow2.asm:asm-all:5.0.4'
     implementation 'com.squareup:javapoet:1.9.0'
 //    implementation project(path: ':byteEncrypt-interface')
@@ -24,7 +24,7 @@ repositories {
     maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
 }
 
-def isLocal=false
+def isLocal=true
 
 if(!isLocal){
     uploadArchives  {

@@ -1,6 +1,6 @@
-最新版: 1.0.3
+最新版: 1.0.7
 
-根 build.gradle中添加: classpath "com.android.plugin:byteEncrypt:1.0.3"
+根 build.gradle中添加: classpath "com.android.plugin:byteEncrypt:1.0.7"
 
 在模块中添加
 apply plugin: 'com.gradle.plugin.byteEncrypt'

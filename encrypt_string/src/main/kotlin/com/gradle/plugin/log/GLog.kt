@@ -14,6 +14,6 @@ object GLog {
     }
 
     fun d(msg:String){
-        println(msg)
+        println("byteEncrypt-->$msg")
     }
 }

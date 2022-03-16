@@ -1,7 +1,9 @@
 package com.android
 
 import android.os.Bundle
-import android.util.Log
+import android.transition.Transition
+import android.transition.TransitionInflater
+import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.android.plugins.R
@@ -21,6 +23,11 @@ class MainActivity2 :AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+        val explode: Transition =
+            TransitionInflater.from(this).inflateTransition(android.R.transition.explode)
+        window.enterTransition = explode
+
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.btn).setOnClickListener {
