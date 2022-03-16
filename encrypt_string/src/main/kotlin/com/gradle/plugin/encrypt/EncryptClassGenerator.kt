@@ -25,9 +25,13 @@ object EncryptClassGenerator {
      * @param applicationId String
      * @param outFile File
      */
-    fun createDefaultEncrypt(targetClass:String,encryptImplCls:String,applicationId:String,outFile:File){
+    fun createDefaultEncrypt(targetClass:String,encryptImplCls:String,applicationId:String,outFile:File,pwd:ByteArray){
         //确定好是否是外部传入的自定义
-
+        var key= ""
+        pwd.forEach {
+            key+="$it,"
+        }
+        key=key.substring(0,key.length-1)
         val implCls=encryptImplCls.split(".").last()
         val javaWriter =  JavaWriter( FileWriter(outFile));
         javaWriter.emitPackage(applicationId)
@@ -37,15 +41,16 @@ object EncryptClassGenerator {
             .emitJavadoc("default encrypt class")
             .beginType(targetClass,"class", EnumSet.of(Modifier.PUBLIC, Modifier.FINAL),null)
             .emitField(IByteEncrypt::class.java.simpleName,"IMPL",EnumSet.of(Modifier.PRIVATE, Modifier.FINAL,Modifier.STATIC),"new $implCls()")
+            .emitField(ByteArray::class.java.simpleName,"pwd",EnumSet.of(Modifier.PRIVATE, Modifier.FINAL,Modifier.STATIC),"new byte[]{$key}")
             .emitEmptyLine()
                 //加密方法
             .beginMethod("byte[]","encrypt",EnumSet.of(Modifier.PUBLIC, Modifier.STATIC),String::class.java.simpleName,"content")
-            .emitStatement("return IMPL.encrypt(content)")
+            .emitStatement("return IMPL.encrypt(pwd,content)")
             .endMethod()
             .emitEmptyLine()
             //解密方法
             .beginMethod("String","decrypt",EnumSet.of(Modifier.PUBLIC, Modifier.STATIC),"byte[]","content")
-            .emitStatement("return IMPL.decrypt(content)")
+            .emitStatement("return IMPL.decrypt(pwd,content)")
             .endMethod()
             .emitEmptyLine()
             .endType()

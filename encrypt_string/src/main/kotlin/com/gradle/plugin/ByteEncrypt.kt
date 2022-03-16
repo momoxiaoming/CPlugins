@@ -19,7 +19,7 @@ class ByteEncrypt : Plugin<Project> {
 
 
     override fun apply(project: Project) {
-        project.dependencies.add("implementation","com.dn.encrypt:byteInterface:1.1.6")
+        project.dependencies.add("implementation","com.dn.encrypt:byteInterface:1.2.1")
 
         val byteEncryptExtension =
             project.extensions.create("byteEncrypt", ByteEncryptExtension::class.java)

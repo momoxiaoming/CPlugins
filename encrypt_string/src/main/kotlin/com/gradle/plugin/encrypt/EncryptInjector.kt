@@ -28,6 +28,9 @@ object EncryptInjector {
 
     lateinit var injector: ClassInjector
 
+    lateinit var AES_KEY:ByteArray
+
+
     fun create(project: Project) {
         project.extensions.findByType(ByteEncryptExtension::class.java)?.let {
             GLog.setDebug(it.debug)
@@ -43,12 +46,24 @@ object EncryptInjector {
                 GLog.d("检测到自定义加密类-->${it.encryptImplCls}")
                 this.encryptImplCls = it.encryptImplCls!!
             }
+
+
+            this.AES_KEY=createRomdomKey()
             createEncryptClass(project)
 
         }
 
     }
 
+    fun createRomdomKey():ByteArray{
+        val byteArr= byteArrayOf(50,50,51,52,53,54,55,56,57,48,49,50,51,52,53,54)
+        val newByteArr= byteArrayOf(49,50,51,52,53,54,55,56,57,48,49,50,51,52,53,54)
+        byteArr.forEachIndexed { index, byte ->
+            val rm=Random().nextInt(26)+97
+            newByteArr[index]= rm.toByte()
+        }
+       return newByteArr
+    }
     /**
      * 获取插件动态生成的加密中间类
      * @return String
@@ -116,7 +131,8 @@ object EncryptInjector {
                 byteEncryptImpl,
                 encryptImplCls,
                 applicationId,
-                outFile1
+                outFile1,
+                AES_KEY
             )
 //            //2.加解密wrapper文件,用于转换自定义加密和默认加密的文件
 //            val outFile2=File(outFilePath, "${runtimeByteEncryptWrapper}.java")

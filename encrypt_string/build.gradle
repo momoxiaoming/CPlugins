@@ -11,7 +11,7 @@ dependencies {
     implementation 'org.ow2.asm:asm-all:5.0.4'
     implementation 'com.squareup:javapoet:1.9.0'
 //    implementation project(path: ':byteEncrypt-interface')
-    implementation 'com.dn.encrypt:byteInterface:1.1.6'
+    implementation 'com.dn.encrypt:byteInterface:1.2.1'
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 }
@@ -24,7 +24,7 @@ repositories {
     maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
 }
 
-def isLocal=true
+def isLocal=false
 
 if(!isLocal){
     uploadArchives  {

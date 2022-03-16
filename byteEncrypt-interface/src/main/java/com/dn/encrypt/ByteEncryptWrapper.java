@@ -32,18 +32,18 @@ public final class ByteEncryptWrapper implements IByteEncrypt
 
     @Nullable
     @Override
-    public byte[] encrypt(@NotNull String value)
+    public byte[] encrypt(@NotNull byte[] pwd,@NotNull String value)
     {
 
-        return impl==null?null:impl.encrypt(value);
+        return impl==null?null:impl.encrypt(pwd,value);
     }
 
     @NotNull
     @Override
-    public String decrypt(@NotNull byte[] value)
+    public String decrypt(@NotNull byte[] pwd,@NotNull byte[] value)
     {
 
-        return impl==null?"":impl.decrypt(value);
+        return impl==null?"":impl.decrypt(pwd,value);
     }
 
     @Override
@@ -51,4 +51,6 @@ public final class ByteEncryptWrapper implements IByteEncrypt
     {
         return true;
     }
+
+
 }

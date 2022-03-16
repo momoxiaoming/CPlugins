@@ -19,7 +19,7 @@ object EncryptVisitor {
      */
     fun stringProguardAndDecrypt(impl:IByteEncrypt,cst:String,mv:MethodVisitor){
         try {//加密
-            val byteArray = impl.encrypt(cst)
+            val byteArray = impl.encrypt(EncryptInjector.AES_KEY,cst)
             if (byteArray == null) {
                 mv.visitLdcInsn(cst)
                 return
