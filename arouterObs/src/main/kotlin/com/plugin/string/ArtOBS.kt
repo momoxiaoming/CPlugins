@@ -17,14 +17,9 @@ import java.util.*
  */
 class ArtOBS : Plugin<Project> {
     override fun apply(project: Project) {
-        if(project.properties.get("isArtOBS")=="false"){
-            GLog.i("artObs已禁用")
-            return
-        }
         project.allprojects { prj->
             prj.afterEvaluate { afterPrj->
                 if (afterPrj.name == "app") {
-                    clearDir(afterPrj)
                     writeProFile(afterPrj)
                 }
                 afterPrj.tasks.whenTaskAdded {task->
@@ -44,20 +39,6 @@ class ArtOBS : Plugin<Project> {
             }
         }
     }
-
-    fun clearDir(project: Project){
-        val armFile = File("${project.rootDir}/app/aRouterMapping.txt")
-        if(armFile.exists()){
-            armFile.delete()
-        }
-        val arrFile = File("${project.rootDir}/app/aRouterReplace.txt")
-        if(arrFile.exists()){
-            arrFile.delete()
-        }
-
-
-    }
-
 
     fun writeProFile(project: Project){
         /**

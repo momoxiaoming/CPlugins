@@ -89,8 +89,12 @@ open class CreateARouterMappingTask : DefaultTask() {
             val obsCls = "${oldCls.replace(it.split("\$\$").last(), "")}${randomClzzName()}"
             val itemString = "$oldCls -> $obsCls"
             val itemString2 = "$oldCls -> $obsCls:"
-            replContent.append("\n$itemString")
-            armContent.append("\n$itemString2")
+            if(!replContent.contains(itemString)){
+                replContent.append("\n$itemString")
+            }
+            if(!armContent.contains(itemString2)){
+                armContent.append("\n$itemString2")
+            }
         }
         //写入两个文件
         armFile.writeBytes(armContent.toString().toByteArray())

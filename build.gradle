@@ -11,9 +11,9 @@ buildscript {
         maven {
             url uri('./repo')
         }
-//        maven {
-//            url uri('https://artifact.bytedance.com/repository/byteX/')
-//        }
+        maven {
+            url uri('https://artifact.bytedance.com/repository/byteX/')
+        }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
         google()
@@ -30,7 +30,7 @@ buildscript {
 //        classpath rootProject.string_encrypt
         classpath rootProject.artOBS
         classpath rootProject.artReplace
-//        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
+        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradlePLUGIN files
     }
@@ -41,9 +41,9 @@ allprojects {
         maven {
             url uri('./repo')
         }
-//        maven {
-//            url uri('https://artifact.bytedance.com/repository/byteX/')
-//        }
+        maven {
+            url uri('https://artifact.bytedance.com/repository/byteX/')
+        }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
         google()
@@ -64,7 +64,7 @@ task clean(type: Delete) {
 }
 
 apply from: 'arouter_obs.gradle'
-//apply from: 'string_encrypt.gradle'
+apply from: 'string_encrypt.gradle'
 
 
 

@@ -13,7 +13,7 @@ import org.objectweb.asm.Opcodes
  * @author mmxm
  * @date 2022/1/21 16:53
  */
-class ByteClassVisitor(val cw: ClassWriter, val impl: IReplaceString) :
+class ByteClassVisitor(val cw: ClassWriter) :
     ClassVisitor(Opcodes.ASM5, cw) {
 
     companion object {
@@ -125,7 +125,7 @@ class ByteClassVisitor(val cw: ClassWriter, val impl: IReplaceString) :
         if (ignoreAnnCls||name==null||!mClassName.startsWith(AROUTER_PACKAGE)) {
             return mv
         }
-        return ByteMethodVisitor(impl,asmField, name, mClassName, mv)
+        return ByteMethodVisitor(asmField, name, mClassName, mv)
     }
 
 

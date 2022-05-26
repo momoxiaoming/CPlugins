@@ -12,7 +12,6 @@ import org.objectweb.asm.Opcodes
  * @date 2022/2/14 10:12
  */
 class ByteMethodVisitor(
-    val impl: IReplaceString,
     val asmField: ByteClassVisitor.ASMField,
     val methodName: String,
     val owner: String,
@@ -28,7 +27,7 @@ class ByteMethodVisitor(
                     super.visitInsn(opcode)
                     return
                 }
-                ReplaceVisitor.stringProguardAndReplace(impl,value, mv)
+                ReplaceVisitor.stringProguardAndReplace(value, mv)
                 super.visitFieldInsn(179, this.owner, name, "Ljava/lang/String;");
                 return
             }
@@ -49,7 +48,7 @@ class ByteMethodVisitor(
      */
     override fun visitLdcInsn(cst: Any?) {
         if (cst != null && cst is String && cst.length != 0) {
-            ReplaceVisitor.stringProguardAndReplace(impl,cst, mv)
+            ReplaceVisitor.stringProguardAndReplace(cst, mv)
             return
         }
         super.visitLdcInsn(cst)

@@ -6,10 +6,8 @@ import com.android.build.gradle.TestedExtension
 import com.plugin.string.log.GLog
 import com.plugin.string.transform.AppReplaceStringTransform
 import com.plugin.string.transform.LibReplaceStringTransform
-import com.plugin.string.utils.Common
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import java.io.File
 
 
 /**
@@ -22,10 +20,6 @@ class ArtReplace : Plugin<Project> {
 
 
     override fun apply(project: Project) {
-        if(project.properties.get("isArtOBS")=="false"){
-            GLog.i("ArtReplace已禁用")
-            return
-        }
         regiest(project)
     }
     fun regiest(project: Project){

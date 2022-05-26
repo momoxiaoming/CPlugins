@@ -2,6 +2,7 @@ package com.plugin.string.vistor
 
 
 import com.plugin.string.string.IReplaceString
+import com.plugin.string.string.ReplaceStringManager
 import jdk.internal.org.objectweb.asm.MethodVisitor
 
 /**
@@ -15,9 +16,9 @@ object ReplaceVisitor {
     /**
      * 对字符串混淆并插入解密方法
      */
-    fun stringProguardAndReplace(impl: IReplaceString, cst: String, mv: MethodVisitor) {
+    fun stringProguardAndReplace( cst: String, mv: MethodVisitor) {
         try {//替换
-            val rlt = impl.replace(cst)
+            val rlt = ReplaceStringManager.replace(cst)
             mv.visitLdcInsn(rlt)
         } catch (e: Exception) {
             e.printStackTrace()

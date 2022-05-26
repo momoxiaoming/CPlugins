@@ -4,6 +4,8 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import com.plugin.string.encrypt.EncryptInjector
+import com.plugin.string.scan.DirScanHelper
+import com.plugin.string.scan.JarScanHelper
 import com.plugin.string.utils.ScanUtil
 import com.plugin.string.utils.eachFileRecurse
 import org.apache.commons.codec.digest.DigestUtils
@@ -51,67 +53,11 @@ abstract class ReplaceTransform(project: Project) : Transform() {
     override fun isIncremental(): Boolean {
         return false
     }
-//
-//    override fun transform(
-//        context: Context?,
-//        inputs: MutableCollection<TransformInput>?,
-//        referencedInputs: MutableCollection<TransformInput>?,
-//        outputProvider: TransformOutputProvider?,
-//        isIncremental: Boolean
-//    ) {
-//        if (!isIncremental) {
-//            outputProvider?.deleteAll()
-//        }
-//        inputs?.forEach { input ->
-//            input.jarInputs.forEach { jarInput ->
-//                var destName = jarInput.name
-//                val hexName = DigestUtils.md5Hex(jarInput.file.absolutePath)
-//                if (hexName.endsWith(".jar")) {
-//                    destName = destName.substring(0, destName.length() - 4)
-//                }
-//                //input file
-//                val src = jarInput.file
-//                // output file
-//                val dest = outputProvider?.getContentLocation(
-//                    destName + "_" + hexName,
-//                    jarInput.contentTypes,
-//                    jarInput.scopes,
-//                    Format.JAR
-//                )
-//                //scan jar file to find classes
-//                EncryptInjector.injector.doJumpClass(src, dest!!)
-//                FileUtils.copyFile(src, dest)
-//            }
-//
-//            input.directoryInputs.forEach { directoryInput ->
-//                val dest = outputProvider!!.getContentLocation(
-//                    directoryInput.name,
-//                    directoryInput.contentTypes,
-//                    directoryInput.scopes,
-//                    Format.DIRECTORY
-//                )
-//                var root = directoryInput.file.absolutePath
-//                if (!root.endsWith(File.separator))
-//                    root += File.separator
-//
-//                directoryInput.file.eachFileRecurse { file ->
-//
-//                    //开始处理class
-//                    if (file.name.endsWith(".class")) {
-//                        //交给stringClassVisitor处理class
-//                        EncryptInjector.injector.doJumpClass(file, fileOutput)
-//                    }
-//                }
-//                FileUtils.copyDirectory(directoryInput.file, dest)
-//            }
-//        }
-//    }
 
     override fun transform(transformInvocation: TransformInvocation?) {
         super.transform(transformInvocation)
         val inputs = transformInvocation?.inputs
         val output = transformInvocation?.outputProvider
-
         //首先需要删除输出的文件,使用我们后面替代的文件
         output?.deleteAll()
         //处理,并输出文件
@@ -121,45 +67,8 @@ abstract class ReplaceTransform(project: Project) : Transform() {
 
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
         inputs.forEach {
-            it.directoryInputs.forEach { directoryInput ->
-                val dest = output.getContentLocation(
-                    directoryInput.name,
-                    directoryInput.contentTypes,
-                    directoryInput.scopes,
-                    Format.DIRECTORY
-                )
-                var root = directoryInput.file.absolutePath
-                if (!root.endsWith(File.separator))
-                    root += File.separator
-                directoryInput.file.eachFileRecurse { file ->
-                    val path = file.absolutePath.replace(root, "")
-                    println("directoryInput-->$path")
-
-                    if (file.isFile) {
-                        ScanUtil.scanClass(FileInputStream(file))
-                    }
-                }
-
-                // copy to dest
-                FileUtils.copyDirectory(directoryInput.file, dest)
-            }
-
-
-//            it.jarInputs.forEach { jarInput ->
-//                val jarInputFile = jarInput.file
-//                val jarOutputFile =
-//                    output.getContentLocation(jarInputFile.name, outputTypes, scopes, Format.JAR)
-//                if (!jarInputFile.parentFile.exists()) {
-//                    jarInputFile.parentFile.mkdirs()
-//                }
-//                if (jarInput.status == Status.REMOVED) {
-//                    if (jarInputFile.exists()) {
-//                        jarInputFile.delete()
-//                    }
-//                } else {
-//                    EncryptInjector.injector.doJumpJar(jarInputFile, jarOutputFile)
-//                }
-//            }
+            DirScanHelper.scanDir(it,output)
+            JarScanHelper.scanJar(it,output)
         }
     }
 
