@@ -57,7 +57,7 @@ class ClassInjector() {
                 val inputIs = jarFile.getInputStream(zipEntry)
                 jaros.putNextEntry(zipEntry)
                 val splitName = entityName.replace("/", ".")
-                if (splitName.endsWith(".class")&&writePackage(splitName)) {
+                if (splitName.endsWith(".class")) {
                     jaros.write(processClass(inputIs))
                 } else {
                     jaros.write(inputIs.readBytes())

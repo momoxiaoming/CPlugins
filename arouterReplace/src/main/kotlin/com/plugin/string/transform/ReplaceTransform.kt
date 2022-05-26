@@ -4,10 +4,12 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import com.plugin.string.encrypt.EncryptInjector
+import com.plugin.string.utils.ScanUtil
 import com.plugin.string.utils.eachFileRecurse
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
 import java.io.File
+import java.io.FileInputStream
 
 /**
  * ReplaceTransform
@@ -119,46 +121,45 @@ abstract class ReplaceTransform(project: Project) : Transform() {
 
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
         inputs.forEach {
-            it.directoryInputs.forEach { dit ->
-                val dirOutput = output.getContentLocation("classes", outputTypes, scopes, Format.DIRECTORY)
-                dit.file.eachFileRecurse { file ->
-                    val fileOutput = File(
-                        file.absolutePath.replace(
-                            dit.file.absolutePath,
-                            dirOutput.absolutePath
-                        )
-                    )
-                    if (!fileOutput.parentFile.exists()) {
-                        fileOutput.parentFile.mkdirs()
-                    }
-                    if (!fileOutput.exists()) {
-                        fileOutput.createNewFile()
-                    }
-                    //开始处理class
-                    if (file.name.endsWith(".class")) {
-                        //交给stringClassVisitor处理class
-                        EncryptInjector.injector.doJumpClass(file, fileOutput)
-                    } else {
-                        //无需处理,直接输出
-                        fileOutput.writeBytes(file.readBytes())
+            it.directoryInputs.forEach { directoryInput ->
+                val dest = output.getContentLocation(
+                    directoryInput.name,
+                    directoryInput.contentTypes,
+                    directoryInput.scopes,
+                    Format.DIRECTORY
+                )
+                var root = directoryInput.file.absolutePath
+                if (!root.endsWith(File.separator))
+                    root += File.separator
+                directoryInput.file.eachFileRecurse { file ->
+                    val path = file.absolutePath.replace(root, "")
+                    println("directoryInput-->$path")
+
+                    if (file.isFile) {
+                        ScanUtil.scanClass(FileInputStream(file))
                     }
                 }
+
+                // copy to dest
+                FileUtils.copyDirectory(directoryInput.file, dest)
             }
-            it.jarInputs.forEach { jarInput ->
-                val jarInputFile = jarInput.file
-                val jarOutputFile =
-                    output.getContentLocation(jarInputFile.name, outputTypes, scopes, Format.JAR)
-                if (!jarInputFile.parentFile.exists()) {
-                    jarInputFile.parentFile.mkdirs()
-                }
-                if (jarInput.status == Status.REMOVED) {
-                    if (jarInputFile.exists()) {
-                        jarInputFile.delete()
-                    }
-                } else {
-                    EncryptInjector.injector.doJumpJar(jarInputFile, jarOutputFile)
-                }
-            }
+
+
+//            it.jarInputs.forEach { jarInput ->
+//                val jarInputFile = jarInput.file
+//                val jarOutputFile =
+//                    output.getContentLocation(jarInputFile.name, outputTypes, scopes, Format.JAR)
+//                if (!jarInputFile.parentFile.exists()) {
+//                    jarInputFile.parentFile.mkdirs()
+//                }
+//                if (jarInput.status == Status.REMOVED) {
+//                    if (jarInputFile.exists()) {
+//                        jarInputFile.delete()
+//                    }
+//                } else {
+//                    EncryptInjector.injector.doJumpJar(jarInputFile, jarOutputFile)
+//                }
+//            }
         }
     }
 

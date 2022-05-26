@@ -22,6 +22,7 @@ class ByteClassVisitor(val cw: ClassWriter, val impl: IReplaceString) :
         const val INIT_METHOD = "<init>"  //实例构造方法,主要创建实例
         const val AROUTER_ANIM="Lcom/alibaba/android/arouter/facade/annotation/Route;"
         const val AROUTER_PACKAGE="com/alibaba/android/arouter/core/LogisticsCenter"
+
     }
 
 
@@ -70,15 +71,14 @@ class ByteClassVisitor(val cw: ClassWriter, val impl: IReplaceString) :
      * @return AnnotationVisitor
      */
     override fun visitAnnotation(desc: String?, visible: Boolean): AnnotationVisitor? {
-//        return  when(desc){
-//            AROUTER_ANIM -> {
-//                null
-//            }
-//            else->{
-//                super.visitAnnotation(desc, visible)
-//          }
-//        }
-        return   super.visitAnnotation(desc, visible)
+        return  when(desc){
+            AROUTER_ANIM -> {
+                null
+            }
+            else->{
+                super.visitAnnotation(desc, visible)
+          }
+        }
     }
 
     /**
