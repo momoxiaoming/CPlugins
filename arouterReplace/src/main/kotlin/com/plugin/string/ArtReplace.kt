@@ -22,10 +22,6 @@ class ArtReplace : Plugin<Project> {
 
 
     override fun apply(project: Project) {
-        if(project.properties.get("isArtOBS")=="false"){
-            GLog.i("ArtReplace已禁用")
-            return
-        }
         regiest(project)
     }
     fun regiest(project: Project){

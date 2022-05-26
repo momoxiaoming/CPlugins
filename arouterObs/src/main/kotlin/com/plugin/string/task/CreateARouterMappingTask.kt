@@ -162,6 +162,6 @@ open class CreateARouterMappingTask : DefaultTask() {
      * @param clsName String
      */
     private fun randomClzzName(): String {
-        return Common.randomClzzName(8)
+        return Common.randomClzzName(Random.nextInt(4,8))
     }
 }

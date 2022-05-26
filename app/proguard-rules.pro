@@ -81,3 +81,9 @@
 -keep class lwa.nry.zor.**{*;}
 -keep class zsp.ngo.jam.**{*;}
 -keep class olh.apa.qgt.**{*;}
+-keep class gni.ojh.rtj.**{*;}
+-keep class rms.hoi.kqx.**{*;}
+-keep class yml.nqq.ivl.**{*;}
+-keep class twr.hcf.rsx.**{*;}
+-keep class wzp.hzj.hkm.**{*;}
+-keep class bdq.vvg.nzm.**{*;}

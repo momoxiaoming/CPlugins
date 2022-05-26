@@ -35,12 +35,12 @@ ext {
             ],
             artOBS: [
                     group      : 'com.plugin.string',
-                    versionName: '1.0.8-5',
+                    versionName: '1.0.9',
                     artifactId : 'artOBS',
             ],
             artReplace: [
                     group      : 'com.plugin.string',
-                    versionName: '1.0.8-5',
+                    versionName: '1.0.9',
                     artifactId : 'artReplace',
             ]
     ]

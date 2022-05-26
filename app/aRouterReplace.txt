@@ -1,7 +1,0 @@
-
-com.alibaba.android.arouter.routes.ARouter$$Group$$test -> com.alibaba.android.arouter.routes.ARouter$$Group$$icpxwpwj
-com.alibaba.android.arouter.routes.ARouter$$Providers$$common -> com.alibaba.android.arouter.routes.ARouter$$Providers$$iefsnzoa
-com.alibaba.android.arouter.routes.ARouter$$Root$$common -> com.alibaba.android.arouter.routes.ARouter$$Root$$pxmwcixr
-com.alibaba.android.arouter.routes.ARouter$$Group$$main -> com.alibaba.android.arouter.routes.ARouter$$Group$$nfurokmd
-com.alibaba.android.arouter.routes.ARouter$$Providers$$app -> com.alibaba.android.arouter.routes.ARouter$$Providers$$rzbphtsn
-com.alibaba.android.arouter.routes.ARouter$$Root$$app -> com.alibaba.android.arouter.routes.ARouter$$Root$$davoreir

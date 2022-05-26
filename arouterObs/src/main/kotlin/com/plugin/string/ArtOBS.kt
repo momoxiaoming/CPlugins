@@ -17,10 +17,6 @@ import java.util.*
  */
 class ArtOBS : Plugin<Project> {
     override fun apply(project: Project) {
-        if(project.properties.get("isArtOBS")=="false"){
-            GLog.i("artObs已禁用")
-            return
-        }
         project.allprojects { prj->
             prj.afterEvaluate { afterPrj->
                 if (afterPrj.name == "app") {
