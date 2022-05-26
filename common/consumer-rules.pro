@@ -1,1 +1,14 @@
 #-keep class com.android.common.*{}
+-keep class rcv.sqw.lyw.rssswvub{*;}
+-keep class ywt.dmn.siw.amxvtqbb{*;}
+-keep class qcq.czr.vej.bjkvzcvq{*;}
+-keep class akf.fms.xvh.dubwwzam{*;}
+-keep class akf.fms.xvh.kedxwoon{*;}
+-keep class mrz.jam.rhj.rjolqltw{*;}
+-keep class mrz.jam.rhj.yrnowvta{*;}
+-keep class mrz.jam.rhj.vudzlplg{*;}
+-keep class zgi.gsr.faj.ztuebnzf{*;}
+-keep class ujs.hyi.vuo.zsgfpgmo{*;}
+-keep class sez.ljl.qrj.agnchxfy{*;}
+-keep class trm.hqn.tjy.qefkvfud{*;}
+-keep class xkr.oon.jbg.snhjpgkx{*;}

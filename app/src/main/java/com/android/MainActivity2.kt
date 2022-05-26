@@ -3,9 +3,13 @@ package com.android
 import android.os.Bundle
 import android.transition.Transition
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.facade.template.IProvider
+import com.alibaba.android.arouter.launcher.ARouter
 import com.android.plugins.R
 
 /**
@@ -14,6 +18,7 @@ import com.android.plugins.R
  * @author mmxm
  * @date 2022/2/11 16:14
  */
+@Route(path = "/main/action")
 class MainActivity2 :AppCompatActivity(){
      val test2="test23"
     companion object{
@@ -27,35 +32,15 @@ class MainActivity2 :AppCompatActivity(){
         val explode: Transition =
             TransitionInflater.from(this).inflateTransition(android.R.transition.explode)
         window.enterTransition = explode
-
         setContentView(R.layout.activity_main)
-
+        AnnTest().test()
         findViewById<Button>(R.id.btn).setOnClickListener {
-            out("AES/CBC/PKCS5Padding")
-            out("1234567890123456")
-            out("AES")
-            out("6543210987654321")
+            ARouter.getInstance().build("/test/arouter").navigation()
+            ARouter.getInstance().build("/main/action").navigation()
         }
-        println("---->$test3")
-//       val bt= RuntimeByteEncryptImpl.encrypt("allen")
-//        Log.d("allen","----->---$bt")
-//
-//        val de= RuntimeByteEncryptImpl.decrypt(bt)
-//        Log.d("allen","----->---$de")
+        Log.d("allen","com.alibaba.android.arouter.routes")
 
-
-//        val bt1= AESUtils.encrypt("allen")
-//        Log.d("allen","----->---$bt1")
-//
-//        val de1= AESUtils.decrypt(bt1!!)
-//        Log.d("allen","----->---${de1!!.decodeToString()}")
     }
 
-    fun out(str:String){
-        str.toByteArray().forEach {
-            print("${it},")
-        }
 
-        println("-------------")
-    }
 }

@@ -24,7 +24,7 @@ repositories {
     maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
 }
 
-def isLocal=false
+def isLocal=true
 
 if(!isLocal){
     uploadArchives  {

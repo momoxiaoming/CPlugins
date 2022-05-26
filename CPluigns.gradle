@@ -32,11 +32,23 @@ ext {
                     group      : 'com.android.plugin',
                     versionName: '1.0.8',
                     artifactId : 'byteEncrypt',
+            ],
+            artOBS: [
+                    group      : 'com.plugin.string',
+                    versionName: '1.0.8-5',
+                    artifactId : 'artOBS',
+            ],
+            artReplace: [
+                    group      : 'com.plugin.string',
+                    versionName: '1.0.8-5',
+                    artifactId : 'artReplace',
             ]
     ]
 
     hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
     string_encrypt = "${cPlugins.string_encrypt.group}:${cPlugins.string_encrypt.artifactId}:${cPlugins.string_encrypt.versionName}"
+    artOBS = "${cPlugins.artOBS.group}:${cPlugins.artOBS.artifactId}:${cPlugins.artOBS.versionName}"
+    artReplace = "${cPlugins.artReplace.group}:${cPlugins.artReplace.artifactId}:${cPlugins.artReplace.versionName}"
 
 
     AES = [

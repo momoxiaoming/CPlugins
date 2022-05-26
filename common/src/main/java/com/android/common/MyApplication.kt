@@ -14,6 +14,7 @@ import androidx.annotation.Keep
 open class MyApplication :Application() {
     fun attach(){
         Log.d("allen","PluginApp  attach")
+        Log.d("allen","com.alibaba.android.arouter.routes")
         onCreate()
     }
 }

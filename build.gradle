@@ -4,14 +4,16 @@
 //apply plugin:'hdl'
 
 buildscript {
-    apply from:'CPluigns.gradle'
-    apply from:'byteEncrypt.gradle'
+    apply from: 'CPluigns.gradle'
 
-    ext.kotlin_version = "1.5.0"
+    ext.kotlin_version = "1.4.32"
     repositories {
         maven {
             url uri('./repo')
         }
+//        maven {
+//            url uri('https://artifact.bytedance.com/repository/byteX/')
+//        }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
         google()
@@ -22,9 +24,13 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.didiglobal.booster:booster-aapt2:3.1.0"
+//        classpath "com.didiglobal.booster:booster-aapt2:3.1.0"
+        classpath "com.alibaba:arouter-register:1.0.2"
 //        classpath rootProject.hdl_plugin
-        classpath rootProject.string_encrypt
+//        classpath rootProject.string_encrypt
+        classpath rootProject.artOBS
+        classpath rootProject.artReplace
+//        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradlePLUGIN files
     }
@@ -35,6 +41,9 @@ allprojects {
         maven {
             url uri('./repo')
         }
+//        maven {
+//            url uri('https://artifact.bytedance.com/repository/byteX/')
+//        }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
         maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
         google()
@@ -53,5 +62,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: 'arouter_obs.gradle'
+//apply from: 'string_encrypt.gradle'
+
 
 

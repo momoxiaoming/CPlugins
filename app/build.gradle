@@ -1,8 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-}
+    id 'kotlin-kapt'
 
+}
+apply plugin: 'com.alibaba.arouter'
 
 
 android {
@@ -21,20 +23,31 @@ android {
 
     defaultConfig {
         applicationId "com.android.plugins"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         buildConfigField "String", "aes_key", "\"${rootProject.AES.KEY}\""
         buildConfigField "String", "aes_iv", "\"${rootProject.AES.IV}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt') ,'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
@@ -50,15 +63,17 @@ android {
 dependencies {
     implementation project(":common")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.1'
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 //    implementation project(path: ':byteEncrypt-interface')
 //    implementation 'com.github.megatronking.stringfog:xor:1.1.0'
 
+    implementation project(":common")
+
+
+    implementation 'com.alibaba:arouter-api:1.5.1'
+    kapt 'com.alibaba:arouter-compiler:1.5.1'
 }
 
 //project.exec {
@@ -68,21 +83,24 @@ dependencies {
 //    commandLine(args.toArray())
 //}
 
-apply plugin: 'com.gradle.plugin.byteEncrypt'
-byteEncrypt {
+//apply plugin: 'com.plugin.string.replace'
+//byteEncrypt {
+//
+//    /**
+//     * 是否开启debug
+//     */
+//    debug true
+//    /**
+//    /**
+//     * 自定义加密实现类(需要实现IByteEncrypt接口),若未定义,将使用默认key值的aes加密
+//     * 注意: 自定义的加密类需要在编译期也能找到,必须添加classpath
+//     */
+////    encryptImplCls "com.android.TestImpl"
+//    /**
+//     * 包名过滤,若此项为空,将默认全部
+//     */
+//    encryptPackages =["com.android.common"]
+//}
 
-    /**
-     * 是否开启debug
-     */
-    debug true
-    /**
-    /**
-     * 自定义加密实现类(需要实现IByteEncrypt接口),若未定义,将使用默认key值的aes加密
-     * 注意: 自定义的加密类需要在编译期也能找到,必须添加classpath
-     */
-//    encryptImplCls "com.android.TestImpl"
-    /**
-     * 包名过滤,若此项为空,将默认全部
-     */
-    encryptPackages =["com.android.common"]
-}
+
+

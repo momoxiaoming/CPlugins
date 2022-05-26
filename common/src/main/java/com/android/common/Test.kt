@@ -1,5 +1,6 @@
 package com.android.common
 
+import android.provider.DocumentsContract
 import android.util.Log
 
 /**
@@ -19,10 +20,14 @@ class Test {
     }
 
     fun test2(){
-        Log.d("allen","---------test2----------")
+        oO0oo0o0("com.alibaba.android.arouter.routes.ARouter");
     }
 
     fun test3(){
         Log.d("allen","---------test3----------")
+    }
+
+    fun oO0oo0o0(s:String){
+        Log.d("tag",s)
     }
 }
