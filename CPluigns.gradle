@@ -35,13 +35,18 @@ ext {
             ],
             artOBS: [
                     group      : 'com.plugin.string',
-                    versionName: '1.0.8-5',
+                    versionName: '1.1.0',
                     artifactId : 'artOBS',
             ],
             artReplace: [
                     group      : 'com.plugin.string',
-                    versionName: '1.0.8-5',
+                    versionName: '1.1.0',
                     artifactId : 'artReplace',
+            ],
+            art: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.2',
+                    artifactId : 'art',
             ]
     ]
 
@@ -49,6 +54,7 @@ ext {
     string_encrypt = "${cPlugins.string_encrypt.group}:${cPlugins.string_encrypt.artifactId}:${cPlugins.string_encrypt.versionName}"
     artOBS = "${cPlugins.artOBS.group}:${cPlugins.artOBS.artifactId}:${cPlugins.artOBS.versionName}"
     artReplace = "${cPlugins.artReplace.group}:${cPlugins.artReplace.artifactId}:${cPlugins.artReplace.versionName}"
+    art = "${cPlugins.art.group}:${cPlugins.art.artifactId}:${cPlugins.art.versionName}"
 
 
     AES = [

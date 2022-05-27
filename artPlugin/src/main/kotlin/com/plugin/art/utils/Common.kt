@@ -1,4 +1,4 @@
-package com.plugin.string.utils
+package com.plugin.art.utils
 
 import java.lang.StringBuilder
 import javax.lang.model.SourceVersion

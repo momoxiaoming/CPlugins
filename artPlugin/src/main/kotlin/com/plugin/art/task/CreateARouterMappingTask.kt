@@ -1,7 +1,7 @@
-package com.plugin.string.task
+package com.plugin.art.task
 
-import com.plugin.string.log.GLog
-import com.plugin.string.utils.Common
+import com.plugin.art.utils.Common
+import com.plugin.art.log.GLog
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input

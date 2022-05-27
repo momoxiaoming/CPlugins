@@ -1,4 +1,4 @@
-package com.plugin.string.log
+package com.plugin.art.log
 
 /**
  * Log
@@ -7,10 +7,10 @@ package com.plugin.string.log
  * @date 2022/1/25 14:09
  */
 object GLog {
-    private var debug:Boolean=false
+    private var debug:Boolean=true
 
     fun setDebug(debug:Boolean){
-        this.debug=debug
+        GLog.debug =debug
     }
 
     fun i(msg:String){

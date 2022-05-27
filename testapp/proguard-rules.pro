@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class sar.uxf.fyn.**{*;}
+-keep class cxt.rxy.qlm.**{*;}
+-keep class ogm.gnn.ovw.**{*;}
+-keep class ewk.zcz.jex.**{*;}
+-keep class nhg.hxs.uur.**{*;}
+-keep class jhm.uyq.otg.**{*;}
+-keep class fzw.wwf.qnd.**{*;}
+-keep class snz.apy.kev.**{*;}
