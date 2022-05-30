@@ -1,6 +1,6 @@
-package com.plugin.string.string
+package com.plugin.art.string
 
-import com.plugin.string.encrypt.EncryptInjector
+import com.plugin.art.encrypt.EncryptInjector
 import java.io.File
 
 /**

@@ -1,11 +1,8 @@
-package com.plugin.string.vistor
+package com.plugin.art.vistor
 
 
-import com.plugin.string.bean.FieldBean
-import com.plugin.string.encrypt.EncryptInjector
-import com.plugin.string.string.IReplaceString
-import jdk.internal.org.objectweb.asm.*
-import org.objectweb.asm.Opcodes
+import com.plugin.art.bean.FieldBean
+import org.objectweb.asm.*
 
 /**
  * 字符串加密核心类
@@ -13,8 +10,8 @@ import org.objectweb.asm.Opcodes
  * @author mmxm
  * @date 2022/1/21 16:53
  */
-class ByteClassVisitor(val cw: ClassWriter) :
-    ClassVisitor(Opcodes.ASM5, cw) {
+class ByteClassVisitor(cw: ClassWriter) :
+    ClassVisitor(Opcodes.ASM6, cw) {
 
     companion object {
         const val STRING_DESC = "Ljava/lang/String;"
@@ -128,6 +125,9 @@ class ByteClassVisitor(val cw: ClassWriter) :
         return ByteMethodVisitor(asmField, name, mClassName, mv)
     }
 
+    override fun visitModule(name: String?, access: Int, version: String?): ModuleVisitor {
+        return super.visitModule(name, access, version)
+    }
 
     class ASMField {
         val mStaticFinalField = mutableListOf<FieldBean>()

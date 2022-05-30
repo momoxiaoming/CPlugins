@@ -1,4 +1,4 @@
-package com.plugin.string.bean
+package com.plugin.art.bean
 
 /**
  * FileBean

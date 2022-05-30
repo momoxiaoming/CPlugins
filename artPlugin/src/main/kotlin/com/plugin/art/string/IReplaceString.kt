@@ -1,4 +1,4 @@
-package com.plugin.string.string
+package com.plugin.art.string
 
 /**
  * IReplaceString

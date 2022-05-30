@@ -5,10 +5,7 @@ apply plugin: 'java-gradle-plugin'
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-//    implementation 'org.ow2.asm:asm-all:5.0.4'
-    implementation 'org.ow2.asm:asm:9.2'
-    implementation 'org.ow2.asm:asm-commons:9.2'
-    implementation 'com.squareup:javapoet:1.9.0'
+    implementation 'com.squareup:javapoet:1.13.0'
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
     implementation "com.android.tools.build:gradle:4.1.3"
 }

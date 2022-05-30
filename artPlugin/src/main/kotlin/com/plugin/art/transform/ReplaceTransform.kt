@@ -1,17 +1,11 @@
-package com.plugin.string.transform
+package com.plugin.art.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.android.utils.FileUtils
-import com.plugin.string.encrypt.EncryptInjector
-import com.plugin.string.scan.DirScanHelper
-import com.plugin.string.scan.JarScanHelper
-import com.plugin.string.utils.ScanUtil
-import com.plugin.string.utils.eachFileRecurse
-import org.apache.commons.codec.digest.DigestUtils
+import com.plugin.art.encrypt.EncryptInjector
+import com.plugin.art.scan.DirScanHelper
+import com.plugin.art.scan.JarScanHelper
 import org.gradle.api.Project
-import java.io.File
-import java.io.FileInputStream
 
 /**
  * ReplaceTransform

@@ -6,8 +6,8 @@ import com.android.build.gradle.TestedExtension
 import com.plugin.art.utils.Common
 import com.plugin.art.log.GLog
 import com.plugin.art.task.CreateARouterMappingTask
-import com.plugin.string.transform.AppReplaceStringTransform
-import com.plugin.string.transform.LibReplaceStringTransform
+import com.plugin.art.transform.AppReplaceStringTransform
+import com.plugin.art.transform.LibReplaceStringTransform
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File

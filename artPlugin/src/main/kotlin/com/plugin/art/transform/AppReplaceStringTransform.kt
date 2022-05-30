@@ -1,5 +1,6 @@
-package com.plugin.string.transform
+package com.plugin.art.transform
 
+import com.plugin.art.transform.ReplaceTransform
 import org.gradle.api.Project
 
 /**

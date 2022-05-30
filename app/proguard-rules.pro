@@ -30,4 +30,9 @@
 
 
 
--keep class snz.apy.kev.**{*;}
+-keep class abw.qnz.gwr.**{*;}
+-keep class com.alibaba.android.arouter.routes.ARouter$$Root$$arouterapi
+-keep class com.alibaba.android.arouter.routes.ARouter$$Providers$$arouterapi
+-keep class com.alibaba.android.arouter.routes.ARouter$$Group$$arouter
+-applymapping D:\zhangjinming\work\git\CPlugins\app\aRouterMapping.txt
+-keep class xsg.imf.zhs.**{*;}

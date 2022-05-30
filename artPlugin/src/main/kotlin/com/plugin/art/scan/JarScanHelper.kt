@@ -1,11 +1,11 @@
-package com.plugin.string.scan
+package com.plugin.art.scan
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.utils.FileUtils
 import com.plugin.art.log.GLog
-import com.plugin.string.utils.ScanUtil
+import com.plugin.art.utils.ScanUtil
 import de.undercouch.gradle.tasks.download.org.apache.commons.codec.digest.DigestUtils
 import java.io.File
 import java.io.FileOutputStream

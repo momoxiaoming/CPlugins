@@ -1,10 +1,9 @@
 package com.plugin.art.task
 
 
-import jdk.internal.org.objectweb.asm.ClassWriter
-import jdk.internal.org.objectweb.asm.Label
-import jdk.internal.org.objectweb.asm.Opcodes.*
-import jdk.internal.org.objectweb.asm.Type
+
+import org.objectweb.asm.*
+import org.objectweb.asm.Opcodes.*
 import java.io.File
 
 
