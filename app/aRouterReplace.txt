@@ -1,0 +1,7 @@
+
+com.alibaba.android.arouter.routes.ARouter$$Group$$test -> com.alibaba.android.arouter.routes.ARouter$$Group$$qbva
+com.alibaba.android.arouter.routes.ARouter$$Providers$$common -> com.alibaba.android.arouter.routes.ARouter$$Providers$$vyumql
+com.alibaba.android.arouter.routes.ARouter$$Root$$common -> com.alibaba.android.arouter.routes.ARouter$$Root$$wxcqvu
+com.alibaba.android.arouter.routes.ARouter$$Group$$main -> com.alibaba.android.arouter.routes.ARouter$$Group$$dwuut
+com.alibaba.android.arouter.routes.ARouter$$Providers$$app -> com.alibaba.android.arouter.routes.ARouter$$Providers$$zydv
+com.alibaba.android.arouter.routes.ARouter$$Root$$app -> com.alibaba.android.arouter.routes.ARouter$$Root$$fqpstkx

@@ -14,6 +14,9 @@ object Common {
 
     var keepPkg = "a/b/c"
 
+    val aMappingStringList= mutableListOf<String>()
+    val aReplaceStringList= mutableListOf<String>()
+
     init {
         keepPkg = "${randomClzzName(3)}/${randomClzzName(3)}/${randomClzzName(3)}"
     }

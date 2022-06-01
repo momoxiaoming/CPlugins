@@ -2,6 +2,7 @@ package com.plugin.art.vistor
 
 
 import com.plugin.art.bean.FieldBean
+import com.plugin.art.log.GLog
 import org.objectweb.asm.*
 
 /**
@@ -70,6 +71,7 @@ class ByteClassVisitor(cw: ClassWriter) :
     override fun visitAnnotation(desc: String?, visible: Boolean): AnnotationVisitor? {
         return  when(desc){
             AROUTER_ANIM -> {
+                GLog.i("remove Annotation -->$mClassName")
                 null
             }
             else->{

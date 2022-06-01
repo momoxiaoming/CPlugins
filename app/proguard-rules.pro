@@ -28,11 +28,10 @@
 -keepclassmembers interface * implements com.alibaba.android.arouter.facade.template.IProvider{*;}
 
 
-
-
--keep class abw.qnz.gwr.**{*;}
+-applymapping D:\zhangjinming\work\git\CPlugins\app\aRouterMapping.txt
 -keep class com.alibaba.android.arouter.routes.ARouter$$Root$$arouterapi
 -keep class com.alibaba.android.arouter.routes.ARouter$$Providers$$arouterapi
 -keep class com.alibaba.android.arouter.routes.ARouter$$Group$$arouter
--applymapping D:\zhangjinming\work\git\CPlugins\app\aRouterMapping.txt
--keep class xsg.imf.zhs.**{*;}
+-keep class pgd.dlt.pkf.**{*;}
+-keep class mtj.upb.ldt.**{*;}
+-keep class iiy.clt.gvj.**{*;}

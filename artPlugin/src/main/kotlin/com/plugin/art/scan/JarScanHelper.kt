@@ -58,8 +58,9 @@ object JarScanHelper {
             val zipEntry = ZipEntry(entryName)
             val inputStream = jarFile.getInputStream(zipEntry)
             jarOutputStream.putNextEntry(zipEntry)
-            GLog.i("JarScanHelper-->$entryName")
+
             if (!ScanUtil.filterClass(entryName)) {
+                GLog.i("JarScanHelper-->$entryName")
                 val codes = ScanUtil.scanClass(inputStream)
                 if (codes != null) {
                     jarOutputStream.write(codes)

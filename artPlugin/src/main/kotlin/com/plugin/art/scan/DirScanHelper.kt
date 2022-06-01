@@ -44,15 +44,14 @@ object DirScanHelper {
             return
         }
         inputFile.eachFileRecurse {
-            GLog.i("DirScanHelper--eachDirFile----file->${it.path}")
             var inputFilePath = it.path.replace(root, "")
             if (File.separatorChar != '/') {
                 inputFilePath = inputFilePath.replace("\\\\", "/").replace("\\", "/")
             }
-            GLog.i("DirScanHelper--eachDirFile----item->${inputFilePath}")
 
             //这里可以对一些class进行过滤
             if(!ScanUtil.filterClass(inputFilePath)){
+                GLog.i("DirScanHelper--eachDirFile----item->${inputFilePath}")
                 val fis=FileInputStream(it)
                 val codes=ScanUtil.scanClass(fis)
                 fis.close()

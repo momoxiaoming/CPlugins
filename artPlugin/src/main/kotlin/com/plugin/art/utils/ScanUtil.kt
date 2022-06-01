@@ -21,9 +21,13 @@ object ScanUtil {
                 || path.contains("R$") //排除资源文件
                 || path.contains("com/google/android")
                 || path.contains("androidx/")
+                || path.contains("android/support/")
+                || path.contains("org/intellij")
                 || path.contains("kotlin/")
                 || path.contains("META-INF")
                 || path.contains("kotlin_module")
+                || path.startsWith("com/alibaba/android/arouter/core/LogisticsCenter")
+
     }
 
     /**

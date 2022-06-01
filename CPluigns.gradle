@@ -45,7 +45,7 @@ ext {
             ],
             art: [
                     group      : 'com.android.plugin',
-                    versionName: '1.0.4-5',
+                    versionName: '1.0.5-20220531-5', //特殊版本,去掉applymapping
                     artifactId : 'art',
             ]
     ]

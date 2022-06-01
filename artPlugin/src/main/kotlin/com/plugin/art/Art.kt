@@ -46,7 +46,6 @@ class Art : Plugin<Project> {
     }
     fun regiest(project: Project){
         if(project.plugins.hasPlugin("com.android.application")){
-            writeProFile(project)
             when (val testedExtension = project.extensions.findByType(TestedExtension::class.java)) {
                 is AppExtension -> {
                     testedExtension.applicationVariants
@@ -67,19 +66,5 @@ class Art : Plugin<Project> {
 
     }
 
-    fun writeProFile(project: Project){
-        /**
-         * 然后在app模块的proguard-rules.pro中写入改java文件的keep
-         */
-        val crFile =  File("${project.projectDir}/proguard-rules.pro")
-        if (crFile.exists() && crFile.isFile) {
-            val content = String(crFile.readBytes())
-            val keepStr = "-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}"
-            if (!content.contains(keepStr)) {
-                GLog.i("keepStr-->$keepStr")
-                val newContent = "${content}\n$keepStr"
-                crFile.writeBytes(newContent.toByteArray())
-            }
-        }
-    }
+
 }
