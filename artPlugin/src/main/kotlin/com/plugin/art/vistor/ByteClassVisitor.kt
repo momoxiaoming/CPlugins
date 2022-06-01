@@ -3,6 +3,8 @@ package com.plugin.art.vistor
 
 import com.plugin.art.bean.FieldBean
 import com.plugin.art.log.GLog
+import com.plugin.art.transform.AScanTransform
+import com.plugin.art.utils.ScanUtil
 import org.objectweb.asm.*
 
 /**
@@ -59,6 +61,7 @@ class ByteClassVisitor(cw: ClassWriter) :
         interfaces: Array<out String>?
     ) {
         mClassName = name!!
+        GLog.i("ByteClassVisitor--$mClassName")
         super.visit(version, access, name, signature, superName, interfaces)
     }
 

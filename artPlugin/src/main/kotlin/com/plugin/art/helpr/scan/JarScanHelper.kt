@@ -1,4 +1,4 @@
-package com.plugin.art.scan
+package com.plugin.art.helpr.scan
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
@@ -58,10 +58,8 @@ object JarScanHelper {
             val zipEntry = ZipEntry(entryName)
             val inputStream = jarFile.getInputStream(zipEntry)
             jarOutputStream.putNextEntry(zipEntry)
-
-            if (!ScanUtil.filterClass(entryName)) {
-                GLog.i("JarScanHelper-->$entryName")
-                val codes = ScanUtil.scanClass(inputStream)
+            if (ScanUtil.filterScanTaskClass(entryName)) {
+                val codes=ScanUtil.scanClass2(inputStream)
                 if (codes != null) {
                     jarOutputStream.write(codes)
                 }

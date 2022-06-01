@@ -11,8 +11,14 @@ import kotlin.random.Random
  * @date 2022/5/24 16:09
  */
 object Common {
+    /**
+     * 路由所在的包名
+     */
+    const val ROUTER_PACKAGE="com/alibaba/android/arouter/routes/"
+
 
     var keepPkg = "a/b/c"
+
 
     val aMappingStringList= mutableListOf<String>()
     val aReplaceStringList= mutableListOf<String>()

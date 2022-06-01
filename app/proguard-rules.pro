@@ -27,11 +27,5 @@
 # If you use the byType method to obtain Service, add the following rules to protect the interface:
 -keepclassmembers interface * implements com.alibaba.android.arouter.facade.template.IProvider{*;}
 
+-applymapping "build/aRouterMapping.txt"
 
--applymapping D:\zhangjinming\work\git\CPlugins\app\aRouterMapping.txt
--keep class com.alibaba.android.arouter.routes.ARouter$$Root$$arouterapi
--keep class com.alibaba.android.arouter.routes.ARouter$$Providers$$arouterapi
--keep class com.alibaba.android.arouter.routes.ARouter$$Group$$arouter
--keep class pgd.dlt.pkf.**{*;}
--keep class mtj.upb.ldt.**{*;}
--keep class iiy.clt.gvj.**{*;}

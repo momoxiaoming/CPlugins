@@ -21,7 +21,6 @@ object ReplaceStringManager : IReplaceString {
     }
 
     override fun replace(string: String): String {
-//        println("replace  $string")
         val value = sMap[string]
        return if(value!=null){
             println("replace-string  $string to $value")

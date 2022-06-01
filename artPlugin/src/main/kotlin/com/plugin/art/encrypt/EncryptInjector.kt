@@ -2,6 +2,8 @@ package com.plugin.art.encrypt
 
 
 
+import com.plugin.art.log.GLog
+import com.plugin.art.task.CreateARouterMappingTask
 import org.gradle.api.Project
 import java.io.File
 
@@ -14,20 +16,10 @@ import java.io.File
  */
 object EncryptInjector {
 
-    /**
-     * 替换的类的映射文件地址
-     */
-    private var mappingPath: String ?=null
-
-
-    fun create(project: Project) {
-        mappingPath="${project.rootDir}/app/aRouterReplace.txt"
-    }
-
-
     fun readMappingFile(): List<Pair<String, String>> {
         val list = mutableListOf<Pair<String, String>>()
-        if (!mappingPath.isNullOrEmpty()) {
+        val mappingPath= CreateARouterMappingTask.replFilePath
+        if (mappingPath.isNotEmpty()) {
             val file = File(mappingPath!!)
             file.readLines().forEach {
                 val sp = it.split("->")
@@ -38,6 +30,7 @@ object EncryptInjector {
                 }
             }
         }
+        GLog.i("mappingPath-->${list.size}")
         return list
     }
 

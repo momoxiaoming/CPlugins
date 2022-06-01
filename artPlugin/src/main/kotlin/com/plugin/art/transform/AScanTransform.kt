@@ -2,24 +2,24 @@ package com.plugin.art.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.plugin.art.encrypt.EncryptInjector
-import com.plugin.art.helpr.replace.DirReplaceHelper
-import com.plugin.art.helpr.replace.JarReplaceHelper
 import com.plugin.art.helpr.scan.DirScanHelper
 import com.plugin.art.helpr.scan.JarScanHelper
 import com.plugin.art.task.CreateARouterMappingTask
 import org.gradle.api.Project
 
 /**
- * 此Transform主要用于路由替换以及注解删除
+ * 此Transform主要用于路由扫描
  *
  * @author mmxm
  * @date 2022/1/21 10:22
  */
-class ReplaceTransform(var project: Project) : Transform() {
+class AScanTransform(var project: Project) : Transform() {
+    companion object{
+        val routes= hashMapOf<String,String>()
+    }
 
     override fun getName(): String {
-        return "art_replace";
+        return "art_scan";
     }
 
     /**
@@ -59,10 +59,12 @@ class ReplaceTransform(var project: Project) : Transform() {
 
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
         inputs.forEach {
-            DirReplaceHelper.scanDir(it, output)
-            JarReplaceHelper.scanJar(it, output)
+            DirScanHelper.scanDir(it, output)
+            JarScanHelper.scanJar(it, output)
         }
 
+        //拿到所有路由后,处理混淆,mapp问题
+        CreateARouterMappingTask.confuse(project =project ,routes.keys.toList())
     }
 
 }

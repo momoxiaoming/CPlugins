@@ -1,9 +1,11 @@
-package com.plugin.art.scan
+package com.plugin.art.helpr.replace
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
 import com.plugin.art.log.GLog
+import com.plugin.art.transform.AScanTransform
+import com.plugin.art.utils.Common
 import com.plugin.art.utils.ScanUtil
 import com.plugin.art.utils.eachFileRecurse
 import org.apache.commons.io.FileUtils
@@ -17,7 +19,7 @@ import java.io.FileOutputStream
  * @author mmxm
  * @date 2022/5/26 17:53
  */
-object DirScanHelper {
+object DirReplaceHelper {  //type 0是扫描任务,1是替换任务
 
     fun scanDir(transformInput: TransformInput, outputProvider: TransformOutputProvider) {
         transformInput.directoryInputs.forEach { directoryInput ->
@@ -32,8 +34,7 @@ object DirScanHelper {
             if (!root.endsWith(File.separator)) {
                 root += File.separator
             }
-            GLog.i("DirScanHelper--rootPath-->${root}")
-
+            GLog.i("DirReplaceHelper--rootPath-->${root}")
             handleDirFile(root, directoryInput.file)
             FileUtils.copyDirectory(directoryInput.file, dest)
         }
@@ -51,7 +52,7 @@ object DirScanHelper {
 
             //这里可以对一些class进行过滤
             if(!ScanUtil.filterClass(inputFilePath)){
-                GLog.i("DirScanHelper--eachDirFile----item->${inputFilePath}")
+                GLog.i("DirReplaceHelper--eachDirFile----item->${inputFilePath}")
                 val fis=FileInputStream(it)
                 val codes=ScanUtil.scanClass(fis)
                 fis.close()
@@ -63,4 +64,6 @@ object DirScanHelper {
             }
         }
     }
+
+
 }

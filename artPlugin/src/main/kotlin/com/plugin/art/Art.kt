@@ -3,14 +3,12 @@ package com.plugin.art
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.TestedExtension
-import com.plugin.art.utils.Common
 import com.plugin.art.log.GLog
 import com.plugin.art.task.CreateARouterMappingTask
-import com.plugin.art.transform.AppReplaceStringTransform
-import com.plugin.art.transform.LibReplaceStringTransform
+import com.plugin.art.transform.AScanTransform
+import com.plugin.art.transform.ReplaceTransform
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import java.io.File
 import java.util.*
 
 
@@ -25,20 +23,30 @@ class Art : Plugin<Project> {
         project.allprojects { prj->
             prj.afterEvaluate { afterPrj->
                 regiest(afterPrj)
-                afterPrj.tasks.whenTaskAdded {task->
-                    if(task.name=="compileDebugJavaWithJavac"){
-                        var interceptorAssembleTask = afterPrj.tasks.create( "${afterPrj.name}DebugARouterObsTask", CreateARouterMappingTask::class.java)
-                        interceptorAssembleTask.buildType = "Debug".toLowerCase(Locale.ROOT)
-                        interceptorAssembleTask.proj=afterPrj
-                        task.finalizedBy(interceptorAssembleTask)
-                    }
-                    if(task.name=="compileReleaseJavaWithJavac"){
-                        var interceptorAssembleTask = afterPrj.tasks.create( "${afterPrj.name}ReleaseARouterObsTask", CreateARouterMappingTask::class.java)
-                        interceptorAssembleTask.buildType = "Release".toLowerCase(Locale.ROOT)
-                        interceptorAssembleTask.proj=afterPrj
-                        task.finalizedBy(interceptorAssembleTask)
+                afterPrj.tasks.forEach { task->
+                    task.doLast {
+                        it.inputs.files.forEach {
+                            GLog.i("task: inputs:${task.name}---${it.path}")
+                        }
+                        it.outputs.files.forEach {
+                            GLog.i("task: outputs:${task.name}---${it.path}")
+                        }
                     }
                 }
+//                afterPrj.tasks.whenTaskAdded {task->
+//                    if(task.name=="compileDebugJavaWithJavac"){
+//                        var interceptorAssembleTask = afterPrj.tasks.create( "${afterPrj.name}DebugARouterObsTask", CreateARouterMappingTask::class.java)
+//                        interceptorAssembleTask.buildType = "Debug".toLowerCase(Locale.ROOT)
+//                        interceptorAssembleTask.proj=afterPrj
+//                        task.finalizedBy(interceptorAssembleTask)
+//                    }
+//                    if(task.name=="compileReleaseJavaWithJavac"){
+//                        var interceptorAssembleTask = afterPrj.tasks.create( "${afterPrj.name}ReleaseARouterObsTask", CreateARouterMappingTask::class.java)
+//                        interceptorAssembleTask.buildType = "Release".toLowerCase(Locale.ROOT)
+//                        interceptorAssembleTask.proj=afterPrj
+//                        task.finalizedBy(interceptorAssembleTask)
+//                    }
+//                }
             }
         }
 
@@ -46,25 +54,9 @@ class Art : Plugin<Project> {
     }
     fun regiest(project: Project){
         if(project.plugins.hasPlugin("com.android.application")){
-            when (val testedExtension = project.extensions.findByType(TestedExtension::class.java)) {
-                is AppExtension -> {
-                    testedExtension.applicationVariants
-                    testedExtension.registerTransform(AppReplaceStringTransform(project))
-                    println("registerTransform---->AppReplaceStringTransform")
-                }
-                is LibraryExtension -> {
-                    testedExtension.libraryVariants
-                    testedExtension.registerTransform(LibReplaceStringTransform(project))
-                    println("registerTransform---->LibReplaceStringTransform")
-                }
-                else -> {
-                    println("TestedExtension is null")
-
-                }
-            }
+            val appExtension = project.extensions.findByType(AppExtension::class.java)
+            appExtension?.registerTransform(AScanTransform(project))
+            appExtension?.registerTransform(ReplaceTransform(project))
         }
-
     }
-
-
 }
