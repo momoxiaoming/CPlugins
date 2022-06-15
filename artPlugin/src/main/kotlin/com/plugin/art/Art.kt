@@ -20,37 +20,7 @@ import java.util.*
  */
 class Art : Plugin<Project> {
     override fun apply(project: Project) {
-        project.allprojects { prj->
-            prj.afterEvaluate { afterPrj->
-                regiest(afterPrj)
-                afterPrj.tasks.forEach { task->
-                    task.doLast {
-                        it.inputs.files.forEach {
-                            GLog.i("task: inputs:${task.name}---${it.path}")
-                        }
-                        it.outputs.files.forEach {
-                            GLog.i("task: outputs:${task.name}---${it.path}")
-                        }
-                    }
-                }
-//                afterPrj.tasks.whenTaskAdded {task->
-//                    if(task.name=="compileDebugJavaWithJavac"){
-//                        var interceptorAssembleTask = afterPrj.tasks.create( "${afterPrj.name}DebugARouterObsTask", CreateARouterMappingTask::class.java)
-//                        interceptorAssembleTask.buildType = "Debug".toLowerCase(Locale.ROOT)
-//                        interceptorAssembleTask.proj=afterPrj
-//                        task.finalizedBy(interceptorAssembleTask)
-//                    }
-//                    if(task.name=="compileReleaseJavaWithJavac"){
-//                        var interceptorAssembleTask = afterPrj.tasks.create( "${afterPrj.name}ReleaseARouterObsTask", CreateARouterMappingTask::class.java)
-//                        interceptorAssembleTask.buildType = "Release".toLowerCase(Locale.ROOT)
-//                        interceptorAssembleTask.proj=afterPrj
-//                        task.finalizedBy(interceptorAssembleTask)
-//                    }
-//                }
-            }
-        }
-
-
+        regiest(project)
     }
     fun regiest(project: Project){
         if(project.plugins.hasPlugin("com.android.application")){

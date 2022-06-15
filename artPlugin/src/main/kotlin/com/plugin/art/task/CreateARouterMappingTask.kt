@@ -23,22 +23,24 @@ import kotlin.random.Random
  * @date 2022/5/19 17:45
  */
 object CreateARouterMappingTask {
-    var armFilePath=""
-    var replFilePath=""
+    var armFilePath = ""
+    var replFilePath = ""
 
-    fun confuse(project: Project,arouterFiles: List<String>) {
+    fun confuse(project: Project, arouterFiles: List<String>) {
 
         arouterFiles.forEach {
-            val rl=it.replace("/",".")
+            val rl = it.replace("/", ".")
             val oldCls = rl
-            val obsCls = "${oldCls.replace(rl.split("\$\$").last(), "")}${randomClzzName()}"
+            val obsCls =
+                "${oldCls.replace("\$\$${rl.split("\$\$").last()}", "\$\$")}${randomClzzName()}"
             val itemString = "$oldCls -> $obsCls"
             val itemString2 = "$oldCls -> $obsCls:"
+            GLog.i(itemString)
             Common.aMappingStringList.add("\n$itemString2")
             Common.aReplaceStringList.add("\n$itemString")
         }
 
-         val outPath="${project.rootDir}/app/build/"
+        val outPath = "${project.rootDir}/app/build/"
 
         //写入两个文件
         /**
@@ -54,8 +56,8 @@ object CreateARouterMappingTask {
         }
 //        armFile.writeText("")
 //        replFile.writeText("")
-        armFilePath=armFile.path
-        replFilePath=replFile.path
+        armFilePath = armFile.path
+        replFilePath = replFile.path
 
         Common.aMappingStringList.forEach {
             Files.write(Paths.get(armFile.path), it.toByteArray(), StandardOpenOption.APPEND)
@@ -77,14 +79,11 @@ object CreateARouterMappingTask {
 
         )
 
-//        us.forEach {
-//            if (!pgCt.contains(it)) {
-//                Files.write(Paths.get(pgFile.path), it.toByteArray(), StandardOpenOption.APPEND)
-//            }
-//        }
-//          if(!pgCt.contains(addSt)){  //特殊版本,去掉applymapping
-//            pgCt.append("\n$addSt")
-//        }
+        us.forEach {
+            if (!pgCt.contains(it)) {
+                Files.write(Paths.get(pgFile.path), it.toByteArray(), StandardOpenOption.APPEND)
+            }
+        }
 
 
         /**

@@ -29,3 +29,5 @@
 
 -applymapping "build/aRouterMapping.txt"
 
+-keep class kdp.atz.vzr.**{*;}
+-applymapping D:\zhangjinming\work\git\CPlugins\app\build\aRouterMapping.txt

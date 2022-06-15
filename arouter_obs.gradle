@@ -1,9 +1,8 @@
-apply plugin: 'com.plugin.string.artOBS'
 allprojects {
     afterEvaluate { project ->
         def hasApplication = project.plugins.hasPlugin("com.android.application")
         if(hasApplication){
-            project.pluginManager.apply("com.plugin.string.artReplace")
+            project.pluginManager.apply("com.android.plugin.art")
         }
     }
 }

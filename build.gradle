@@ -65,8 +65,8 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//apply from: 'arouter_obs.gradle'
-apply plugin: 'com.android.plugin.art'
+apply from: 'arouter_obs.gradle'
+//apply plugin: 'com.android.plugin.art'
 //apply from: 'string_encrypt.gradle'
 
 
