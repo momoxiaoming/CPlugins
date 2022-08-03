@@ -26,7 +26,7 @@ class Art : Plugin<Project> {
         if(project.plugins.hasPlugin("com.android.application")){
             val appExtension = project.extensions.findByType(AppExtension::class.java)
             appExtension?.registerTransform(AScanTransform(project))
-            appExtension?.registerTransform(ReplaceTransform(project))
+//            appExtension?.registerTransform(ReplaceTransform(project))
         }
     }
 }

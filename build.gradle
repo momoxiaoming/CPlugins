@@ -14,8 +14,20 @@ buildscript {
 //        maven {
 //            url uri('https://artifact.bytedance.com/repository/byteX/')
 //        }
-        maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
-        maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
+        maven {
+            url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/"
+            credentials {
+                username = 'vapp-reader'
+                password = 'pwd123456'
+            }
+        }
+        maven {
+            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/"
+            credentials {
+                username = 'vapp-reader'
+                password = 'pwd123456'
+            }
+        }
         google()
         mavenCentral()
         maven { url 'https://repo1.maven.org/maven2/' }
@@ -30,8 +42,8 @@ buildscript {
 //        classpath rootProject.string_encrypt
 //        classpath rootProject.artOBS
 //        classpath rootProject.artReplace
-          classpath rootProject.art
-
+//          classpath rootProject.art
+//        classpath rootProject.ann
 //        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradlePLUGIN files
@@ -46,8 +58,20 @@ allprojects {
 //        maven {
 //            url uri('https://artifact.bytedance.com/repository/byteX/')
 //        }
-        maven { url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/" }
-        maven { url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/" }
+        maven {
+            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/"
+            credentials {
+                username = 'vapp-reader'
+                password = 'pwd123456'
+            }
+        }
+        maven {
+            url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/"
+            credentials {
+                username = 'vapp-reader'
+                password = 'pwd123456'
+            }
+        }
         google()
         mavenCentral()
         maven { url 'https://repo1.maven.org/maven2/' }
@@ -65,9 +89,9 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply from: 'arouter_obs.gradle'
+//apply from: 'arouter_obs.gradle'
 //apply plugin: 'com.android.plugin.art'
 //apply from: 'string_encrypt.gradle'
 
-
+//apply from: 'remove_annotation/remove_ann.gradle'
 

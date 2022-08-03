@@ -19,7 +19,7 @@ import java.io.FileOutputStream
  * @author mmxm
  * @date 2022/5/26 17:53
  */
-object DirReplaceHelper {  //type 0是扫描任务,1是替换任务
+object DirReplaceHelper {
 
     fun scanDir(transformInput: TransformInput, outputProvider: TransformOutputProvider) {
         transformInput.directoryInputs.forEach { directoryInput ->
@@ -34,7 +34,6 @@ object DirReplaceHelper {  //type 0是扫描任务,1是替换任务
             if (!root.endsWith(File.separator)) {
                 root += File.separator
             }
-            GLog.i("DirReplaceHelper--rootPath-->${root}")
             handleDirFile(root, directoryInput.file)
             FileUtils.copyDirectory(directoryInput.file, dest)
         }

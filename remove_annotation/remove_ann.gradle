@@ -1,0 +1,21 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if(hasApplication){
+            project.pluginManager.apply("com.android.plugin.reann")
+            def ext = project.extensions.getByName("remove_annotation")
+            /**
+             * 需要移除的注解包名
+             */
+            ext.removePkgName=[
+                    "com.android.TestFragment"
+            ]
+            /**
+             * 需要移除的注解名
+             */
+            ext.removeAnnClsName=[
+                    "androidx.annotation.Keep"
+            ]
+        }
+    }
+}

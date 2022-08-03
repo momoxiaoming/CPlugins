@@ -34,7 +34,6 @@ object ScanUtil {
 
     fun filterScanTaskClass(path:String):Boolean{
         return path.startsWith(Common.ROUTER_PACKAGE)
-
     }
     /**
      * 替换路由以及删除注解

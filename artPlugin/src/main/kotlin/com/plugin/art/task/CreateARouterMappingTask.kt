@@ -74,7 +74,7 @@ object CreateARouterMappingTask {
         val addSt = "-applymapping " + armFile.path
         val pgCt = StringBuffer(pgFile.readText())
         val us = listOf<String>(
-            "-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}\n",
+            "\n-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}",
             "$addSt\n"
 
         )

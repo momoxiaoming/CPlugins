@@ -47,6 +47,11 @@ ext {
                     group      : 'com.android.plugin',
                     versionName: '2.0.0', //特殊版本,去掉applymapping
                     artifactId : 'art',
+            ],
+            ann: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.1',
+                    artifactId : 'reann',
             ]
     ]
 
@@ -55,6 +60,7 @@ ext {
     artOBS = "${cPlugins.artOBS.group}:${cPlugins.artOBS.artifactId}:${cPlugins.artOBS.versionName}"
     artReplace = "${cPlugins.artReplace.group}:${cPlugins.artReplace.artifactId}:${cPlugins.artReplace.versionName}"
     art = "${cPlugins.art.group}:${cPlugins.art.artifactId}:${cPlugins.art.versionName}"
+    ann = "${cPlugins.ann.group}:${cPlugins.ann.artifactId}:${cPlugins.ann.versionName}"
 
 
     AES = [

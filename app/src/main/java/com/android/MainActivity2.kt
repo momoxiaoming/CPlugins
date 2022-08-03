@@ -25,6 +25,7 @@ class MainActivity2 :AppCompatActivity(){
         const val TAG="MainActivity2"
         val test3="test3"
     }
+    val fragment=TestFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +40,6 @@ class MainActivity2 :AppCompatActivity(){
             ARouter.getInstance().build("/main/action").navigation()
         }
         Log.d("allen","com.alibaba.android.arouter.routes")
-
+        Log.d("allen","${fragment.isAdded}")
     }
-
-
 }
