@@ -25,8 +25,12 @@ import kotlin.random.Random
 object CreateARouterMappingTask {
     var armFilePath = ""
     var replFilePath = ""
+    var obsRouter= mutableListOf<String>()
 
     fun confuse(project: Project, arouterFiles: List<String>) {
+
+        val aMappingStringList= mutableListOf<String>()
+        val aReplaceStringList= mutableListOf<String>()
 
         arouterFiles.forEach {
             val rl = it.replace("/", ".")
@@ -36,8 +40,9 @@ object CreateARouterMappingTask {
             val itemString = "$oldCls -> $obsCls"
             val itemString2 = "$oldCls -> $obsCls:"
             GLog.i(itemString)
-            Common.aMappingStringList.add("\n$itemString2")
-            Common.aReplaceStringList.add("\n$itemString")
+            obsRouter.add(obsCls)
+            aMappingStringList.add("\n$itemString2")
+            aReplaceStringList.add("\n$itemString")
         }
 
         val outPath = "${project.rootDir}/app/build/"
@@ -47,22 +52,23 @@ object CreateARouterMappingTask {
          * 3.在app模块目录下生成在app模块目录下生成aRouterMapping.txt,以及相应的字符串替换文件aRouterReplace.txt
          */
         val armFile = File("${outPath}/aRouterMapping.txt")
-        if (!armFile.exists()) {
-            armFile.createNewFile()
+        if (armFile.exists()) {
+            armFile.delete()
+
         }
         val replFile = File("${outPath}/aRouterReplace.txt")
-        if (!replFile.exists()) {
-            replFile.createNewFile()
+        if (replFile.exists()) {
+            replFile.delete()
         }
-//        armFile.writeText("")
-//        replFile.writeText("")
+        armFile.createNewFile()
+        replFile.createNewFile()
         armFilePath = armFile.path
         replFilePath = replFile.path
 
-        Common.aMappingStringList.forEach {
+        aMappingStringList.forEach {
             Files.write(Paths.get(armFile.path), it.toByteArray(), StandardOpenOption.APPEND)
         }
-        Common.aReplaceStringList.forEach {
+        aReplaceStringList.forEach {
             Files.write(Paths.get(replFile.path), it.toByteArray(), StandardOpenOption.APPEND)
         }
 
@@ -74,7 +80,7 @@ object CreateARouterMappingTask {
         val addSt = "-applymapping " + armFile.path
         val pgCt = StringBuffer(pgFile.readText())
         val us = listOf<String>(
-            "\n-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}",
+            "\n-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}\n",
             "$addSt\n"
 
         )

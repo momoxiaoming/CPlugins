@@ -43,6 +43,8 @@ object DirReplaceHelper {
         if (!inputFile.exists()) {
             return
         }
+        GLog.i("DirReplaceHelper--handleDirFile----item->$root")
+
         inputFile.eachFileRecurse {
             var inputFilePath = it.path.replace(root, "")
             if (File.separatorChar != '/') {

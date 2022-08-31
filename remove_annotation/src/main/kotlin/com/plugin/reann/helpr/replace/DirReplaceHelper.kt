@@ -50,7 +50,7 @@ object DirReplaceHelper {  //type 0是扫描任务,1是替换任务
 
             //这里可以对一些class进行过滤
             if(ScanUtil.filterClass(inputFilePath)){
-                GLog.i("DirReplaceHelper--eachDirFile----item->${inputFilePath}")
+//                GLog.i("DirReplaceHelper--eachDirFile----item->${inputFilePath}")
                 val fis=FileInputStream(it)
                 val codes= ScanUtil.scanClass(fis)
                 fis.close()

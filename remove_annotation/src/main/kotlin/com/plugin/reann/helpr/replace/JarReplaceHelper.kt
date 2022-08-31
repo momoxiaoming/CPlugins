@@ -60,7 +60,6 @@ object JarReplaceHelper {
             jarOutputStream.putNextEntry(zipEntry)
 
             if (ScanUtil.filterClass(entryName)) {
-                GLog.i("JarReplaceHelper-->$entryName")
                 val codes= ScanUtil.scanClass(inputStream)
                 if (codes != null) {
                     jarOutputStream.write(codes)

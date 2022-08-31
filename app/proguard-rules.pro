@@ -28,3 +28,10 @@
 -keepclassmembers interface * implements com.alibaba.android.arouter.facade.template.IProvider{*;}
 
 
+
+
+
+-keep class bkg.rhr.mvl.**{*;}
+-applymapping D:\zhangjinming\work\git\CPlugins\app\build\aRouterMapping.txt
+
+-keep class kks.tzd.cfy.**{*;}

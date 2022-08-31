@@ -61,7 +61,7 @@ class ByteClassVisitor(cw: ClassWriter) :
         interfaces: Array<out String>?
     ) {
         mClassName = name!!
-        GLog.i("ByteClassVisitor--$mClassName")
+//        GLog.i("ByteClassVisitor--$mClassName")
         super.visit(version, access, name, signature, superName, interfaces)
     }
 

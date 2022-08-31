@@ -5,7 +5,10 @@ import com.android.build.gradle.internal.pipeline.TransformManager
 import com.plugin.art.helpr.scan.DirScanHelper
 import com.plugin.art.helpr.scan.JarScanHelper
 import com.plugin.art.task.CreateARouterMappingTask
+import com.plugin.art.task.EncryptClassGenerator
+import com.plugin.art.utils.Common
 import org.gradle.api.Project
+import java.io.File
 
 /**
  * 此Transform主要用于路由扫描
@@ -65,6 +68,27 @@ class AScanTransform(var project: Project) : Transform() {
 
         //拿到所有路由后,处理混淆,mapp问题
         CreateARouterMappingTask.confuse(project =project ,routes.keys.toList())
+
+        //创建中间类,防止被优化
+        createObsClass(inputs, output)
+
     }
 
+    fun createObsClass(inputs: Collection<TransformInput>, output: TransformOutputProvider){
+        val directoryInput=inputs.iterator().next().directoryInputs.iterator().next()
+        val dest = output.getContentLocation(
+            directoryInput.name,
+            directoryInput.contentTypes,
+            directoryInput.scopes,
+            Format.DIRECTORY
+        )
+        val path=dest.path
+        val targetClass=Common.randomClzzName(4)
+        val outFilePath=File(path,"${Common.keepPkg}/$targetClass.class")
+        if(!outFilePath.parentFile.exists()){
+            outFilePath.parentFile.mkdirs()
+        }
+        //创建引用文件,防止被优化
+        EncryptClassGenerator.createDefaultEncrypt(targetClass,Common.keepPkg,routes.keys.toList(),outFilePath)
+    }
 }

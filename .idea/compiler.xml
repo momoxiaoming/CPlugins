@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8">
-      <module name="CPlugins.app" target="11" />
-      <module name="CPlugins.byteEncrypt-interface" target="11" />
-      <module name="CPlugins.common" target="11" />
-      <module name="CPlugins.encrypt_string" target="11" />
-      <module name="CPlugins.hdl" target="11" />
-      <module name="CPlugins.testapp" target="11" />
-      <module name="CPlugins.testEnc" target="11" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8" />
   </component>
 </project>
