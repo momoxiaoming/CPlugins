@@ -1,5 +1,6 @@
 package com.plugin.art.task
 
+import com.plugin.art.extension.ArtRemoveExtension
 import com.plugin.art.utils.Common
 import com.plugin.art.log.GLog
 import org.gradle.api.DefaultTask
@@ -29,6 +30,9 @@ object CreateARouterMappingTask {
 
     fun confuse(project: Project, arouterFiles: List<String>) {
 
+        val extension = project.extensions.getByName("art_annotation") as? ArtRemoveExtension
+        val openObs=extension?.openObs?:false
+
         val aMappingStringList= mutableListOf<String>()
         val aReplaceStringList= mutableListOf<String>()
 
@@ -51,19 +55,23 @@ object CreateARouterMappingTask {
         /**
          * 3.在app模块目录下生成在app模块目录下生成aRouterMapping.txt,以及相应的字符串替换文件aRouterReplace.txt
          */
-        val armFile = File("${outPath}/aRouterMapping.txt")
-        if (armFile.exists()) {
-            armFile.delete()
 
+        val armFile = File("${outPath}/aRouterMapping.txt")
+        if (!armFile.exists()) {
+            armFile.createNewFile()
         }
         val replFile = File("${outPath}/aRouterReplace.txt")
-        if (replFile.exists()) {
-            replFile.delete()
+        if (!replFile.exists()) {
+            replFile.createNewFile()
         }
-        armFile.createNewFile()
-        replFile.createNewFile()
+        armFile.writeText("")
+        replFile.writeText("")
+
+
         armFilePath = armFile.path
         replFilePath = replFile.path
+
+
 
         aMappingStringList.forEach {
             Files.write(Paths.get(armFile.path), it.toByteArray(), StandardOpenOption.APPEND)
@@ -71,7 +79,18 @@ object CreateARouterMappingTask {
         aReplaceStringList.forEach {
             Files.write(Paths.get(replFile.path), it.toByteArray(), StandardOpenOption.APPEND)
         }
-
+        if(openObs){
+            val obsFile = File("${project.rootDir}/app/obs-mapping.txt")  //为了兼容obs
+            if (!obsFile.exists()) {
+                obsFile.createNewFile()
+            }
+            val obsList=obsFile.readLines()
+            aMappingStringList.forEach {
+                if(!obsList.contains(it)){
+                    Files.write(Paths.get(obsFile.path), it.toByteArray(), StandardOpenOption.APPEND)
+                }
+            }
+        }
         /**
          * 最后一步,将aRouterMapping写入到app模块下的proguard-rules.pro中
          * 新增通用keep
@@ -79,12 +98,13 @@ object CreateARouterMappingTask {
         val pgFile = File("${project.rootDir}/app/proguard-rules.pro")
         val addSt = "-applymapping " + armFile.path
         val pgCt = StringBuffer(pgFile.readText())
-        val us = listOf<String>(
+        val us = mutableListOf<String>(
             "\n-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}\n",
-            "$addSt\n"
-
+//            "$addSt\n"
         )
-
+        if(!openObs){
+            us.add(addSt)
+        }
         us.forEach {
             if (!pgCt.contains(it)) {
                 Files.write(Paths.get(pgFile.path), it.toByteArray(), StandardOpenOption.APPEND)

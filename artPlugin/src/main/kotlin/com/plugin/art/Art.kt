@@ -3,6 +3,7 @@ package com.plugin.art
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.TestedExtension
+import com.plugin.art.extension.ArtRemoveExtension
 import com.plugin.art.log.GLog
 import com.plugin.art.task.CreateARouterMappingTask
 import com.plugin.art.transform.AScanTransform
@@ -23,6 +24,7 @@ class Art : Plugin<Project> {
         regiest(project)
     }
     fun regiest(project: Project){
+        project.extensions.create("art_annotation", ArtRemoveExtension::class.java)
         if(project.plugins.hasPlugin("com.android.application")){
             val appExtension = project.extensions.findByType(AppExtension::class.java)
             appExtension?.registerTransform(AScanTransform(project))

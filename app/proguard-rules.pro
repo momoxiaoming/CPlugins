@@ -29,9 +29,9 @@
 
 
 
+-keep class xtq.xcl.xbs.**{*;}
 
+-keep class mrf.yfs.zpt.**{*;}
 
--keep class bkg.rhr.mvl.**{*;}
+-keep class vtg.qrb.sby.**{*;}
 -applymapping D:\zhangjinming\work\git\CPlugins\app\build\aRouterMapping.txt
-
--keep class kks.tzd.cfy.**{*;}

@@ -3,6 +3,11 @@ allprojects {
         def hasApplication = project.plugins.hasPlugin("com.android.application")
         if(hasApplication){
             project.pluginManager.apply("com.android.plugin.art")
+            def ext = project.extensions.getByName("art_annotation")
+            /**
+             * 是否启用obs,启用后,obs会接管mapping
+             */
+            ext.openObs=false
         }
     }
 }
