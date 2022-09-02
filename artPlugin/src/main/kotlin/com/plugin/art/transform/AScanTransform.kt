@@ -2,6 +2,8 @@ package com.plugin.art.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.plugin.art.helpr.replace.DirReplaceHelper
+import com.plugin.art.helpr.replace.JarReplaceHelper
 import com.plugin.art.helpr.scan.DirScanHelper
 import com.plugin.art.helpr.scan.JarScanHelper
 import com.plugin.art.task.CreateARouterMappingTask
@@ -69,9 +71,12 @@ class AScanTransform(var project: Project) : Transform() {
         //拿到所有路由后,处理混淆,mapp问题
         CreateARouterMappingTask.confuse(project =project ,routes.keys.toList())
 
+        inputs.forEach {
+            DirReplaceHelper.scanDir(it, output)
+            JarReplaceHelper.scanJar(it, output)
+        }
         //创建中间类,防止被优化
         createObsClass(inputs, output)
-
     }
 
     fun createObsClass(inputs: Collection<TransformInput>, output: TransformOutputProvider){

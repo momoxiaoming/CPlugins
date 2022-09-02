@@ -35,3 +35,22 @@
 
 -keep class vtg.qrb.sby.**{*;}
 -applymapping D:\zhangjinming\work\git\CPlugins\app\build\aRouterMapping.txt
+-keep class ddc.dpq.ywd.**{*;}
+
+-keep class fkg.qsn.yze.**{*;}
+
+-keep class ymk.npi.uga.**{*;}
+
+-keep class xrp.cgv.hiy.**{*;}
+
+-keep class ysz.wmj.qln.**{*;}
+
+-keep class uhx.kdk.qwb.**{*;}
+
+-keep class mpd.ksx.tgn.**{*;}
+
+-keep class gkj.doo.qxx.**{*;}
+
+-keep class xhb.rjh.ler.**{*;}
+
+-keep class sxw.kkw.vpk.**{*;}

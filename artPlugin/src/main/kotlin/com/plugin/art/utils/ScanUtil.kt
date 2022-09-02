@@ -18,23 +18,26 @@ import java.io.InputStream
  */
 object ScanUtil {
 
-    fun filterClass(path:String):Boolean{
-        return !path.endsWith(".class") //排除非class文件
-                || path.contains("R$") //排除资源文件
-                || path.contains("com/google/android")
-                || path.contains("androidx/")
-                || path.contains("android/support/")
-                || path.contains("org/intellij")
-                || path.contains("kotlin/")
-                || path.contains("META-INF")
-                || path.contains("kotlin_module")
-//                || path.startsWith("com/alibaba/android/arouter/core/LogisticsCenter")
+    fun filterClass(path: String): Boolean {
+//        return !path.endsWith(".class") //排除非class文件
+//                || path.contains("R$") //排除资源文件
+//                || path.contains("com/google/android")
+//                || path.contains("androidx/")
+//                || path.contains("android/support/")
+//                || path.contains("org/intellij")
+//                || path.contains("kotlin/")
+//                || path.contains("META-INF")
+//                || path.contains("kotlin_module")
+//                || path.contains("/android/m2repository")
+//                || path.contains("com.android.support")
+        return path.startsWith("com/alibaba/android/arouter/core/LogisticsCenter")
 
     }
 
-    fun filterScanTaskClass(path:String):Boolean{
+    fun filterScanTaskClass(path: String): Boolean {
         return path.startsWith(Common.ROUTER_PACKAGE)
     }
+
     /**
      * 替换路由以及删除注解
      */
@@ -42,14 +45,13 @@ object ScanUtil {
         try {
             val classReader = ClassReader(IOUtils.toByteArray(inputStream))
             val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-            val classVisitor = ByteClassVisitor( classWriter)
+            val classVisitor = ByteClassVisitor(classWriter)
             classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
             return classWriter.toByteArray()
         } catch (e: Exception) {
             e.printStackTrace()
-
         }
-        return null
+        return inputStream.readBytes()
     }
 
     /**
@@ -59,20 +61,19 @@ object ScanUtil {
         try {
             val classReader = ClassReader(IOUtils.toByteArray(inputStream))
             val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-            val classVisitor = ARScanClassVisitor( classWriter)
+            val classVisitor = ARScanClassVisitor(classWriter)
             classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
             return classWriter.toByteArray()
         } catch (e: Exception) {
             e.printStackTrace()
-
         }
-        return null
+        return inputStream.readBytes()
     }
 
 
-    fun addRoutesList(clzz:String?){
-        if(clzz!=null&&clzz.startsWith(Common.ROUTER_PACKAGE)){
-            AScanTransform.routes[clzz]=clzz
+    fun addRoutesList(clzz: String?) {
+        if (clzz != null && clzz.startsWith(Common.ROUTER_PACKAGE)) {
+            AScanTransform.routes[clzz] = clzz
         }
     }
 }

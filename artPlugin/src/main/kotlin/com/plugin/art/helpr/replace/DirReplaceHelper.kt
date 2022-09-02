@@ -52,7 +52,7 @@ object DirReplaceHelper {
             }
 
             //这里可以对一些class进行过滤
-            if(!ScanUtil.filterClass(inputFilePath)){
+            if(ScanUtil.filterClass(inputFilePath)){
                 GLog.i("DirReplaceHelper--eachDirFile----item->${inputFilePath}")
                 val fis=FileInputStream(it)
                 val codes=ScanUtil.scanClass(fis)
