@@ -54,3 +54,5 @@
 -keep class xhb.rjh.ler.**{*;}
 
 -keep class sxw.kkw.vpk.**{*;}
+
+-keep class com.lzx.als.**{*;}

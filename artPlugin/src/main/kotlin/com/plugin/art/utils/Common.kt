@@ -23,7 +23,7 @@ object Common {
 
 
     init {
-        keepPkg = "${randomClzzName(3)}/${randomClzzName(3)}/${randomClzzName(3)}"
+        keepPkg = "com/${randomClzzName(3)}/${randomClzzName(3)}"
     }
 
 
