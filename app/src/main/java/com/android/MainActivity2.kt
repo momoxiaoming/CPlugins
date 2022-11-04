@@ -1,5 +1,7 @@
 package com.android
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.transition.Transition
 import android.transition.TransitionInflater
@@ -39,7 +41,27 @@ class MainActivity2 :AppCompatActivity(){
             ARouter.getInstance().build("/test/arouter").navigation()
             ARouter.getInstance().build("/main/action").navigation()
         }
-        Log.d("allen","com.alibaba.android.arouter.routes")
-        Log.d("allen","${fragment.isAdded}")
+
+        Log.d("allen","mata: ${getMetaValue(this,"com.android.Test2","null")}")
+    }
+
+    fun getMetaValue(context: Context, key: String, defaultValue: String?): String? {
+        try {
+            val appInfo = context.packageManager.getApplicationInfo(
+                context.packageName,
+                PackageManager.GET_META_DATA
+            )
+            val metaData = appInfo.metaData
+            if (metaData != null) {
+                val value = metaData.get(key)?.toString()
+                if (value != null) {
+                    return value
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return defaultValue
     }
 }

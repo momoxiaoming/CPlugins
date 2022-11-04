@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/wrapper/dists/gradle-6.5-all/caches/modules-2/files-2.1/com.google.auto.value/auto-value/1.5.2/1b94ab7ec707e2220a0d1a7517488d1843236345/auto-value-1.5.2.jar" />
+        </processorPath>
+        <module name="CPlugins.aab.core" />
+      </profile>
+    </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="CPlugins.app" target="11" />
       <module name="CPlugins.byteEncrypt-interface" target="11" />

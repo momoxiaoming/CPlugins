@@ -20,7 +20,9 @@
 		<!--			</intent-filter>-->
 		<!--		</activity>-->
 
-		<activity android:name="com.android.MainActivity2">
+		<meta-data android:name="com.android.Test2" android:value="@string/appCallback"/>
+
+		<activity android:name="com.android.MainActivity2" android:theme="@android:style/Animation.Activity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />

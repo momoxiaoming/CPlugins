@@ -5,11 +5,14 @@
 
 buildscript {
     apply from: 'CPluigns.gradle'
-
+    apply from: rootProject.file("aab/config.gradle")
     ext.kotlin_version = "1.4.32"
     repositories {
         maven {
             url uri('./repo')
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
         }
 //        maven {
 //            url uri('https://artifact.bytedance.com/repository/byteX/')
@@ -42,11 +45,15 @@ buildscript {
 //        classpath rootProject.string_encrypt
 //        classpath rootProject.artOBS
 //        classpath rootProject.artReplace
-          classpath rootProject.art
+//          classpath rootProject.art
 //        classpath rootProject.ann
 //        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradlePLUGIN files
+        classpath deps.plugin.digital
+        classpath deps.plugin.shadow
+//        classpath rootProject.aab  //aab混淆
+
     }
 }
 
@@ -54,6 +61,9 @@ allprojects {
     repositories {
         maven {
             url uri('./repo')
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
         }
 //        maven {
 //            url uri('https://artifact.bytedance.com/repository/byteX/')
@@ -89,7 +99,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply from: 'arouter_obs.gradle'
+//apply from: 'arouter_obs.gradle'
 //apply plugin: 'com.android.plugin.art'
 //apply from: 'string_encrypt.gradle'
 

@@ -52,7 +52,14 @@ ext {
                     group      : 'com.android.plugin',
                     versionName: '1.0.1',
                     artifactId : 'reann',
-            ]
+            ],
+            aab: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.3.1',
+                    artifactId : 'aabResGuard-plugin',
+            ],
+
+
     ]
 
     hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
@@ -61,8 +68,7 @@ ext {
     artReplace = "${cPlugins.artReplace.group}:${cPlugins.artReplace.artifactId}:${cPlugins.artReplace.versionName}"
     art = "${cPlugins.art.group}:${cPlugins.art.artifactId}:${cPlugins.art.versionName}"
     ann = "${cPlugins.ann.group}:${cPlugins.ann.artifactId}:${cPlugins.ann.versionName}"
-
-
+    aab = "${cPlugins.aab.group}:${cPlugins.aab.artifactId}:${cPlugins.aab.versionName}"
     AES = [
             MODE: "AES/CBC/PKCS5Padding",
             KEY : "1234567890123456",

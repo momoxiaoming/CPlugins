@@ -1,0 +1,26 @@
+apply plugin: "com.bytedance.android.aabResGuard"
+aabResGuard {
+    enableObfuscate = true
+//    mappingFile = file("../mapping.txt").toPath()
+    whiteList = [
+            // keep resources
+            "*.R.raw.*",
+            "*.R.drawable.icon",
+            "*.R.drawable.ic_*",
+            "*.R.anim.abc*",
+            "*.R.xml.actions",
+            // keep resource file
+            "*/res/xml/actions.xml",
+    ]
+    obfuscatedBundleFileName = "obfuscated-app.aab"
+    mergeDuplicatedRes = false
+    enableFilterFiles = true
+    filterList = [
+            "*/arm64-v8a/*",
+            "META-INF/*",
+            "BUNDLE-METADATA/**/proguard.map"
+    ]
+    enableFilterStrings = false
+    unusedStringPath = "aab/unused.txt"
+    languageWhiteList = ["en", "zh"]
+}
