@@ -56,3 +56,15 @@
 -keep class sxw.kkw.vpk.**{*;}
 
 -keep class com.lzx.als.**{*;}
+
+-keep class com.hrw.zmp.**{*;}
+
+-keep class com.udx.bpr.**{*;}
+
+-keep class com.krs.uqo.**{*;}
+
+-keep class com.iph.fug.**{*;}
+
+-keep class com.hpy.iba.**{*;}
+
+-keep class com.iqf.uld.**{*;}

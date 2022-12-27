@@ -43,7 +43,7 @@ object CreateARouterMappingTask {
                 "${oldCls.replace("\$\$${rl.split("\$\$").last()}", "\$\$")}${randomClzzName()}"
             val itemString = "$oldCls -> $obsCls"
             val itemString2 = "$oldCls -> $obsCls:"
-            GLog.i(itemString)
+            println(itemString)
             obsRouter.add(obsCls)
             aMappingStringList.add("\n$itemString2")
             aReplaceStringList.add("\n$itemString")

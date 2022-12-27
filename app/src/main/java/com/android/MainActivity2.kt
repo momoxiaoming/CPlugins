@@ -20,7 +20,7 @@ import com.android.plugins.R
  * @author mmxm
  * @date 2022/2/11 16:14
  */
-@Route(path = "/main/action")
+@Route(path = "/app/activity/splash")
 class MainActivity2 :AppCompatActivity(){
      val test2="test23"
     companion object{

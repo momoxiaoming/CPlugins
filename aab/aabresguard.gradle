@@ -18,7 +18,9 @@ aabResGuard {
     filterList = [
             "*/arm64-v8a/*",
             "META-INF/*",
-            "BUNDLE-METADATA/**/proguard.map"
+            "BUNDLE-METADATA/**/proguard.map",
+            "BUNDLE-METADATA/**/dependencies.pb"
+
     ]
     enableFilterStrings = false
     unusedStringPath = "aab/unused.txt"

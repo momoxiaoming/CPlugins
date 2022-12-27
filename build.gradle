@@ -45,7 +45,7 @@ buildscript {
 //        classpath rootProject.string_encrypt
 //        classpath rootProject.artOBS
 //        classpath rootProject.artReplace
-//          classpath rootProject.art
+          classpath rootProject.art
 //        classpath rootProject.ann
 //        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
         // NOTE: Do not place your application dependencies here; they belong
@@ -99,7 +99,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//apply from: 'arouter_obs.gradle'
+apply from: 'arouter_obs.gradle'
 //apply plugin: 'com.android.plugin.art'
 //apply from: 'string_encrypt.gradle'
 

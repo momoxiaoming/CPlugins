@@ -2,10 +2,12 @@ package com.plugin.art.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.plugin.art.extension.ArtRemoveExtension
 import com.plugin.art.helpr.replace.DirReplaceHelper
 import com.plugin.art.helpr.replace.JarReplaceHelper
 import com.plugin.art.helpr.scan.DirScanHelper
 import com.plugin.art.helpr.scan.JarScanHelper
+import com.plugin.art.log.GLog
 import com.plugin.art.task.CreateARouterMappingTask
 import com.plugin.art.task.EncryptClassGenerator
 import com.plugin.art.utils.Common
@@ -63,6 +65,9 @@ class AScanTransform(var project: Project) : Transform() {
 
 
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
+        val extension = project.extensions.getByName("art_annotation") as? ArtRemoveExtension
+        val openDebug=extension?.openLog?:false
+        GLog.setDebug(openDebug)
         inputs.forEach {
             DirScanHelper.scanDir(it, output)
             JarScanHelper.scanJar(it, output)

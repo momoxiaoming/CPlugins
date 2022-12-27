@@ -30,7 +30,7 @@ object EncryptInjector {
                 }
             }
         }
-        GLog.i("mappingPath-->${list.size}")
+        println("mappingPath-->${list.size}")
         return list
     }
 

@@ -8,6 +8,8 @@ allprojects {
              * 是否启用obs,启用后,obs会接管mapping
              */
             ext.openObs=false
+
+            ext.openLog=false
         }
     }
 }

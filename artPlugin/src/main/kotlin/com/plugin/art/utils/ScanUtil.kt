@@ -35,7 +35,7 @@ object ScanUtil {
     }
 
     fun filterScanTaskClass(path: String): Boolean {
-        return path.startsWith(Common.ROUTER_PACKAGE)
+        return path.contains(Common.ROUTER_PACKAGE)
     }
 
     /**

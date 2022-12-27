@@ -45,16 +45,16 @@ object DirScanHelper {  //type 0是扫描任务,1是替换任务
         if (!inputFile.exists()) {
             return
         }
-//        GLog.i("DirScanHelper--handleDirFile----item->$root")
+        GLog.i("DirScanHelper--handleDirFile----item->$root")
         inputFile.eachFileRecurse {
             var inputFilePath = it.path.replace(root, "")
             if (File.separatorChar != '/') {
                 inputFilePath = inputFilePath.replace("\\\\", "/").replace("\\", "/")
             }
-
+            GLog.i("DirScanHelper--handleDirFile----inputFilePath->$inputFilePath----outpath:${it.path}")
             //这里可以对一些class进行过滤
             if(ScanUtil.filterScanTaskClass(inputFilePath)){
-//                GLog.i("DirScanHelper--eachDirFile----item->${inputFilePath}")
+                GLog.i("DirScanHelper--eachDirFile----item->${inputFilePath}")
                 val fis=FileInputStream(it)
                 val codes=ScanUtil.scanClass2(fis)
                 fis.close()

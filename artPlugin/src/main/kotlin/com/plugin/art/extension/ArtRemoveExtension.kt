@@ -13,7 +13,10 @@ open class ArtRemoveExtension {
      */
     var openObs:Boolean = false
 
-
+    /**
+     * 是否开启日志
+     */
+    var openLog:Boolean=false
 
 
 
