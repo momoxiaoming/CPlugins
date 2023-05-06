@@ -12,3 +12,5 @@ include ':artPlugin'
 include ':remove_annotation'
 include ':aab:plugin'
 include ':aab:core'
+include ':unityPlugin'
+

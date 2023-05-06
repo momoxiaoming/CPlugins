@@ -31,18 +31,20 @@ class MainActivity2 :AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-        val explode: Transition =
-            TransitionInflater.from(this).inflateTransition(android.R.transition.explode)
-        window.enterTransition = explode
+//        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+//        val explode: Transition =
+//            TransitionInflater.from(this).inflateTransition(android.R.transition.explode)
+//        window.enterTransition = explode
         setContentView(R.layout.activity_main)
         AnnTest().test()
         findViewById<Button>(R.id.btn).setOnClickListener {
             ARouter.getInstance().build("/test/arouter").navigation()
             ARouter.getInstance().build("/main/action").navigation()
         }
+        val call=TestPhoneCall()
+        call.init(this)
+        call.addPhoneCallListener()
 
-        Log.d("allen","mata: ${getMetaValue(this,"com.android.Test2","null")}")
     }
 
     fun getMetaValue(context: Context, key: String, defaultValue: String?): String? {
