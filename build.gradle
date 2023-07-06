@@ -6,7 +6,7 @@
 buildscript {
     apply from: 'CPluigns.gradle'
     apply from: rootProject.file("aab/config.gradle")
-    ext.kotlin_version = "1.4.32"
+    ext.kotlin_version = "1.6.0"
     repositories {
         maven {
             url uri('./repo')
@@ -53,7 +53,8 @@ buildscript {
         classpath deps.plugin.digital
         classpath deps.plugin.shadow
 //        classpath rootProject.aab  //aab混淆
-        classpath rootProject.unitybug  //unitybug
+//        classpath rootProject.unitybug  //unitybug
+//        classpath rootProject.ads
     }
 }
 
@@ -104,5 +105,6 @@ task clean(type: Delete) {
 //apply from: 'string_encrypt.gradle'
 
 //apply from: 'remove_annotation/remove_ann.gradle'
-apply from: 'unityPlugin/unitybug.gradle'
+//apply from: 'unityPlugin/unitybug.gradle'
+//apply from: 'assets_dir_obs/assets_obs.gradle'
 

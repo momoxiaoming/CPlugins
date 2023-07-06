@@ -9,6 +9,7 @@ plugins {
 //apply plugin: "com.bytedance.android.aabResGuard"
 
 
+
 android {
 
     signingConfigs {
@@ -47,8 +48,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt') ,'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -75,6 +76,8 @@ dependencies {
 
 //    implementation project(":common")
 
+    implementation "com.gp.game:scribble-world:1.0.0"
+    implementation "com.gp.game:webServer:1.0.4-test5"
 
     implementation 'com.alibaba:arouter-api:1.5.1'
     kapt 'com.alibaba:arouter-compiler:1.5.1'

@@ -1,0 +1,24 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.android.plugin.assetsObs")
+            def ext = project.extensions.getByName("assets_file_obs")
+
+
+            /**
+             *
+             * 需要混淆的文件名, 类似web/index.html. 类中必须要有这个字符串,切不能是拼接的
+             */
+            ext.assetsFileObs = [
+                    "web/index.html":["com.stickman.jump.server.NanoServer"],
+            ]
+            /**
+             * 需要混淆的目录名,类似web,或web/web ,类中必须要有这个字符串,切不能是拼接的
+             */
+            ext.assetsDirObs = [
+                    "web":["com.stickman.jump.server.NanoServer"],
+            ]
+        }
+    }
+}
