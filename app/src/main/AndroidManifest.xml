@@ -14,26 +14,20 @@
 		android:theme="@style/Theme.CPlugins"
 		tools:replace="android:appComponentFactory">
 
-		<!--		<activity android:name="com.android.MainActivity">-->
-		<!--			<intent-filter>-->
-		<!--				<action android:name="android.intent.action.MAIN" />-->
-		<!--				<category android:name="android.intent.category.LAUNCHER" />-->
-		<!--			</intent-filter>-->
-		<!--		</activity>-->
-
-		<meta-data
-			android:name="com.android.Test2"
-			android:value="@string/appCallback" />
-
-		<activity
-			android:name="com.android.MainActivity2"
-			android:excludeFromRecents="true"
-			android:theme="@android:style/Animation.Activity">
+		<activity android:name="com.android.MainActivity2">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+		<activity-alias
+			android:name="com.android.MainActivity3"
+			android:targetActivity="com.android.MainActivity2" />
+		<meta-data
+			android:name="com.android.Test2"
+			android:value="@string/appCallback" />
+
 	</application>
 
 </manifest>

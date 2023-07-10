@@ -1,0 +1,15 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.android.plugin.junkCode")
+            def ext = project.extensions.getByName("junkCodeExtension")
+
+            /**
+             * 最大的manifest垃圾节点数量,
+             * 此数量只是一种组件的数量, 支持mata-data, activity, service
+             */
+            ext.maxManifestJunkNodeNum = 5
+        }
+    }
+}

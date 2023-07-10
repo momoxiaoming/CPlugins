@@ -25,8 +25,6 @@ class ByteMethodVisitor(
                 super.visitLdcInsn(value)
                 return
             }
-            println("path->${value}")
-
             val entryString = ExtensionManager.getUseName(value)
             if (entryString != null && entryString != value) {
                 println("assets 字符替换: $value --> $entryString")
@@ -45,7 +43,6 @@ class ByteMethodVisitor(
                     super@ByteMethodVisitor.visitInsn(opcode)
                     return
                 }
-                println("path->${value}")
                 val entryString = ExtensionManager.getUseName(value)
                 if (entryString != null && entryString != value) {
                     println("assets 字符替换: $value --> $entryString")

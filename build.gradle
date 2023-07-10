@@ -55,6 +55,8 @@ buildscript {
 //        classpath rootProject.aab  //aab混淆
 //        classpath rootProject.unitybug  //unitybug
 //        classpath rootProject.ads
+//        classpath rootProject.junkCode
+
     }
 }
 
@@ -107,4 +109,5 @@ task clean(type: Delete) {
 //apply from: 'remove_annotation/remove_ann.gradle'
 //apply from: 'unityPlugin/unitybug.gradle'
 //apply from: 'assets_dir_obs/assets_obs.gradle'
+//apply from: 'junkCode/junk_code.gradle'
 

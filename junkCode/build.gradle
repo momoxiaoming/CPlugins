@@ -30,9 +30,9 @@ if(!properties.get("isLocal").toBoolean()){
                     authentication(userName: 'vapp-deployment', password: 'pwd123456')
                 }
                 pom {
-                    groupId=rootProject.cPlugins.art.group
-                    artifactId=rootProject.cPlugins.art.artifactId
-                    version=rootProject.cPlugins.art.versionName
+                    groupId=rootProject.cPlugins.junkCode.group
+                    artifactId=rootProject.cPlugins.junkCode.artifactId
+                    version=rootProject.cPlugins.junkCode.versionName
                 }
             }
         }
@@ -43,9 +43,9 @@ if(!properties.get("isLocal").toBoolean()){
             mavenDeployer {
                 repository(url: uri('../repo'))
                 pom {
-                    groupId = rootProject.cPlugins.art.group
-                    artifactId = rootProject.cPlugins.art.artifactId
-                    version = rootProject.cPlugins.art.versionName
+                    groupId = rootProject.cPlugins.junkCode.group
+                    artifactId = rootProject.cPlugins.junkCode.artifactId
+                    version = rootProject.cPlugins.junkCode.versionName
                 }
             }
         }

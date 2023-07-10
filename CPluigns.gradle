@@ -45,7 +45,7 @@ ext {
             ],
             art: [
                     group      : 'com.android.plugin',
-                    versionName: '2.1.6', //
+                    versionName: '2.1.7', //
                     artifactId : 'art',
             ],
             ann: [
@@ -65,8 +65,13 @@ ext {
             ],
             ads: [
                     group      : 'com.android.plugin',
-                    versionName: '1.0.0',
+                    versionName: '1.0.1',
                     artifactId : 'assets_dir_obs',
+            ],
+            junkCode: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.0',
+                    artifactId : 'junkCode',
             ],
 
     ]
@@ -80,6 +85,7 @@ ext {
     aab = "${cPlugins.aab.group}:${cPlugins.aab.artifactId}:${cPlugins.aab.versionName}"
     unitybug = "${cPlugins.unitybug.group}:${cPlugins.unitybug.artifactId}:${cPlugins.unitybug.versionName}"
     ads = "${cPlugins.ads.group}:${cPlugins.ads.artifactId}:${cPlugins.ads.versionName}"
+    junkCode = "${cPlugins.junkCode.group}:${cPlugins.junkCode.artifactId}:${cPlugins.junkCode.versionName}"
 
 
     AES = [
