@@ -9,7 +9,42 @@ allprojects {
              * 最大的manifest垃圾节点数量,
              * 此数量只是一种组件的数量, 支持mata-data, activity, service
              */
-            ext.maxManifestJunkNodeNum = 5
+            ext.maxManifestJunkNodeNum = 50
+
+            /**
+             * 最大随机生成的垃圾类数量
+             */
+            ext.maxRandomClassCount = 200
+
+            /**
+             * 最大随机生成的类的方法数量
+             */
+            ext.maxRandomMethodCount = 10
+
+            /**
+             * 最大随机生成的类的field数量
+             */
+            ext.maxRandomFieldCount = 10
+
+            /**
+             * 垃圾方法最大个数
+             */
+            ext.maxJunkCodeFunOfPerClass = 5
+
+            /**
+             * 最多可以插入垃圾代码的方法个数
+             */
+            ext.maxJunkCodeFunToModify = 5
+
+            /**
+             * 最多垃圾字段数
+             */
+            ext.maxJunkCodeFields = 6
+
+            /**
+             * 需要插入垃圾代码的包名
+             */
+            ext.junkPackages = ["com.android.test123","com.unity3d.player"]
         }
     }
 }

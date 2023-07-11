@@ -6,11 +6,14 @@ import com.android.manifmerger.XmlNode
 import com.android.utils.forEach
 import com.mckj.junkCode.ext.ExtensionManager
 import com.mckj.junkCode.ext.JunkCodeExtension
+import com.mckj.junkCode.task.JunkCodeGenerateClassTask
+import com.mckj.junkCode.transform.JunkCodeTransForm
 import com.mckj.junkCode.util.Helper
 import org.apache.xerces.parsers.XMLDocumentParser
 import org.apache.xerces.parsers.XMLParser
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.internal.impldep.bsh.commands.dir
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import java.io.File
@@ -24,7 +27,7 @@ import kotlin.random.Random
  * JunkCodePlugin
  * 1. 添加垃圾类,方法,变量
  * 2. manifest添加垃圾类
- *
+ * 3. manifest乱序
  * @author mmxm
  * @date 2023/7/7 18:18
  */
@@ -34,17 +37,32 @@ class JunkCodePlugin : Plugin<Project> {
         hookTask(project)
     }
 
-    fun regiestExt(project: Project) {
+    private fun regiestExt(project: Project) {
         project.extensions.create(ExtensionManager.extensionTagName, JunkCodeExtension::class.java)
+        if (project.plugins.hasPlugin("com.android.application")) {
+            val appExtension = project.extensions.findByType(AppExtension::class.java)
+            appExtension?.registerTransform(JunkCodeTransForm())
+        }
+    }
+
+    private fun addRandomClassTask(project: Project) {
+        val appExtension = project.extensions.getByType(AppExtension::class.java)
+        appExtension.applicationVariants.all {
+            val out=File(project.buildDir, "generated/source/junkCode/${it.name}")
+            val task=project.tasks.create("generate${it.name.capitalize()}JunkCode",JunkCodeGenerateClassTask::class.java)
+            task.outDir=out
+            it.registerJavaGeneratingTask(task,out)
+            it.generateBuildConfigProvider.get().dependsOn(task)
+        }
     }
 
     private fun hookTask(project: Project) {
         project.afterEvaluate {
             ExtensionManager.initExtension(it)
             if (it.plugins.hasPlugin("com.android.application")) {
+                addRandomClassTask(it)
                 project.tasks.forEach { task ->
                     if (task.name.matches(Regex("processReleaseManifest"))) {
-                        println("taskName-->" + task.name)
                         task.doLast { assetTask ->
                             assetTask.outputs.files.forEach { file ->
                                 println("outputs-->" + file.path)
@@ -55,10 +73,36 @@ class JunkCodePlugin : Plugin<Project> {
                                 }
                             }
                         }
+                    } else if (task.name.matches(Regex("mergeReleaseGeneratedProguardFiles"))) {
+                        task.doLast { assetTask ->
+                            assetTask.outputs.files.forEach { file ->
+                                println("outputs-->" + file.path)
+                                if(file.path.endsWith("proguard.txt")){
+                                    addProguard(file)
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun addProguard(file: File) {
+        if(!file.exists()){
+            var lines=""
+            ExtensionManager.mappingMap.forEach {
+                lines+="\n $it"
+            }
+            file.writeText(lines)
+        }else{
+            var proguard=file.readText()
+            ExtensionManager.mappingMap.forEach {
+                proguard+="\n $it"
+            }
+            file.writeText(proguard)
+        }
+        ExtensionManager.proguardFile=file
     }
 
     private fun randomManifest(file: File) {
@@ -66,9 +110,10 @@ class JunkCodePlugin : Plugin<Project> {
         if (num == 0) return
         //解析manifest文件, 并添加节点
         val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
-        val applicationElement = doc.documentElement.getElementsByTagName("application").item(0) as Element
+        val applicationElement =
+            doc.documentElement.getElementsByTagName("application").item(0) as Element
         //随机添加节点
-        addRandomElement(num,doc, applicationElement)
+        addRandomElement(num, doc, applicationElement)
 
         //随机打乱节点
         randomAllElement(applicationElement)
@@ -82,21 +127,21 @@ class JunkCodePlugin : Plugin<Project> {
      * 随机打乱所有application下节点
      * 注意这里要排除activity-alias 节点, 此种只能放于数组末尾,否者可能会出错
      */
-    private fun randomAllElement(applicationElement:Element){
-        val nodeList= mutableListOf<Element>()
-        val nodes=applicationElement.childNodes
+    private fun randomAllElement(applicationElement: Element) {
+        val nodeList = mutableListOf<Element>()
+        val nodes = applicationElement.childNodes
         //打乱顺序
-        for(i in 0..nodes.length){
-            val node=nodes.item(i)
-            if(node is Element){
+        for (i in 0..nodes.length) {
+            val node = nodes.item(i)
+            if (node is Element) {
                 nodeList.add(node)
             }
         }
         nodeList.shuffle()
         //找出activity-alias,放置数据末尾
-        val aliasList= mutableListOf<Element>()
+        val aliasList = mutableListOf<Element>()
         nodeList.forEach {
-            if (it.nodeName.contains("activity-alias")){
+            if (it.nodeName.contains("activity-alias")) {
                 aliasList.add(it)
             }
         }
@@ -106,17 +151,17 @@ class JunkCodePlugin : Plugin<Project> {
         nodeList.addAll(aliasList)
 
         //移除原有的所有节点
-        for(node in nodeList){
+        for (node in nodeList) {
             applicationElement.removeChild(node)
         }
 
         //添加打乱后的节点
-        for(node in nodeList){
+        for (node in nodeList) {
             applicationElement.appendChild(node)
         }
     }
 
-    private fun addRandomElement(num:Int,doc: Document, element: Element) {
+    private fun addRandomElement(num: Int, doc: Document, element: Element) {
         //随机添加
         createAndroidElement(doc, element, Random.nextInt(num), "activity")
         createAndroidElement(doc, element, Random.nextInt(num), "service")
@@ -148,6 +193,13 @@ class JunkCodePlugin : Plugin<Project> {
                     }
                 }
             }
+            println(
+                "junkCode-->add name --> name:${node.nodeName}, android:name: ${
+                    node.getAttribute(
+                        "android:name"
+                    )
+                }"
+            )
             element.appendChild(node)
         }
     }

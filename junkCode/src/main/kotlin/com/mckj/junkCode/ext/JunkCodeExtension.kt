@@ -14,4 +14,40 @@ open class JunkCodeExtension {
      */
     var maxManifestJunkNodeNum = 10
 
+    /**
+     * 最大随机生成的垃圾类数量
+     */
+    var maxRandomClassCount = 100
+
+    /**
+     * 最大随机生成的类的方法数量
+     */
+    var maxRandomMethodCount = 10
+
+    /**
+     * 最大随机生成的类的field数量
+     */
+    var maxRandomFieldCount = 10
+
+    /**
+     * 垃圾方法最大个数
+     */
+    var maxJunkCodeFunOfPerClass = 5
+
+    /**
+     * 最多可以插入垃圾代码的方法个数
+     */
+    var maxJunkCodeFunToModify = 5
+
+    /**
+     * 最多垃圾字段数
+     */
+    var maxJunkCodeFields = 6
+
+    /**
+     * 需要插入垃圾代码的包名
+     */
+    var junkPackages = arrayListOf<String>()
+
+
 }

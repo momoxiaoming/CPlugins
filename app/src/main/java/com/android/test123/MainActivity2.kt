@@ -1,17 +1,16 @@
-package com.android
+package com.android.test123
 
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.transition.Transition
-import android.transition.TransitionInflater
 import android.util.Log
-import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.facade.template.IProvider
 import com.alibaba.android.arouter.launcher.ARouter
+import com.android.AnnTest
+import com.android.TestFragment
+import com.android.TestPhoneCall
 import com.android.plugins.R
 
 /**
@@ -27,7 +26,7 @@ class MainActivity2 :AppCompatActivity(){
         const val TAG="MainActivity2"
         val test3="test3"
     }
-    val fragment=TestFragment()
+    val fragment= TestFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,29 +40,26 @@ class MainActivity2 :AppCompatActivity(){
             ARouter.getInstance().build("/test/arouter").navigation()
             ARouter.getInstance().build("/main/action").navigation()
         }
-        val call=TestPhoneCall()
+        val call= TestPhoneCall()
         call.init(this)
         call.addPhoneCallListener()
 
+        test1()
+        test2()
+        test3()
+        test4()
     }
 
-    fun getMetaValue(context: Context, key: String, defaultValue: String?): String? {
-        try {
-            val appInfo = context.packageManager.getApplicationInfo(
-                context.packageName,
-                PackageManager.GET_META_DATA
-            )
-            val metaData = appInfo.metaData
-            if (metaData != null) {
-                val value = metaData.get(key)?.toString()
-                if (value != null) {
-                    return value
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return defaultValue
+    fun test1(){
+        Log.d(TAG, "test1: tetwetet")
+    }
+    fun test2(){
+        Log.d(TAG, "test1: tetwetet")
+    }
+    fun test3(){
+        Log.d(TAG, "test1: tetwetet")
+    }
+    fun test4(){
+        Log.d(TAG, "test1: tetwetet")
     }
 }
