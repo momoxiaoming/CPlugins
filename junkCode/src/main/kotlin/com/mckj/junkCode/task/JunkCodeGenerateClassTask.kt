@@ -44,7 +44,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         //生成垃圾类
         val classBuilder = TypeSpec.classBuilder(className)
         val methodCount = Random.nextInt(ExtensionManager.extension?.maxRandomMethodCount ?: 0)
-        println("junkCode 随机添加垃圾类方法个数:$methodCount")
+//        println("junkCode 随机添加垃圾类方法个数:$methodCount")
 
         //添加方法
         for (i in 0..methodCount) {
