@@ -6,6 +6,10 @@ allprojects {
             def ext = project.extensions.getByName("junkCodeExtension")
 
             /**
+             * 最大的随机生成的包名个数
+             */
+            ext.maxRandomPackageNum=[10,20]
+            /**
              * 最大的manifest垃圾节点数量,
              * 此数量只是一种组件的数量, 支持mata-data, activity, service
              */

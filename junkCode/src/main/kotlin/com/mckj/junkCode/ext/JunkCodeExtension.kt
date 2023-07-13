@@ -15,6 +15,11 @@ open class JunkCodeExtension {
     var maxManifestJunkNodeNum = 10
 
     /**
+     * 最大的随机生成的包名个数
+     */
+    var maxRandomPackageNum = arrayOf(10,20)
+
+    /**
      * 最大随机生成的垃圾类数量
      */
     var maxRandomClassCount = 100
@@ -23,6 +28,7 @@ open class JunkCodeExtension {
      * 最大随机生成的类的方法数量
      */
     var maxRandomMethodCount = 10
+
 
     /**
      * 最大随机生成的类的field数量

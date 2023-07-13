@@ -169,6 +169,7 @@ class JunkCodePlugin : Plugin<Project> {
     }
 
     private fun createAndroidElement(doc: Document, element: Element, num: Int, nodeName: String) {
+        println("junkCode 随机$num 个 $nodeName")
         for (i in 0..num) {
             val clz = "${Helper.randomName(Random.nextInt(4, 8))}.${
                 Helper.randomName(
@@ -182,7 +183,7 @@ class JunkCodePlugin : Plugin<Project> {
                 "meta-data" -> {
                     doc.createElement(nodeName).also {
                         it.setAttribute("android:name", clz)
-                        it.setAttribute("android:value", Helper.randomName(16))
+                        it.setAttribute("android:value", Helper.randomLengthName(10,30))
                     }
                 }
 
@@ -193,13 +194,13 @@ class JunkCodePlugin : Plugin<Project> {
                     }
                 }
             }
-            println(
-                "junkCode-->add name --> name:${node.nodeName}, android:name: ${
-                    node.getAttribute(
-                        "android:name"
-                    )
-                }"
-            )
+//            println(
+//                "junkCode-->add name --> name:${node.nodeName}, android:name: ${
+//                    node.getAttribute(
+//                        "android:name"
+//                    )
+//                }"
+//            )
             element.appendChild(node)
         }
     }

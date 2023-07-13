@@ -17,16 +17,29 @@ object Helper {
     val DESC_LIST = arrayOf("Ljava/lang/String;", "Z", "C", "B", "S", "I", "F", "J", "D", "[I")
 
     /**
+     * 主要用于排重,防止生成的名称一样
+     */
+    private val map= hashMapOf<String,Int>()
+
+    fun randomLengthName(form:Int=5,until:Int=20):String{
+        return randomName(Random.nextInt(form,until))
+    }
+
+    /**
      * 随机一个字符串,已做关键字排除处理
      * @param num Int
      * @return String
      */
-    fun randomName(num: Int = 8): String {
+    fun randomName(num: Int = Random.nextInt(5,10)): String {
         var clzz: String
         do {
             clzz = romdomClzz(num)
         } while (SourceVersion.isKeyword(clzz))
-        return clzz
+        return if(map[clzz]==null){
+            clzz
+        }else{
+            randomName(num)
+        }
     }
 
     private fun romdomClzz(num: Int = 8): String {
