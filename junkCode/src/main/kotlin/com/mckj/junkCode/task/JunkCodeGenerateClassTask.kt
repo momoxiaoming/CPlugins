@@ -82,7 +82,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         }
 
         JavaFile.builder(pkg,classBuilder.build()).build().writeTo(outDir)
-        val obsClassName = "-keep , allowobfuscation class $pkg.** { *; } \n"
+        val obsClassName = "-keep , allowobfuscation class $pkg.$className { *; } \n"
         ExtensionManager.mappingMap.add(obsClassName)
     }
 
