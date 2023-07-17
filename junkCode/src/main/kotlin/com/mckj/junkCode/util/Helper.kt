@@ -61,4 +61,17 @@ object Helper {
     fun getDescriptor(): String {
         return DESC_LIST[Random.nextInt(DESC_LIST.size)]
     }
+
+    /**
+     * 随机生成颜色值
+     * @return String
+     */
+    fun randomColor(): String {
+        // 生成三个随机的RGB值
+        val red = Random.nextInt(256)
+        val green = Random.nextInt(256)
+        val blue = Random.nextInt(256)
+        // 将RGB值转换为十六进制表示
+        return String.format("#%02x%02x%02x", red, green, blue)
+    }
 }

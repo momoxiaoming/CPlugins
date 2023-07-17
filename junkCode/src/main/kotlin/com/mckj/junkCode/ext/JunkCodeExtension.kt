@@ -12,6 +12,11 @@ open class JunkCodeExtension {
      * 最大的manifest垃圾节点数量,
      * 此数量只是一种组件的数量, 支持mata-data, activity, service
      */
+    var logEnable = false
+    /**
+     * 最大的manifest垃圾节点数量,
+     * 此数量只是一种组件的数量, 支持mata-data, activity, service
+     */
     var maxManifestJunkNodeNum = 10
 
     /**
@@ -56,4 +61,29 @@ open class JunkCodeExtension {
     var junkPackages = arrayListOf<String>()
 
 
+    /**
+     * 生成drawable数量
+     */
+    var maxDrawableResCount= intArrayOf(2,20)
+
+    /**
+     * 生成String数量
+     */
+    var maxStringResCount= intArrayOf(2,20)
+
+    /**
+     * 生成layout数量
+     */
+    var maxLayoutResCount= intArrayOf(2,20)
+
+
+    /**
+     * 生成Color数量
+     */
+    var maxColorResCount= intArrayOf(2,20)
+
+    /**
+     * 生成style数量
+     */
+    var maxStyleResCount= intArrayOf(2,20)
 }

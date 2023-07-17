@@ -7,8 +7,10 @@ import com.android.utils.forEach
 import com.mckj.junkCode.ext.ExtensionManager
 import com.mckj.junkCode.ext.JunkCodeExtension
 import com.mckj.junkCode.task.JunkCodeGenerateClassTask
+import com.mckj.junkCode.task.JunkResGenerateClassTask
 import com.mckj.junkCode.transform.JunkCodeTransForm
 import com.mckj.junkCode.util.Helper
+import com.mckj.junkCode.util.logI
 import org.apache.xerces.parsers.XMLDocumentParser
 import org.apache.xerces.parsers.XMLParser
 import org.gradle.api.Plugin
@@ -48,11 +50,19 @@ class JunkCodePlugin : Plugin<Project> {
     private fun addRandomClassTask(project: Project) {
         val appExtension = project.extensions.getByType(AppExtension::class.java)
         appExtension.applicationVariants.all {
-            val out=File(project.buildDir, "generated/source/junkCode/${it.name}")
-            val task=project.tasks.create("generate${it.name.capitalize()}JunkCode",JunkCodeGenerateClassTask::class.java)
-            task.outDir=out
-            it.registerJavaGeneratingTask(task,out)
-            it.generateBuildConfigProvider.get().dependsOn(task)
+            val junkCodeOut=File(project.buildDir, "generated/source/junkCode/${it.name}")
+            val junkCodeTask=project.tasks.create("generate${it.name.capitalize()}JunkCode",JunkCodeGenerateClassTask::class.java)
+            junkCodeTask.outDir=junkCodeOut
+            it.registerJavaGeneratingTask(junkCodeTask,junkCodeOut)
+            it.generateBuildConfigProvider.get().dependsOn(junkCodeTask)
+
+
+            val junkResOut=File(project.buildDir, "generated/res/junkCode/${it.name}")
+            val junkResTask=project.tasks.create("generate${it.name.capitalize()}JunkResource",JunkResGenerateClassTask::class.java)
+            junkResTask.resDir=junkResOut
+            it.registerGeneratedResFolders(project.files(junkResOut).builtBy(junkResTask))
+            it.mergeResourcesProvider.get().dependsOn(junkResTask)
+
         }
     }
 
@@ -169,7 +179,7 @@ class JunkCodePlugin : Plugin<Project> {
     }
 
     private fun createAndroidElement(doc: Document, element: Element, num: Int, nodeName: String) {
-        println("junkCode 随机$num 个 $nodeName")
+        logI("随机$num 个 $nodeName")
         for (i in 0..num) {
             val clz = "${Helper.randomName(Random.nextInt(4, 8))}.${
                 Helper.randomName(

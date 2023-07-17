@@ -1,5 +1,7 @@
 package com.mckj.junkCode.templates.modity
 
+import com.mckj.junkCode.util.Helper
+
 /**
  * Template13
  *
@@ -105,13 +107,13 @@ object Template13 {
         val label15 = org.objectweb.asm.Label()
         methodVisitor.visitLabel(label15)
         methodVisitor.visitLineNumber(99, label15)
-        methodVisitor.visitLdcInsn("Timestamp format must be yyyy-mm-dd hh:mm:ss[.fffffffff]")
+        methodVisitor.visitLdcInsn(Helper.randomLengthName(10,50))
         val v22 = ++index
         methodVisitor.visitVarInsn(org.objectweb.asm.Opcodes.ASTORE, v22)
         val label16 = org.objectweb.asm.Label()
         methodVisitor.visitLabel(label16)
         methodVisitor.visitLineNumber(100, label16)
-        methodVisitor.visitLdcInsn("000000000")
+        methodVisitor.visitLdcInsn(Helper.randomLengthName(10,50))
         val v23 = ++index
         methodVisitor.visitVarInsn(org.objectweb.asm.Opcodes.ASTORE, v23)
         val label17 = org.objectweb.asm.Label()

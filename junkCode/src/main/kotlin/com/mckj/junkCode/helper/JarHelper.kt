@@ -34,7 +34,7 @@ object JarHelper {
                 outputEntry.time = entry.time
                 outputJar.putNextEntry(outputEntry)
                 if (ScanUtil.filterClass(entry.name)) {
-                    println("junkCode 需要插入垃圾代码的类-->${entry.name}")
+//                    println("junkCode 需要插入垃圾代码的类-->${entry.name}")
                     val bt= ScanUtil.scanClass(inputStream)
                     if(bt!=null){
                         outputJar.write(bt)

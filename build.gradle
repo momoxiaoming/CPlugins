@@ -6,7 +6,7 @@
 buildscript {
     apply from: 'CPluigns.gradle'
     apply from: rootProject.file("aab/config.gradle")
-    ext.kotlin_version = "1.6.0"
+    ext.kotlin_version = "1.7.21"
     repositories {
         maven {
             url uri('./repo')
@@ -55,7 +55,7 @@ buildscript {
 //        classpath rootProject.aab  //aab混淆
 //        classpath rootProject.unitybug  //unitybug
 //        classpath rootProject.ads
-        classpath rootProject.junkCode
+//        classpath rootProject.junkCode
 
     }
 }
@@ -109,5 +109,5 @@ task clean(type: Delete) {
 //apply from: 'remove_annotation/remove_ann.gradle'
 //apply from: 'unityPlugin/unitybug.gradle'
 //apply from: 'assets_dir_obs/assets_obs.gradle'
-apply from: 'junkCode/junk_code.gradle'
+//apply from: 'junkCode/junk_code.gradle'
 

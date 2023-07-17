@@ -6,6 +6,10 @@ allprojects {
             def ext = project.extensions.getByName("junkCodeExtension")
 
             /**
+             * 日志开关
+             */
+            ext.logEnable=true
+            /**
              * 最大的随机生成的包名个数
              */
             ext.maxRandomPackageNum=[10,20]
@@ -49,6 +53,32 @@ allprojects {
              * 需要插入垃圾代码的包名
              */
             ext.junkPackages = ["com.android.test123","com.unity3d.player"]
+
+            /**
+             * 生成drawable数量
+             */
+            ext.maxDrawableResCount= [2,20]
+
+            /**
+             * 生成String数量
+             */
+            ext.maxStringResCount= [2,20]
+
+            /**
+             * 生成layout数量
+             */
+            ext.maxLayoutResCount= [2,20]
+
+
+            /**
+             * 生成Color数量
+             */
+            ext.maxColorResCount= [2,20]
+
+            /**
+             * 生成style数量
+             */
+            ext.maxStyleResCount= [2,20]
         }
     }
 }

@@ -70,7 +70,7 @@ ext {
             ],
             junkCode: [
                     group      : 'com.android.plugin',
-                    versionName: '1.1.0',
+                    versionName: '1.1.2',
                     artifactId : 'junkCode',
             ],
 
