@@ -5,7 +5,7 @@
 
 buildscript {
     apply from: 'CPluigns.gradle'
-    apply from: rootProject.file("aab/config.gradle")
+    apply from: rootProject.file("plugins/aab/config.gradle")
     ext.kotlin_version = "1.7.21"
     repositories {
         maven {

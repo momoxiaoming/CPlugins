@@ -66,15 +66,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(":common")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-//    implementation project(path: ':byteEncrypt-interface')
-//    implementation 'com.github.megatronking.stringfog:xor:1.1.0'
-
-//    implementation project(":common")
 
     implementation "com.gp.game:scribble-world:1.0.0"
     implementation "com.gp.game:webServer:1.0.4-test5"
