@@ -1,8 +1,8 @@
-package com.plugin.unitybug.utils
+package com.plugin.stringEncrypt.utils
 
 
-import com.plugin.unitybug.extension.ExtensionManager
-import com.plugin.unitybug.vistor.ByteClassVisitor
+import com.plugin.stringEncrypt.extension.ExtensionManager
+import com.plugin.stringEncrypt.vistor.ByteClassVisitor
 
 import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader

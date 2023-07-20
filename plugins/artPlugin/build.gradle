@@ -41,7 +41,8 @@ if(!properties.get("isLocal").toBoolean()){
     uploadArchives {
         repositories {
             mavenDeployer {
-                repository(url: uri('../repo'))
+                repository(url: rootProject.file("./repo").toURI())
+
                 pom {
                     groupId = rootProject.cPlugins.art.group
                     artifactId = rootProject.cPlugins.art.artifactId

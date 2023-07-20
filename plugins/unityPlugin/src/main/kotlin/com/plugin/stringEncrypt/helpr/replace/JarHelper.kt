@@ -1,10 +1,10 @@
-package com.plugin.unitybug.helpr.replace
+package com.plugin.stringEncrypt.helpr.replace
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
-import com.plugin.unitybug.utils.ScanUtil
-import com.plugin.unitybug.vistor.ByteClassVisitor
+import com.plugin.stringEncrypt.utils.ScanUtil
+import com.plugin.stringEncrypt.vistor.ByteClassVisitor
 import org.objectweb.asm.*
 import org.apache.commons.io.IOUtils
 import java.util.jar.JarFile

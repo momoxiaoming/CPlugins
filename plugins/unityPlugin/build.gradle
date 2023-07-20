@@ -53,7 +53,8 @@ if (!properties.get("isLocal").toBoolean()) {
     uploadArchives {
         repositories {
             mavenDeployer {
-                repository(url: uri('../repo'))
+                repository(url: rootProject.file("./repo").toURI())
+
                 pom {
                     groupId = rootProject.cPlugins.unitybug.group
                     artifactId = rootProject.cPlugins.unitybug.artifactId

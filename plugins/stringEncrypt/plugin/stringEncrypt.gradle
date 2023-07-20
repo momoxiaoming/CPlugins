@@ -1,0 +1,24 @@
+println("--->"+project.name)
+
+project.buildscript.dependencies {
+    add("classpath", rootProject.stringEncrypt)
+}
+
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.android.plugin.stringEncrypt")
+            def ext = project.extensions.getByName("stringEncryptExtension")
+            /**
+             * 需要移除的类以及方法名
+             */
+            ext.classAndMethod = [
+                    "com.unity3d.player.UnityPlayer": ["addPhoneCallListener"],
+                    "com.android.TestPhoneCall":["addPhoneCallListener"]
+            ]
+            println("gradle-->afterEvaluate")
+
+        }
+    }
+}

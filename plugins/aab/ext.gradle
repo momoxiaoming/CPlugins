@@ -40,7 +40,7 @@ if (localFile.exists()) {
         System.setProperty(arr[0], arr[1])
     }
     ext.properties.keySet().forEach {
-        println "\t${it} : ${ext.get(it)}"
+//        println "\t${it} : ${ext.get(it)}"
     }
     println "======== read local.properties ========"
 }

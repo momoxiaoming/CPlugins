@@ -1,4 +1,4 @@
-package com.plugin.unitybug.utils
+package com.plugin.stringEncrypt.utils
 
 import java.io.File
 

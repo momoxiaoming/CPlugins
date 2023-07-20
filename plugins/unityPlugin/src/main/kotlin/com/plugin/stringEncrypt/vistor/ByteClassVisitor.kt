@@ -1,7 +1,7 @@
-package com.plugin.unitybug.vistor
+package com.plugin.stringEncrypt.vistor
 
 
-import com.plugin.unitybug.extension.ExtensionManager
+import com.plugin.stringEncrypt.extension.ExtensionManager
 import org.objectweb.asm.*
 
 /**

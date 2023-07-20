@@ -1,11 +1,8 @@
-package com.plugin.unitybug.transform
+package com.plugin.stringEncrypt.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.plugin.unitybug.extension.ExtensionManager
-import com.plugin.unitybug.helpr.replace.DirReplaceHelper
-import com.plugin.unitybug.helpr.replace.JarHelper
-import org.gradle.api.Project
+import com.plugin.stringEncrypt.helpr.JumpHelper
 
 /**
  * 此Transform主要用于路由替换以及注解删除
@@ -13,16 +10,11 @@ import org.gradle.api.Project
  * @author mmxm
  * @date 2022/1/21 10:22
  */
-class UnitybugTransform(var project: Project) : Transform() {
+class StringEncryptTransform() : Transform() {
 
-    init {
-        project.afterEvaluate {
-            ExtensionManager.initExtension(it)
-        }
-    }
 
     override fun getName(): String {
-        return "UnitybugTransform";
+        return "StringEncryptTransform";
     }
 
     /**
@@ -62,8 +54,7 @@ class UnitybugTransform(var project: Project) : Transform() {
 
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
         inputs.forEach {
-            DirReplaceHelper.scanDir(it, output)
-            JarHelper.scanJar(it, output)
+            JumpHelper.doJump(it, output)
         }
     }
 }

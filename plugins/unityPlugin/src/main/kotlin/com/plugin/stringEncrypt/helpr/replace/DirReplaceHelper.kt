@@ -1,10 +1,10 @@
-package com.plugin.unitybug.helpr.replace
+package com.plugin.stringEncrypt.helpr.replace
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
-import com.plugin.unitybug.utils.ScanUtil
-import com.plugin.unitybug.utils.eachFileRecurse
+import com.plugin.stringEncrypt.utils.ScanUtil
+import com.plugin.stringEncrypt.utils.eachFileRecurse
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.FileInputStream

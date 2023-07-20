@@ -1,4 +1,4 @@
-package com.plugin.unitybug.extension
+package com.plugin.stringEncrypt.extension
 
 /**
  * AnnRemoveExtension

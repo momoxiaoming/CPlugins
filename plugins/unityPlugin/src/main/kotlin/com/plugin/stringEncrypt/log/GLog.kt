@@ -1,4 +1,4 @@
-package com.plugin.unitybug.log
+package com.plugin.stringEncrypt.log
 
 /**
  * Log

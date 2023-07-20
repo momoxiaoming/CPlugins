@@ -1,8 +1,8 @@
-package com.plugin.unitybug
+package com.plugin.stringEncrypt
 
 import com.android.build.gradle.AppExtension
-import com.plugin.unitybug.extension.UnitybugExtension
-import com.plugin.unitybug.transform.UnitybugTransform
+import com.plugin.stringEncrypt.extension.UnitybugExtension
+import com.plugin.stringEncrypt.transform.UnitybugTransform
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

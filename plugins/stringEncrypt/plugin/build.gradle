@@ -8,7 +8,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation 'com.squareup:javapoet:1.13.0'
-    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21"
     implementation "com.android.tools.build:gradle:4.1.3"
 }
 
@@ -42,9 +42,9 @@ if (!properties.get("isLocal").toBoolean()) {
                     authentication(userName: 'vapp-deployment', password: 'pwd123456')
                 }
                 pom {
-                    groupId = rootProject.cPlugins.ann.group
-                    artifactId = rootProject.cPlugins.ann.artifactId
-                    version = rootProject.cPlugins.ann.versionName
+                    groupId = rootProject.cPlugins.stringEncrypt.group
+                    artifactId = rootProject.cPlugins.stringEncrypt.artifactId
+                    version = rootProject.cPlugins.stringEncrypt.versionName
                 }
             }
         }
@@ -54,11 +54,10 @@ if (!properties.get("isLocal").toBoolean()) {
         repositories {
             mavenDeployer {
                 repository(url: rootProject.file("./repo").toURI())
-
                 pom {
-                    groupId = rootProject.cPlugins.ann.group
-                    artifactId = rootProject.cPlugins.ann.artifactId
-                    version = rootProject.cPlugins.ann.versionName
+                    groupId = rootProject.cPlugins.stringEncrypt.group
+                    artifactId = rootProject.cPlugins.stringEncrypt.artifactId
+                    version = rootProject.cPlugins.stringEncrypt.versionName
                 }
             }
         }

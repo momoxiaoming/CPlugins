@@ -73,6 +73,11 @@ ext {
                     versionName: '1.1.2',
                     artifactId : 'junkCode',
             ],
+            stringEncrypt: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.1.2',
+                    artifactId : 'stringEncrypt',
+            ],
 
     ]
 
@@ -86,6 +91,7 @@ ext {
     unitybug = "${cPlugins.unitybug.group}:${cPlugins.unitybug.artifactId}:${cPlugins.unitybug.versionName}"
     ads = "${cPlugins.ads.group}:${cPlugins.ads.artifactId}:${cPlugins.ads.versionName}"
     junkCode = "${cPlugins.junkCode.group}:${cPlugins.junkCode.artifactId}:${cPlugins.junkCode.versionName}"
+    stringEncrypt = "${cPlugins.stringEncrypt.group}:${cPlugins.stringEncrypt.artifactId}:${cPlugins.stringEncrypt.versionName}"
 
 
     AES = [
