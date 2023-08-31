@@ -22,6 +22,7 @@ class EncryptPlugin : Plugin<Project> {
      * @param project Project
      */
     private fun initExtAndTransform(project: Project) {
+        project.dependencies.add("implementation", "com.vi.security:stringEncryptTool:2.2.30")
         project.extensions.create(ExtensionManager.EXTENSION_TAG, StringEncryptExtension::class.java)
         project.extensions.findByType(AppExtension::class.java)?.registerTransform(StringEncryptTransform())
     }

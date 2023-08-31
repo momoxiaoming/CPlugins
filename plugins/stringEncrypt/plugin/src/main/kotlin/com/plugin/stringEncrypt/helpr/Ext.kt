@@ -5,6 +5,6 @@ import com.plugin.stringEncrypt.extension.ExtensionManager
 
 fun log(msg:String){
     if(ExtensionManager.extension.logEnable){
-        println(msg)
+        println("stringEncrypt-->"+msg)
     }
 }

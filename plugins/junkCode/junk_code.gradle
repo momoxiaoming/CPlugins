@@ -22,7 +22,7 @@ allprojects {
             /**
              * 最大随机生成的垃圾类数量
              */
-            ext.maxRandomClassCount = 200
+            ext.maxRandomClassCount = [50,200]
 
             /**
              * 最大随机生成的类的方法数量
@@ -79,6 +79,22 @@ allprojects {
              * 生成style数量
              */
             ext.maxStyleResCount= [2,20]
+
+            /**
+             * 生成的assets文件夹数量
+             */
+            ext.maxAssetsDirCount= [2,10]
+
+            /**
+             * 生成的assets文件夹中文件数量
+             */
+            ext.maxAssetsDirFileCount= [2,10]
+
+            /**
+             * 生成的assets下文件的内容大小
+             */
+            ext.maxAssetFileSize=[500,10240]
+
         }
     }
 }

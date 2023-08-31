@@ -1,7 +1,9 @@
 package com.mckj.junkCode.task
 
 import com.mckj.junkCode.ext.ExtensionManager
+import com.mckj.junkCode.ext.randomForArray
 import com.mckj.junkCode.util.Helper
+import com.mckj.junkCode.util.logI
 import com.squareup.javapoet.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
@@ -39,22 +41,13 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
     private fun generateJunkCode() {
         //随机出包名列表
         val pkgList = mutableListOf<String>()
-        val maxRandomPackageNum = if (ExtensionManager.extension?.maxRandomPackageNum?.size == 2) {
-            val min = ExtensionManager.extension?.maxRandomPackageNum?.get(0) ?: 10
-            val max = ExtensionManager.extension?.maxRandomPackageNum?.get(1) ?: 20
-            Random.nextInt(min, max)
-        } else {
-            Random.nextInt(10, 20)
-        }
-
-        println("junkCode 随机包名数量:$maxRandomPackageNum")
-
+        val maxRandomPackageNum=randomForArray(ExtensionManager.extension?.maxRandomPackageNum)
+        logI("junkCode 随机包名数量:$maxRandomPackageNum")
         for (i in 0 until maxRandomPackageNum) {
             pkgList.add("${Helper.randomName()}.${Helper.randomName()}.${Helper.randomName()}")
         }
-        val maxRandomClassNum = ExtensionManager.extension?.maxRandomClassCount ?: 0
-        val junkClassCount = Random.nextInt(maxRandomClassNum) + 10
-        println("junkCode 随机添加垃圾类个数:$junkClassCount")
+        val junkClassCount =randomForArray(ExtensionManager.extension?.maxRandomClassCount)
+        logI("junkCode 随机添加垃圾类个数:$junkClassCount")
         for (i in 0..junkClassCount) {
             createClassFile(pkgList[Random.nextInt(pkgList.size)])
         }
@@ -73,7 +66,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         //生成垃圾类
         val classBuilder = TypeSpec.classBuilder(className)
         val methodCount = Random.nextInt(ExtensionManager.extension?.maxRandomMethodCount ?: 0)
-//        println("junkCode 随机添加垃圾类方法个数:$methodCount")
+        logI("junkCode 随机添加垃圾类方法个数:$methodCount")
 //        logI("随机添加垃圾类方法个数:$methodCount")
         //添加方法
         for (i in 0..methodCount) {
@@ -207,11 +200,5 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         }
     }
 
-    private fun getRandomForArray(array: IntArray?, min: Int, max: Int): Int {
-        return if (array != null && array.size == 2) {
-            Random.nextInt(array[0], array[1])
-        } else {
-            Random.nextInt(min, max)
-        }
-    }
+
 }

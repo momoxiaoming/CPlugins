@@ -7,11 +7,13 @@ import org.objectweb.asm.tree.FieldNode
 
 class ByteClassVisitor(cw: ClassWriter) :
     ClassVisitor(Opcodes.ASM7, cw) {
+    var hasClinit = false
 
     /**
      * 存放所有的类变量, 包括静态变量
      */
-    private val stringFieldList= mutableListOf<FieldNode>()
+    private val stringFieldList = mutableListOf<FieldNode>()
+    private var owner: String? = null
 
     /**
      * 访问的每个类的回调接口
@@ -30,6 +32,7 @@ class ByteClassVisitor(cw: ClassWriter) :
         superName: String?,
         interfaces: Array<out String>?
     ) {
+        owner = name
         super.visit(version, access, name, signature, superName, interfaces)
     }
 
@@ -42,6 +45,7 @@ class ByteClassVisitor(cw: ClassWriter) :
     override fun visitAnnotation(desc: String?, visible: Boolean): AnnotationVisitor? {
         return super.visitAnnotation(desc, visible)
     }
+
     /**
      * 访问类的变量field的回调接口
      * @param access Int 权限
@@ -58,16 +62,23 @@ class ByteClassVisitor(cw: ClassWriter) :
         signature: String?,
         value: Any?
     ): FieldVisitor {
-        if (value != null && value is String
-            && desc == Type.getDescriptor(String::class.java)
-            && 0 != (Opcodes.ACC_STATIC and access)
-            && 0 != (Opcodes.ACC_FINAL and access)
-        ) {
-            //添加一个类下的 所有  static final 的字段
+        if (value == null || value !is String || desc != "Ljava/lang/String;" || (access and Opcodes.ACC_STATIC == 0) || (access and Opcodes.ACC_FINAL == 0)) {
+            return super.visitField(access, name, desc, signature, value)
+        } else {
             stringFieldList.add(FieldNode(access, name, desc, signature, value))
-            return super.visitField(access, name, desc, signature, null)
+            return super.visitField(access, name, desc, signature, value)
         }
-        return  super.visitField(access, name, desc, signature, value)
+
+//        if (value != null && value is String
+//            && desc == Type.getDescriptor(String::class.java)
+//            && 0 != (Opcodes.ACC_STATIC and access)
+//            && 0 != (Opcodes.ACC_FINAL and access)
+//        ) {
+//            //添加一个类下的 所有  static final 的字段
+//            stringFieldList.add(FieldNode(access, name, desc, signature, value))
+//            return super.visitField(access, name, desc, signature, null)
+//        }
+//        return  super.visitField(access, name, desc, signature, null)
     }
 
     /**
@@ -86,13 +97,25 @@ class ByteClassVisitor(cw: ClassWriter) :
         signature: String?,
         exceptions: Array<out String>?
     ): MethodVisitor {
-        val mv=super.visitMethod(access, name, desc, signature, exceptions)
-        return ByteMethodVisitor(mv,stringFieldList)
+//        if (name == "<clinit>") {
+//            hasClinit = true
+//        }
+        val mv = super.visitMethod(access, name, desc, signature, exceptions)
+        return ByteMethodVisitor(mv, name, owner, stringFieldList)
     }
 
     override fun visitModule(name: String?, access: Int, version: String?): ModuleVisitor {
         return super.visitModule(name, access, version)
     }
 
-
+//    override fun visitEnd() {
+//        if (!hasClinit) {
+//            val mv = super.visitMethod(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null)
+//            mv.visitCode()
+//            mv.visitInsn(Opcodes.RETURN)
+//            mv.visitMaxs(0, 0)
+//            mv.visitEnd()
+//        }
+//        super.visitEnd()
+//    }
 }

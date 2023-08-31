@@ -1,5 +1,7 @@
 package com.mckj.junkCode.util
 
+import com.mckj.junkCode.ext.ExtensionManager
+
 /**
  * Ext
  *
@@ -8,5 +10,7 @@ package com.mckj.junkCode.util
  */
 
 fun logI(msg:String){
-    println("junkCode: $msg")
+    if(ExtensionManager.extension?.logEnable==true){
+        println("junkCode: $msg")
+    }
 }

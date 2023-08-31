@@ -8,10 +8,11 @@ buildscript {
     apply from: 'CPluigns.gradle'
     apply from: rootProject.file("plugins/aab/config.gradle")
 
-    apply from: 'plugins/stringEncrypt/plugin/stringEncrypt.gradle'
+//    apply from: 'plugins/stringEncrypt/plugin/stringEncrypt.gradle'
 
     ext.kotlin_version = "1.7.21"
     repositories {
+        google()
         maven {
             url uri('./repo')
         }
@@ -35,7 +36,7 @@ buildscript {
                 password = 'pwd123456'
             }
         }
-        google()
+
         mavenCentral()
         maven { url 'https://repo1.maven.org/maven2/' }
         jcenter()
@@ -43,30 +44,20 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-//        classpath "com.didiglobal.booster:booster-aapt2:3.1.0"
-//        classpath "com.alibaba:arouter-register:1.0.2"
-//        classpath rootProject.hdl_plugin
-//        classpath rootProject.string_encrypt
-//        classpath rootProject.artOBS
-//        classpath rootProject.artReplace
-//          classpath rootProject.art
-//        classpath rootProject.ann
-//        classpath "com.android.plugin:stringEncrypt:1.0.4.6"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradlePLUGIN files
+
         classpath deps.plugin.digital
         classpath deps.plugin.shadow
 //        classpath rootProject.aab  //aab混淆
 //        classpath rootProject.unitybug  //unitybug
 //        classpath rootProject.ads
 //        classpath rootProject.junkCode
-//
 
     }
 }
 
 allprojects {
     repositories {
+        google()
         maven {
             url uri('./repo')
         }
@@ -90,7 +81,6 @@ allprojects {
                 password = 'pwd123456'
             }
         }
-        google()
         mavenCentral()
         maven { url 'https://repo1.maven.org/maven2/' }
         jcenter()
@@ -114,5 +104,5 @@ task clean(type: Delete) {
 //apply from: 'remove_annotation/remove_ann.gradle'
 //apply from: 'unityPlugin/unitybug.gradle'
 //apply from: 'assets_dir_obs/assets_obs.gradle'
-//apply from: 'junkCode/junk_code.gradle'
+//apply from: 'plugins/junkCode/junk_code.gradle'
 

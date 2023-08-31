@@ -1,6 +1,7 @@
 package com.mckj.junkCode.task
 
 import com.mckj.junkCode.ext.ExtensionManager
+import com.mckj.junkCode.ext.randomForArray
 import com.mckj.junkCode.templates.res.DrawableTemplate
 import com.mckj.junkCode.templates.res.LayoutTemplate
 import com.mckj.junkCode.templates.res.StyleTemplate
@@ -46,7 +47,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         /**
          * 生成drawable
          */
-        val drawableCount =getRandomForArray(ExtensionManager.extension?.maxDrawableResCount, 2, 50)
+        val drawableCount = randomForArray(ExtensionManager.extension?.maxDrawableResCount)
 
         for (i in 0..drawableCount) {
             val fileName=Helper.randomLengthName()
@@ -58,7 +59,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         /**
          * 生成string
          */
-        val stringResCount =getRandomForArray(ExtensionManager.extension?.maxStringResCount, 2, 50)
+        val stringResCount =randomForArray(ExtensionManager.extension?.maxStringResCount)
         val stringFile=File(resDir,"value/string.xml")
         val sb=StringBuilder()
         sb.append("<resources>\n")
@@ -72,7 +73,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         /**
          * 生成layout
          */
-        val layoutResCount =getRandomForArray(ExtensionManager.extension?.maxLayoutResCount, 2, 50)
+        val layoutResCount =randomForArray(ExtensionManager.extension?.maxLayoutResCount)
         for (i in 0..layoutResCount) {
             val fileName=Helper.randomLengthName()
             writeResFile(File(resDir,"layout/$fileName.xml"), LayoutTemplate.randomTemplate())
@@ -82,7 +83,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         /**
          * 生成color
          */
-        val colorResCount =getRandomForArray(ExtensionManager.extension?.maxColorResCount, 2, 50)
+        val colorResCount =randomForArray(ExtensionManager.extension?.maxColorResCount)
         val colorFile=File(resDir ,"value/colors.xml")
         val colorSb=StringBuilder()
         colorSb.append("<resources>\n")
@@ -97,7 +98,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         /**
          * 生成样式
          */
-        val styleResCount =getRandomForArray(ExtensionManager.extension?.maxStyleResCount, 2, 50)
+        val styleResCount =randomForArray(ExtensionManager.extension?.maxStyleResCount)
         val styleFile=File(resDir,"value/styles.xml")
         val styleSb=StringBuilder()
         styleSb.append("<resources>\n")
@@ -138,11 +139,5 @@ open class JunkResGenerateClassTask : DefaultTask() {
 
 
 
-    private fun getRandomForArray(array: IntArray?, min: Int, max: Int): Int {
-        return if (array != null && array.size == 2) {
-            Random.nextInt(array[0], array[1])
-        } else {
-            Random.nextInt(min, max)
-        }
-    }
+
 }

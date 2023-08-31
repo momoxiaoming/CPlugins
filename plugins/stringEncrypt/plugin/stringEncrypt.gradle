@@ -10,15 +10,14 @@ allprojects {
         if (hasApplication) {
             project.pluginManager.apply("com.android.plugin.stringEncrypt")
             def ext = project.extensions.getByName("stringEncryptExtension")
+
+            ext.logEnable=true
             /**
              * 需要移除的类以及方法名
              */
-            ext.classAndMethod = [
-                    "com.unity3d.player.UnityPlayer": ["addPhoneCallListener"],
-                    "com.android.TestPhoneCall":["addPhoneCallListener"]
+            ext.encryptPackages = [
+                    "com/android/test123",
             ]
-            println("gradle-->afterEvaluate")
-
         }
     }
 }

@@ -3,6 +3,7 @@ package com.mckj.junkCode
 import com.android.build.gradle.AppExtension
 import com.mckj.junkCode.ext.ExtensionManager
 import com.mckj.junkCode.ext.JunkCodeExtension
+import com.mckj.junkCode.task.JunkAssetsGenerateClassTask
 import com.mckj.junkCode.task.JunkCodeGenerateClassTask
 import com.mckj.junkCode.task.JunkResGenerateClassTask
 import com.mckj.junkCode.transform.JunkCodeTransForm
@@ -44,13 +45,14 @@ class JunkCodePlugin : Plugin<Project> {
     private fun addRandomClassTask(project: Project) {
         val appExtension = project.extensions.getByType(AppExtension::class.java)
         appExtension.applicationVariants.all {
+            //插入垃圾代码
             val junkCodeOut=File(project.buildDir, "generated/source/junkCode/${it.name}")
             val junkCodeTask=project.tasks.create("generate${it.name.capitalize()}JunkCode",JunkCodeGenerateClassTask::class.java)
             junkCodeTask.outDir=junkCodeOut
             it.registerJavaGeneratingTask(junkCodeTask,junkCodeOut)
             it.generateBuildConfigProvider.get().dependsOn(junkCodeTask)
 
-
+            //插入资源
             val junkResOut=File(project.buildDir, "generated/res/junkCode/${it.name}")
             val junkResTask=project.tasks.create("generate${it.name.capitalize()}JunkResource",JunkResGenerateClassTask::class.java)
             junkResTask.resDir=junkResOut
@@ -59,6 +61,8 @@ class JunkCodePlugin : Plugin<Project> {
 
         }
     }
+
+
 
     private fun hookTask(project: Project) {
         project.afterEvaluate {
@@ -83,6 +87,17 @@ class JunkCodePlugin : Plugin<Project> {
                                 println("outputs-->" + file.path)
                                 if(file.path.endsWith("proguard.txt")){
                                     addProguard(file)
+                                }
+                            }
+                        }
+                    }else if (task.name.matches(Regex("^merge\\S*ReleaseAssets\$"))) {
+                        task.doLast { assetTask ->
+                            assetTask.outputs.files.forEach { file ->
+                                if (file.path.contains("merged_assets")) {
+
+                                    logI("merged_assets-->${file.path}")
+
+                                    JunkAssetsGenerateClassTask.doTask(file)
                                 }
                             }
                         }
