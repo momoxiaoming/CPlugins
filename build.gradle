@@ -44,13 +44,14 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "com.alibaba:arouter-register:1.0.2"
         classpath deps.plugin.digital
         classpath deps.plugin.shadow
 //        classpath rootProject.aab  //aab混淆
 //        classpath rootProject.unitybug  //unitybug
 //        classpath rootProject.ads
 //        classpath rootProject.junkCode
+//        classpath rootProject.art
 
     }
 }
@@ -97,7 +98,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//apply from: 'arouter_obs.gradle'
+//apply from: 'plugins/artPlugin/arouter_obs.gradle'
 //apply plugin: 'com.android.plugin.art'
 //apply from: 'string_encrypt.gradle'
 

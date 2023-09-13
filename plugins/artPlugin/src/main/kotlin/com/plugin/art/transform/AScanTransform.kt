@@ -2,6 +2,7 @@ package com.plugin.art.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.plugin.art.ArtManager
 import com.plugin.art.extension.ArtRemoveExtension
 import com.plugin.art.helpr.replace.DirReplaceHelper
 import com.plugin.art.helpr.replace.JarReplaceHelper
@@ -9,10 +10,7 @@ import com.plugin.art.helpr.scan.DirScanHelper
 import com.plugin.art.helpr.scan.JarScanHelper
 import com.plugin.art.log.GLog
 import com.plugin.art.task.CreateARouterMappingTask
-import com.plugin.art.task.EncryptClassGenerator
-import com.plugin.art.utils.Common
 import org.gradle.api.Project
-import java.io.File
 
 /**
  * 此Transform主要用于路由扫描
@@ -21,8 +19,8 @@ import java.io.File
  * @date 2022/1/21 10:22
  */
 class AScanTransform(var project: Project) : Transform() {
-    companion object{
-        val routes= hashMapOf<String,String>()
+    companion object {
+        val routes = hashMapOf<String, String>()
     }
 
     override fun getName(): String {
@@ -66,39 +64,33 @@ class AScanTransform(var project: Project) : Transform() {
 
     private fun handleInput(inputs: Collection<TransformInput>, output: TransformOutputProvider) {
         val extension = project.extensions.getByName("art_annotation") as? ArtRemoveExtension
-        val openDebug=extension?.openLog?:false
+        val openDebug = extension?.openLog ?: false
         GLog.setDebug(openDebug)
+
+        //遍历拿出所有路由
         inputs.forEach {
             DirScanHelper.scanDir(it, output)
             JarScanHelper.scanJar(it, output)
         }
 
         //拿到所有路由后,处理混淆,mapp问题
-        CreateARouterMappingTask.confuse(project =project ,routes.keys.toList())
+        CreateARouterMappingTask.confuse(project = project, routes.keys.toList())
 
+        //替换路由
         inputs.forEach {
-            DirReplaceHelper.scanDir(it, output)
             JarReplaceHelper.scanJar(it, output)
         }
-        //创建中间类,防止被优化
-        createObsClass(inputs, output)
+
+        //混淆规则, 防止路由被优化
+        createProguard()
     }
 
-    fun createObsClass(inputs: Collection<TransformInput>, output: TransformOutputProvider){
-        val directoryInput=inputs.iterator().next().directoryInputs.iterator().next()
-        val dest = output.getContentLocation(
-            directoryInput.name,
-            directoryInput.contentTypes,
-            directoryInput.scopes,
-            Format.DIRECTORY
-        )
-        val path=dest.path
-        val targetClass=Common.randomClzzName(4)
-        val outFilePath=File(path,"${Common.keepPkg}/$targetClass.class")
-        if(!outFilePath.parentFile.exists()){
-            outFilePath.parentFile.mkdirs()
+    fun createProguard() {
+        val pgList= mutableListOf<String>()
+        routes.keys.toList().forEach {
+            val clz = it.replace("/", ".")
+            pgList.add("-keep, allowobfuscation class $clz")
         }
-        //创建引用文件,防止被优化
-        EncryptClassGenerator.createDefaultEncrypt(targetClass,Common.keepPkg,routes.keys.toList(),outFilePath)
+        ArtManager.updateProguard(pgList)
     }
 }

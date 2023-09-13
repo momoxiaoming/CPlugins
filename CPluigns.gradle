@@ -45,7 +45,7 @@ ext {
             ],
             art: [
                     group      : 'com.android.plugin',
-                    versionName: '2.1.7', //
+                    versionName: '2.1.8', //
                     artifactId : 'art',
             ],
             ann: [

@@ -66,6 +66,4 @@ object DirScanHelper {  //type 0是扫描任务,1是替换任务
             }
         }
     }
-
-
 }

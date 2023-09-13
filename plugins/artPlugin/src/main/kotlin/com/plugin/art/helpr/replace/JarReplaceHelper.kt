@@ -20,27 +20,43 @@ import org.apache.commons.io.IOUtils
  * @date 2022/5/26 17:53
  */
 object JarReplaceHelper {
+    var routerJarFile:File?=null
 
     fun scanJar(transformInput: TransformInput, outputProvider: TransformOutputProvider) {
         // scan all jars
         transformInput.jarInputs.forEach { jarInput ->
+
             var destName = jarInput.name
             // rename jar files
             val hexName = DigestUtils.md5Hex(jarInput.file.absolutePath)
             if (destName.endsWith(".jar")) {
                 destName = destName.substring(0, destName.length - 4)
             }
+
             // input file
             val src = jarInput.file
-            // output file
-            val dest = outputProvider.getContentLocation(
-                destName + "_" + hexName,
-                jarInput.contentTypes,
-                jarInput.scopes,
-                Format.JAR
-            )
-            handleJarFile(src)
-            FileUtils.copyFile(src, dest)
+
+            if(routerJarFile!=null){
+                if (routerJarFile!!.path == src.path) {
+                    val dest = outputProvider.getContentLocation(
+                        destName + "_" + hexName,
+                        jarInput.contentTypes,
+                        jarInput.scopes,
+                        Format.JAR
+                    )
+                    handleJarFile(src)
+                    FileUtils.copyFile(src, dest)
+                }
+            }else{
+                val dest = outputProvider.getContentLocation(
+                    destName + "_" + hexName,
+                    jarInput.contentTypes,
+                    jarInput.scopes,
+                    Format.JAR
+                )
+                handleJarFile(src)
+                FileUtils.copyFile(src, dest)
+            }
         }
     }
 

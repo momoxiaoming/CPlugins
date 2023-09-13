@@ -4,6 +4,8 @@ import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.utils.FileUtils
+import com.plugin.art.helpr.replace.JarReplaceHelper
+import com.plugin.art.log.GLog
 import com.plugin.art.utils.ScanUtil
 import org.apache.commons.codec.digest.DigestUtils
 import java.io.File
@@ -12,6 +14,10 @@ import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
 import org.apache.commons.io.IOUtils
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.jar.JarEntry
+
 /**
  * JarScanHelper
  *
@@ -38,12 +44,13 @@ object JarScanHelper {
                 jarInput.scopes,
                 Format.JAR
             )
+            GLog.i("jar-->src:${src.path}")
             handleJarFile(src)
             FileUtils.copyFile(src, dest)
         }
     }
 
-    private fun handleJarFile(src:File){
+    private fun handleJarFile(src: File) {
         val jarFile = JarFile(src)
         val tempFile = File(src.parent + File.separator + "${src.name}.jar")
         if (tempFile.exists()) {
@@ -62,14 +69,16 @@ object JarScanHelper {
                 if (codes != null) {
                     jarOutputStream.write(codes)
                 }
-            } else {
+            }else {
+                 if(ScanUtil.filterClass(entryName)){
+                    //记录路由表类所在的jar路径
+                    JarReplaceHelper.routerJarFile=src
+                }
                 jarOutputStream.write(IOUtils.toByteArray(inputStream))
             }
         }
-        //结束
-        jarOutputStream.close()
         jarFile.close()
-
+        jarOutputStream.close()
         if (src.exists()) {
             src.delete()
         }

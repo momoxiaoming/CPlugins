@@ -22,6 +22,7 @@ import java.util.*
 class Art : Plugin<Project> {
     override fun apply(project: Project) {
         regiest(project)
+        hookTask(project)
     }
     fun regiest(project: Project){
         project.extensions.create("art_annotation", ArtRemoveExtension::class.java)
@@ -29,6 +30,25 @@ class Art : Plugin<Project> {
             val appExtension = project.extensions.findByType(AppExtension::class.java)
             appExtension?.registerTransform(AScanTransform(project))
 //            appExtension?.registerTransform(ReplaceTransform(project))
+        }
+    }
+
+    private fun hookTask(project: Project) {
+        project.afterEvaluate {
+            if (it.plugins.hasPlugin("com.android.application")) {
+                project.tasks.forEach { task ->
+                     if (task.name.matches(Regex("^merge\\S*ReleaseGeneratedProguardFiles\$"))) {
+                         task.doLast { assetTask ->
+                             assetTask.outputs.files.forEach { file ->
+                                 println("outputs-->" + file.path)
+                                 if(file.path.endsWith("proguard.txt")){
+                                     ArtManager.buildProguardFile=file
+                                 }
+                             }
+                         }
+                    }
+                }
+            }
         }
     }
 }
