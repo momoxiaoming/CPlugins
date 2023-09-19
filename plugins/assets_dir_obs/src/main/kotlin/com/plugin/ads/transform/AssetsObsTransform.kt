@@ -59,11 +59,10 @@ class AssetsObsTransform(var project: Project) : Transform() {
         inputs.forEach {
             DirReplaceHelper.scanDir(it, output)
             JarHelper.scanJar(it, output)
-
-            //检查assets修改的路径和替换的字符串是否能匹配
-            if(ExtensionManager.useMapping.keys.size!=0){
-                throw Exception("修改的assets文件目录路径与修改的字符串不匹配,请检查:${ExtensionManager.useMapping.keys.toList()}")
-            }
+        }
+        //检查assets修改的路径和替换的字符串是否能匹配
+        if(ExtensionManager.useMapping.keys.size!=0){
+            throw Exception("修改的assets文件目录路径与修改的字符串不匹配,请检查:${ExtensionManager.useMapping.keys.toList()}")
         }
     }
 }

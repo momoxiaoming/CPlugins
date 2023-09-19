@@ -20,24 +20,18 @@ object ArtManager {
      * 更新proGuard,防止修改的mapping被优化
      */
     fun updateProguard(proguard: List<String>) {
-        if (buildProguardFile ==null) {
+        if (buildProguardFile == null) {
             return
         }
-        if (!buildProguardFile!!.exists()) {
-            var lines = ""
-            proguard.forEach {
-                lines += "\n $it"
-            }
-            buildProguardFile!!.writeText(lines)
-        } else {
-            var proguard = buildProguardFile!!.readText()
-            proguard.forEach {
-                proguard += "\n $it"
-            }
-            buildProguardFile!!.writeText(proguard)
+        if(!buildProguardFile!!.exists()){
+            buildProguardFile!!.createNewFile()
         }
+        var fileText=buildProguardFile!!.readText()
+        proguard.forEach {
+            fileText += "\n $it"
+        }
+        buildProguardFile!!.writeText(fileText)
+
     }
-
-
 
 }

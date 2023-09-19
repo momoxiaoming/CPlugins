@@ -1,10 +1,10 @@
 package com.plugin.ads.vistor
 
 import com.plugin.ads.extension.ExtensionManager
+import com.plugin.ads.log.GLog
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.FieldNode
-import java.util.*
 
 /**
  * 自定义方法访问模式
@@ -27,7 +27,7 @@ class ByteMethodVisitor(
             }
             val entryString = ExtensionManager.getUseName(value)
             if (entryString != null && entryString != value) {
-                println("assets 字符替换: $value --> $entryString")
+                GLog.i("assets 字符替换: $value --> $entryString")
                 super.visitLdcInsn(entryString)
                 return
             }
@@ -45,7 +45,7 @@ class ByteMethodVisitor(
                 }
                 val entryString = ExtensionManager.getUseName(value)
                 if (entryString != null && entryString != value) {
-                    println("assets 字符替换: $value --> $entryString")
+                    GLog.i("assets 字符替换: $value --> $entryString")
                     mv.visitFieldInsn(
                         Opcodes.PUTSTATIC,
                         owner,

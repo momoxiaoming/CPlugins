@@ -1,54 +1,59 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'maven'
-    id 'kotlin-kapt'
-
+    id 'java-gradle-plugin'  //Gradle开发插件
+    id 'kotlin'              //使用java
+    id 'maven-publish'       //插件发布
 }
 
-android {
-    compileSdkVersion 33
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['/libs']
-            jni.srcDirs = []
-        }
-    }
-}
+sourceCompatibility = "11"
+targetCompatibility = "11"
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.21"
+    implementation gradleApi()
+    implementation 'com.squareup:javapoet:1.13.0'
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21"
+    implementation "com.android.tools.build:gradle:4.1.3"
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')) {
-                authentication(userName: 'vapp-deployment', password: 'pwd123456')
-            }
-            pom {
+
+
+
+
+if (!properties.get("isLocal").toBoolean()) {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
                 groupId = rootProject.cPlugins.stringEncrypt.group
                 artifactId = rootProject.cPlugins.stringEncrypt.artifactId
                 version = rootProject.cPlugins.stringEncrypt.versionName
+            }
+        }
+        repositories {
+            maven {
+                allowInsecureProtocol = true
+                url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                credentials {
+                    it.username = "vapp-deployment"
+                    it.password = "pwd123456"
+                }
+            }
+
+        }
+
+    }
+} else {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.java
+                groupId = rootProject.cPlugins.stringEncrypt.group
+                artifactId = rootProject.cPlugins.stringEncrypt.artifactId
+                version = rootProject.cPlugins.stringEncrypt.versionName
+            }
+        }
+        repositories {
+            maven {
+                url = rootProject.file("./repo").toURI()
             }
         }
     }

@@ -7,6 +7,11 @@ package com.plugin.ads.extension
  * @date 2022/8/3 11:59
  */
 open class AssetsObsExtension {
+
+    /**
+     * 日志开关
+     */
+    var logEnable=false
     /**
      * 需要混淆的目录 , 比如assets/web/
      */

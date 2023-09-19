@@ -4,8 +4,6 @@ import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
 import com.plugin.art.log.GLog
-import com.plugin.art.transform.AScanTransform
-import com.plugin.art.utils.Common
 import com.plugin.art.utils.ScanUtil
 import com.plugin.art.utils.eachFileRecurse
 import org.apache.commons.io.FileUtils
@@ -29,7 +27,7 @@ object DirScanHelper {  //type 0是扫描任务,1是替换任务
                 directoryInput.scopes,
                 Format.DIRECTORY
             )
-            FileUtils.forceMkdir(dest)
+            dest.mkdirs()
             var root = directoryInput.file.absolutePath
             if (!root.endsWith(File.separator)) {
                 root += File.separator

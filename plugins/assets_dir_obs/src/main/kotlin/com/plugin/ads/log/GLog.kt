@@ -1,5 +1,7 @@
 package com.plugin.ads.log
 
+import com.plugin.ads.extension.ExtensionManager
+
 /**
  * Log
  *
@@ -7,14 +9,8 @@ package com.plugin.ads.log
  * @date 2022/1/25 14:09
  */
 object GLog {
-    private var debug:Boolean=true
-
-    fun setDebug(debug:Boolean){
-        GLog.debug =debug
-    }
-
     fun i(msg:String){
-        if(debug){
+        if(ExtensionManager.extension?.logEnable==true){
             println("art: $msg")
         }
     }

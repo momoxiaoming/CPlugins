@@ -23,6 +23,8 @@ object ExtensionManager {
 
 
     var extension: AssetsObsExtension? = null
+
+
     fun initExtension(project: Project) {
         extension = project.extensions.getByName("assets_file_obs") as AssetsObsExtension
         initMappingName()

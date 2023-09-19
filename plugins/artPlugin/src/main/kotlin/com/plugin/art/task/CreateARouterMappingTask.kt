@@ -1,16 +1,11 @@
 package com.plugin.art.task
 
+import com.plugin.art.ArtManager
 import com.plugin.art.extension.ArtRemoveExtension
 import com.plugin.art.utils.Common
-import com.plugin.art.log.GLog
-import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.TaskAction
 import java.io.File
-import java.lang.StringBuilder
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import java.util.*
@@ -90,33 +85,9 @@ object CreateARouterMappingTask {
                     Files.write(Paths.get(obsFile.path), it.toByteArray(), StandardOpenOption.APPEND)
                 }
             }
+        }else{
+            ArtManager.updateProguard(listOf("-applymapping " + armFile.path))
         }
-        /**
-         * 最后一步,将aRouterMapping写入到app模块下的proguard-rules.pro中
-         * 新增通用keep
-         */
-        val pgFile = File("${project.rootDir}/app/proguard-rules.pro")
-        val addSt = "-applymapping " + armFile.path
-        val pgCt = StringBuffer(pgFile.readText())
-        val us = mutableListOf<String>(
-            "\n-keep class ${Common.keepPkg.replace("/", ".")}.**{*;}\n",
-//            "$addSt\n"
-        )
-        if(!openObs){
-            us.add(addSt)
-        }
-        us.forEach {
-            if (!pgCt.contains(it)) {
-                Files.write(Paths.get(pgFile.path), it.toByteArray(), StandardOpenOption.APPEND)
-            }
-        }
-
-
-        /**
-
-         */
-
-
     }
 
     /**

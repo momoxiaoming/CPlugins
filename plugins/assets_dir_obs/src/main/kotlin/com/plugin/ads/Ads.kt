@@ -3,6 +3,7 @@ package com.plugin.ads
 import com.android.build.gradle.AppExtension
 import com.plugin.ads.extension.AssetsObsExtension
 import com.plugin.ads.extension.ExtensionManager
+import com.plugin.ads.log.GLog
 import com.plugin.ads.transform.AssetsObsTransform
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -37,7 +38,8 @@ class Ads : Plugin<Project> {
                 if (task.name.matches(Regex("^merge\\S*ReleaseAssets\$"))) {
                     task.doLast { assetTask ->
                         assetTask.outputs.files.forEach { file ->
-                            if (file.path.contains("merged_assets")) {
+                            GLog.i("assets输出文件->"+file.path)
+                            if (file.path.contains("assets")) {
                                 /**
                                  * 这里顺序别错了, 优先重命名文件,再重命名目录, 否者会出现问题
                                  */
@@ -84,7 +86,7 @@ class Ads : Plugin<Project> {
                     return
                 }
                 val newFile = File(file.path.replace(it, obsName))
-                println("--->${file.path}---rename-->${newFile.path}")
+                GLog.i("it:$it--->${file.path}---rename-->${newFile.path}")
                 file.renameTo(newFile)
                 ExtensionManager.setUseName(it,obsName)
             }else{

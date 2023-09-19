@@ -9,9 +9,10 @@ import com.mckj.junkCode.util.Helper
 import com.mckj.junkCode.util.logI
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import java.io.File
-import kotlin.random.Random
 
 /**
  * 随机生成垃圾类
@@ -21,19 +22,20 @@ import kotlin.random.Random
  * @date 2023/7/11 9:35
  */
 open class JunkResGenerateClassTask : DefaultTask() {
-
     @Input
-    lateinit var resDir: File
+    lateinit var resDirPath: String
 
     @TaskAction
     fun doTask() {
         println("JunkResGenerateClassTask do task")
+
+        val resDir=File(resDirPath)
         if (!resDir.exists()) {
             resDir.mkdirs()
         }
 
         //生成垃圾资源
-        generateResource()
+        generateResource(resDir)
     }
 
 
@@ -42,7 +44,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
     /**
      * 生成资源
      */
-    private fun generateResource() {
+    private fun generateResource(resDir:File) {
         val keepList= mutableListOf<String>()
         /**
          * 生成drawable

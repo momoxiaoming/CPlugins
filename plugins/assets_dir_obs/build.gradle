@@ -1,69 +1,55 @@
-apply plugin: 'maven'
-apply plugin: 'kotlin'
-apply plugin: 'java-gradle-plugin'
+plugins {
+    id 'java-gradle-plugin'  //Gradle开发插件
+    id 'kotlin'              //使用java
+    id 'maven-publish'       //插件发布
+}
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8  //使用1.8编译
+sourceCompatibility = "11"
+targetCompatibility = "11"
+
 dependencies {
     implementation gradleApi()
-    implementation localGroovy()
-    implementation 'com.squareup:javapoet:1.13.0'
-    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
-    implementation "com.android.tools.build:gradle:4.1.3"
+    implementation "com.android.tools.build:gradle:$gradleVersion"
+    implementation "commons-io:commons-io:2.13.0"
+    implementation "org.ow2.asm:asm-tree:9.2"
+
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url 'https://dl.bintray.com/android/android-tools'
-    }
-    maven {
-        url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/"
-        credentials {
-            username = 'vapp-reader'
-            password = 'pwd123456'
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.java
+            groupId = rootProject.cPlugins.ads.group
+            artifactId = rootProject.cPlugins.ads.artifactId
+            version = rootProject.cPlugins.ads.versionName
         }
     }
-    maven {
-        url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/"
-        credentials {
-            username = 'vapp-reader'
-            password = 'pwd123456'
-        }
-    }
-}
-
-
-if (!properties.get("isLocal").toBoolean()) {
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')) {
-                    authentication(userName: 'vapp-deployment', password: 'pwd123456')
-                }
-                pom {
-                    groupId = rootProject.cPlugins.ads.group
-                    artifactId = rootProject.cPlugins.ads.artifactId
-                    version = rootProject.cPlugins.ads.versionName
+    repositories {
+        if (!isLocal.toBoolean()) {
+            maven {
+                allowInsecureProtocol = true
+                url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                credentials {
+                    it.username = "vapp-deployment"
+                    it.password = "pwd123456"
                 }
             }
-        }
-    }
-} else {
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: rootProject.file("./repo").toURI())
-
-                pom {
-                    groupId = rootProject.cPlugins.ads.group
-                    artifactId = rootProject.cPlugins.ads.artifactId
-                    version = rootProject.cPlugins.ads.versionName
-                }
+        } else {
+            maven {
+                url = rootProject.file("./repo").toURI()
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 

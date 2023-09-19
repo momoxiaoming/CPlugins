@@ -2,12 +2,8 @@ package com.plugin.art.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.plugin.art.encrypt.EncryptInjector
 import com.plugin.art.helpr.replace.DirReplaceHelper
 import com.plugin.art.helpr.replace.JarReplaceHelper
-import com.plugin.art.helpr.scan.DirScanHelper
-import com.plugin.art.helpr.scan.JarScanHelper
-import com.plugin.art.task.CreateARouterMappingTask
 import org.gradle.api.Project
 
 /**

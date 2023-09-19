@@ -7,6 +7,8 @@ import com.mckj.junkCode.util.logI
 import com.squareup.javapoet.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.util.*
@@ -23,22 +25,22 @@ import kotlin.random.Random
 open class JunkCodeGenerateClassTask : DefaultTask() {
 
     @Input
-    lateinit var outDir: File
-
+    lateinit var outDirPath: String
 
     @TaskAction
     fun doTask() {
         println("JunkCodeGenerateClassTask do task")
+        val outDir=File(outDirPath)
         if (!outDir.exists()) {
             outDir.mkdirs()
         }
         //生成垃圾类
-        generateJunkCode()
+        generateJunkCode(outDir)
 
 
     }
 
-    private fun generateJunkCode() {
+    private fun generateJunkCode(outDir:File) {
         //随机出包名列表
         val pkgList = mutableListOf<String>()
         val maxRandomPackageNum=randomForArray(ExtensionManager.extension?.maxRandomPackageNum)
@@ -49,13 +51,13 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         val junkClassCount =randomForArray(ExtensionManager.extension?.maxRandomClassCount)
         logI("junkCode 随机添加垃圾类个数:$junkClassCount")
         for (i in 0..junkClassCount) {
-            createClassFile(pkgList[Random.nextInt(pkgList.size)])
+            createClassFile(pkgList[Random.nextInt(pkgList.size)],outDir)
         }
     }
 
 
 
-    private fun createClassFile(packageName: String?) {
+    private fun createClassFile(packageName: String?,outDir:File) {
         val pkg = if (packageName.isNullOrEmpty()) {
             "${Helper.randomName()}.${Helper.randomName()}.${Helper.randomName()}"
         } else {

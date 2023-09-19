@@ -4,7 +4,7 @@
 	package="com.android.plugins">
 
 	<application
-		android:name="com.android.App"
+		android:name="com.android.test123.App"
 		android:allowBackup="true"
 		android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
 		android:icon="@mipmap/ic_launcher"
@@ -14,7 +14,7 @@
 		android:theme="@style/Theme.CPlugins"
 		tools:replace="android:appComponentFactory">
 
-		<activity android:name="com.android.test123.MainActivity2">
+		<activity android:name="com.android.test123.MainActivity2" android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +25,7 @@
 			android:name="com.android.MainActivity3"
 			android:targetActivity="com.android.test123.MainActivity2" />
 		<meta-data
-			android:name="com.android.Test2"
+			android:name="com.android.test123.Test2"
 			android:value="@string/appCallback" />
 
 	</application>

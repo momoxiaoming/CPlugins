@@ -1,4 +1,4 @@
-package com.android
+package com.android.test123
 
 import android.app.Application
 import com.alibaba.android.arouter.launcher.ARouter

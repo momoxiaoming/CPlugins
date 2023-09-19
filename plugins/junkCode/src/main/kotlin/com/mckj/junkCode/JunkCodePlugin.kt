@@ -1,6 +1,7 @@
 package com.mckj.junkCode
 
 import com.android.build.gradle.AppExtension
+import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.mckj.junkCode.ext.ExtensionManager
 import com.mckj.junkCode.ext.JunkCodeExtension
 import com.mckj.junkCode.task.JunkAssetsGenerateClassTask
@@ -48,20 +49,18 @@ class JunkCodePlugin : Plugin<Project> {
             //插入垃圾代码
             val junkCodeOut=File(project.buildDir, "generated/source/junkCode/${it.name}")
             val junkCodeTask=project.tasks.create("generate${it.name.capitalize()}JunkCode",JunkCodeGenerateClassTask::class.java)
-            junkCodeTask.outDir=junkCodeOut
+            junkCodeTask.outDirPath=junkCodeOut.path
             it.registerJavaGeneratingTask(junkCodeTask,junkCodeOut)
             it.generateBuildConfigProvider.get().dependsOn(junkCodeTask)
 
             //插入资源
             val junkResOut=File(project.buildDir, "generated/res/junkCode/${it.name}")
             val junkResTask=project.tasks.create("generate${it.name.capitalize()}JunkResource",JunkResGenerateClassTask::class.java)
-            junkResTask.resDir=junkResOut
+            junkResTask.resDirPath=junkResOut.path
             it.registerGeneratedResFolders(project.files(junkResOut).builtBy(junkResTask))
-            it.mergeResourcesProvider.get().dependsOn(junkResTask)
-
+            it.mergeResourcesProvider.dependsOn(junkResTask)
         }
     }
-
 
 
     private fun hookTask(project: Project) {
@@ -70,7 +69,7 @@ class JunkCodePlugin : Plugin<Project> {
             if (it.plugins.hasPlugin("com.android.application")) {
                 addRandomClassTask(it)
                 project.tasks.forEach { task ->
-                    if (task.name.matches(Regex("processReleaseManifest"))) {
+                    if (task.name.matches(Regex("^process\\S*Manifest\$"))) {
                         task.doLast { assetTask ->
                             assetTask.outputs.files.forEach { file ->
                                 println("outputs-->" + file.path)
@@ -81,7 +80,7 @@ class JunkCodePlugin : Plugin<Project> {
                                 }
                             }
                         }
-                    } else if (task.name.matches(Regex("mergeReleaseGeneratedProguardFiles"))) {
+                    } else if (task.name.matches(Regex("^merge\\S*GeneratedProguardFiles\$"))) {
                         task.doLast { assetTask ->
                             assetTask.outputs.files.forEach { file ->
                                 println("outputs-->" + file.path)
@@ -93,7 +92,7 @@ class JunkCodePlugin : Plugin<Project> {
                     }else if (task.name.matches(Regex("^merge\\S*ReleaseAssets\$"))) {
                         task.doLast { assetTask ->
                             assetTask.outputs.files.forEach { file ->
-                                if (file.path.contains("merged_assets")) {
+                                if (file.path.contains("assets")) {
 
                                     logI("merged_assets-->${file.path}")
 

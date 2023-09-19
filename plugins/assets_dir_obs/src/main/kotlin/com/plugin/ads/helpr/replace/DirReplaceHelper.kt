@@ -3,8 +3,6 @@ package com.plugin.ads.helpr.replace
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
-import com.plugin.ads.extension.ExtensionManager
-import com.plugin.ads.log.GLog
 import com.plugin.ads.utils.ScanUtil
 import com.plugin.ads.utils.eachFileRecurse
 import org.apache.commons.io.FileUtils

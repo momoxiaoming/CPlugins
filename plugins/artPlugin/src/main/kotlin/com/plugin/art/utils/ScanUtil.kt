@@ -5,7 +5,6 @@ import com.plugin.art.transform.AScanTransform
 import com.plugin.art.vistor.ARScanClassVisitor
 import com.plugin.art.vistor.ByteClassVisitor
 
-import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import java.io.InputStream
@@ -43,7 +42,7 @@ object ScanUtil {
      */
     fun scanClass(inputStream: InputStream): ByteArray? {
         try {
-            val classReader = ClassReader(IOUtils.toByteArray(inputStream))
+            val classReader = ClassReader(inputStream.readBytes())
             val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
             val classVisitor = ByteClassVisitor(classWriter)
             classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
@@ -59,7 +58,7 @@ object ScanUtil {
      */
     fun scanClass2(inputStream: InputStream): ByteArray? {
         try {
-            val classReader = ClassReader(IOUtils.toByteArray(inputStream))
+            val classReader = ClassReader(inputStream.readBytes())
             val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
             val classVisitor = ARScanClassVisitor(classWriter)
             classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)

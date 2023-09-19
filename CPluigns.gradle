@@ -45,7 +45,7 @@ ext {
             ],
             art: [
                     group      : 'com.android.plugin',
-                    versionName: '2.1.8', //
+                    versionName: '2.2.1', //
                     artifactId : 'art',
             ],
             ann: [
@@ -60,17 +60,17 @@ ext {
             ],
             unitybug: [
                     group      : 'com.android.plugin',
-                    versionName: '1.0.0.0',
+                    versionName: '1.1.0',
                     artifactId : 'unitybug',
             ],
             ads: [
                     group      : 'com.android.plugin',
-                    versionName: '1.0.1',
+                    versionName: '1.1.0',
                     artifactId : 'assets_dir_obs',
             ],
             junkCode: [
                     group      : 'com.android.plugin',
-                    versionName: '1.1.3',
+                    versionName: '1.2.0',
                     artifactId : 'junkCode',
             ],
             stringEncrypt: [
