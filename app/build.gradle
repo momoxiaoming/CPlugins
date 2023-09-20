@@ -8,7 +8,10 @@ apply plugin: 'com.alibaba.arouter'
 //apply from: "$rootDir/aab/aabresguard.gradle"
 //apply plugin: "com.bytedance.android.aabResGuard"
 
-
+apply plugin: 'com.mckj.annotation'
+AnnotationConfig {
+    whiteList = ["com.android.test123"]
+}
 
 android {
 
@@ -82,7 +85,7 @@ dependencies {
 
 //    implementation project(":plugins:stringEncrypt:decrypt-lib")
 
-
+    implementation "com.google.code.gson:gson:2.8.6"
     implementation 'com.alibaba:arouter-api:1.5.1'
     kapt 'com.alibaba:arouter-compiler:1.5.1'
 }

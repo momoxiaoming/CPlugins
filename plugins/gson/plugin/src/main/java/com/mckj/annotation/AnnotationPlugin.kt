@@ -2,7 +2,7 @@ package com.mckj.annotation
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
-import com.mckj.plugin.common.utils.Logger
+import com.mckj.annotation.utlis.Logger
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

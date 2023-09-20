@@ -1,7 +1,7 @@
 package com.mckj.annotation.visitor
 
 import com.mckj.annotation.Constant
-import com.mckj.plugin.common.utils.Logger
+import com.mckj.annotation.utlis.Logger
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.FieldVisitor
 

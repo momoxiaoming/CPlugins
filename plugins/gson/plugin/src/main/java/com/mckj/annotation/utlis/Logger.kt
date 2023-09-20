@@ -1,4 +1,4 @@
-package com.mckj.plugin.common.utils
+package com.mckj.annotation.utlis
 
 object Logger {
     //    private lateinit var logger: org.gradle.api.logging.Logger

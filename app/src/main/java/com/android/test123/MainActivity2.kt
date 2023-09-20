@@ -6,8 +6,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.android.plugins.R
+import com.google.gson.Gson
 import java.nio.charset.Charset
 import com.stickman.jump.server.NanoServer
+
 /**
  * MainActivity2
  *
@@ -36,6 +38,10 @@ class MainActivity2 : AppCompatActivity() {
 //            ARouter.getInstance().build("/test/arouter").navigation()
 //            ARouter.getInstance().build("/main/action").navigation()
             test1()
+        }
+        findViewById<Button>(R.id.btn3).setOnClickListener {
+            val gson = GsonEntity("晋明", "工具人")
+            Log.d(TAG, "onCreate: ${Gson().toJson(gson)}")
         }
 //        val call= TestPhoneCall()
 //        call.init(this)
@@ -82,7 +88,7 @@ class MainActivity2 : AppCompatActivity() {
             opt = opt xor data.size
             opt += key
             opt = if (i % 2 == 0) {  //位运算
-                opt shl  1
+                opt shl 1
             } else {
                 opt shr 1
             }

@@ -1,11 +1,11 @@
-package com.mckj.plugin.common.base
+package com.mckj.annotation.base
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformInvocation
-import com.android.utils.FileUtils
-import com.mckj.plugin.common.utils.Logger
+import com.mckj.annotation.utlis.Logger
 import org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.io.FileUtils
 import org.gradle.api.Project
 import org.gradle.api.UnknownDomainObjectException
 import java.io.File

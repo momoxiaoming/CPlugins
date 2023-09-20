@@ -1,14 +1,18 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'       //插件发布
 
 android {
     namespace 'com.mckj.annotation.tools'
-    compileSdk 33
+    compileSdk 30
 
     defaultConfig {
+
         minSdk 24
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -20,21 +24,35 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 }
 
 dependencies {
+    implementation "com.google.code.gson:gson:2.8.6"
+    implementation "com.vi.security:stringEncryptTool:2.0.6"
+}
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = rootProject.cPlugins.gsonTools.group
+            artifactId = rootProject.cPlugins.gsonTools.artifactId
+            version = rootProject.cPlugins.gsonTools.versionName
+        }
+    }
+    repositories {
+        if (!isLocal.toBoolean()) {
+            maven {
+                allowInsecureProtocol = true
+                url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                credentials {
+                    it.username = "vapp-deployment"
+                    it.password = "pwd123456"
+                }
+            }
+        } else {
+            maven {
+                url = rootProject.file("./repo").toURI()
+            }
+        }
+    }
 }

@@ -78,6 +78,16 @@ ext {
                     versionName: '1.1.2',
                     artifactId : 'stringEncrypt',
             ],
+            gsonEncrypt: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.0',
+                    artifactId : 'gsonEncrypt',
+            ],
+            gsonTools: [
+                    group      : 'com.android.plugin',
+                    versionName: '1.0.0',
+                    artifactId : 'gsonTools',
+            ],
 
     ]
 
@@ -92,6 +102,7 @@ ext {
     ads = "${cPlugins.ads.group}:${cPlugins.ads.artifactId}:${cPlugins.ads.versionName}"
     junkCode = "${cPlugins.junkCode.group}:${cPlugins.junkCode.artifactId}:${cPlugins.junkCode.versionName}"
     stringEncrypt = "${cPlugins.stringEncrypt.group}:${cPlugins.stringEncrypt.artifactId}:${cPlugins.stringEncrypt.versionName}"
+    gsonEncrypt = "${cPlugins.gsonEncrypt.group}:${cPlugins.gsonEncrypt.artifactId}:${cPlugins.gsonEncrypt.versionName}"
 
 
     AES = [

@@ -1,4 +1,4 @@
-package com.mckj.plugin.common.utils;
+package com.mckj.annotation.utlis;
 
 
 /* loaded from: classes3.dex */

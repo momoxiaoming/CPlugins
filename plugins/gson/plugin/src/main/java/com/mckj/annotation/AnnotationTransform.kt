@@ -2,11 +2,8 @@ package com.mckj.annotation
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.android.utils.FileUtils
 import com.mckj.annotation.utlis.GsonModifyUtils
-import com.mckj.plugin.common.base.BaseTransform
-import com.mckj.plugin.common.utils.Logger
-import org.apache.commons.codec.digest.DigestUtils
+import com.mckj.annotation.base.BaseTransform
 import org.gradle.api.Project
 import java.io.File
 

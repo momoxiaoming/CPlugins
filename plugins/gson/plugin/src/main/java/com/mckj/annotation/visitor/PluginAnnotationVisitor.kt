@@ -1,8 +1,8 @@
 package com.mckj.annotation.visitor
 
 import com.mckj.annotation.Constant
-import com.mckj.plugin.common.utils.HexEncryptUtils
-import com.mckj.plugin.common.utils.Logger
+import com.mckj.annotation.utlis.HexEncryptUtils
+import com.mckj.annotation.utlis.Logger
 import org.objectweb.asm.AnnotationVisitor
 
 class PluginAnnotationVisitor(annotationVisitor: AnnotationVisitor) :

@@ -4,7 +4,6 @@ import com.mckj.annotation.AnnotationExtension
 import com.mckj.annotation.kt.getJarPath
 import com.mckj.annotation.kt.isClassFile
 import com.mckj.annotation.visitor.PluginClassVisitor
-import com.mckj.plugin.common.utils.Logger
 import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter

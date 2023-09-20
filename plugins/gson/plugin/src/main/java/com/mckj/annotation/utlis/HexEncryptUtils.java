@@ -1,4 +1,4 @@
-package com.mckj.plugin.common.utils;
+package com.mckj.annotation.utlis;
 
 public class HexEncryptUtils {
 
