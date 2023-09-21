@@ -1,0 +1,54 @@
+ext{
+    stringEncrypt_enable = true
+    stringEncrypt_enableInDebug = false
+    stringEncrypt_encryptPackages = [
+            'com.tz',
+            'com.mc',
+            'com.mckj',
+            'com.mckj.sceneslib',
+            'com.mckj.api',
+            'com.mckj.apiimpl',
+            'com.google.daemon',
+            'com.alibaba.android.arouter.routes',
+            'com.vimedia',
+            'com.vigame',
+            'com.dn',
+            'com.mc.cpyr.weather',
+            'com.tz.gg.appproxy',
+            'com.dn.dg.env.EnvManager',
+            'com.bumptech.glide',
+            'com.mc.cpyr.running',
+            'com.lc.main.vm',
+            'com.org',
+            'com.dynamic',
+            'com.bzm.defaultweathercommon',
+            'com.vi',
+            'com.cc.xdd.home.view.widgets',
+            'com.dzb',
+            'com.appcleaner',
+            'vimedia.pay.common.utils',
+            'com.battery',
+            'com.google.android.material.internal',
+            'com.google.dd',
+            'com.android.test123'
+    ]
+}
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            println("string_encrypt->"+string_encrypt)
+            project.pluginManager.apply("com.android.string.encrypt")
+            def obj = project.extensions.getByName("encrypt_string")
+            def stringEncrypt_enable = project.stringEncrypt_enable
+            def stringEncrypt_enableInDebug = project.stringEncrypt_enableInDebug
+            def stringEncrypt_encryptPackages = project.stringEncrypt_encryptPackages
+            println("stringEncrypt_enable="+stringEncrypt_enable)
+            println("stringEncrypt_enableInDebug="+stringEncrypt_enableInDebug)
+            println("stringEncrypt_encryptPackages="+stringEncrypt_encryptPackages)
+            obj.enable(stringEncrypt_enable)
+            obj.enableWhenDebug(stringEncrypt_enableInDebug)
+            obj.setEncryptPackages(stringEncrypt_encryptPackages)
+        }
+    }
+}

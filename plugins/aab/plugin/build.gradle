@@ -1,8 +1,10 @@
-apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: "groovy"
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'java-gradle-plugin'
+
+sourceCompatibility = "11"
+targetCompatibility = "11"
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation gradleApi()
@@ -23,34 +25,28 @@ configurations {
     all*.exclude group: "com.android.tools.build", module: "bundletool"
 }
 
-sourceCompatibility= 1.8
-targetCompatibility= 1.8  //使用1.8编译
-
-if(!properties.get("isLocal").toBoolean()){
-    uploadArchives  {
-        repositories {
-            mavenDeployer  {
-                repository(url: uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')) {
-                    authentication(userName: 'vapp-deployment', password: 'pwd123456')
-                }
-                pom {
-                    groupId=rootProject.cPlugins.aab.group
-                    artifactId=rootProject.cPlugins.aab.artifactId
-                    version=rootProject.cPlugins.aab.versionName
-                }
-            }
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.java
+            groupId = rootProject.cPlugins.aab.group
+            artifactId = rootProject.cPlugins.aab.artifactId
+            version = rootProject.cPlugins.aab.versionName
         }
     }
-}else{
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: uri('../../repo'))
-                pom {
-                    groupId = rootProject.cPlugins.aab.group
-                    artifactId = rootProject.cPlugins.aab.artifactId
-                    version = rootProject.cPlugins.aab.versionName
+    repositories {
+        if (!isLocal.toBoolean()) {
+            maven {
+                allowInsecureProtocol = true
+                url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                credentials {
+                    it.username = "vapp-deployment"
+                    it.password = "pwd123456"
                 }
+            }
+        } else {
+            maven {
+                url = rootProject.file("./repo").toURI()
             }
         }
     }

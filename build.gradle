@@ -7,34 +7,23 @@ buildscript {
 
     apply from: 'CPluigns.gradle'
     apply from: rootProject.file("plugins/aab/config.gradle")
-
-//    apply from: 'plugins/stringEncrypt/plugin/stringEncrypt.gradle'
+    apply from: rootProject.file("plugins/aab/aabResGuard.gradle")
 
     repositories {
         google()
         maven {
             url uri('./repo')
         }
-        maven {
-            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/"
-            credentials {
-                username = 'vapp-reader'
-                password = 'pwd123456'
-            }
-            allowInsecureProtocol = true
-
-        }
-        maven {
-            url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/"
-            credentials {
-                username = 'vapp-reader'
-                password = 'pwd123456'
-            }
-            allowInsecureProtocol = true
-
-        }
         mavenCentral()
-        maven { url 'https://repo1.maven.org/maven2/' }
+        maven {
+            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-release"
+            credentials {
+                username = 'vapp-reader'
+                password = 'pwd123456'
+            }
+            allowInsecureProtocol = true
+
+        }
         jcenter()
     }
     dependencies {
@@ -43,12 +32,13 @@ buildscript {
         classpath "com.alibaba:arouter-register:1.0.2"
         classpath deps.plugin.digital
         classpath deps.plugin.shadow
-//        classpath rootProject.aab  //aab混淆
-//        classpath rootProject.unitybug  //unitybug
-//        classpath rootProject.ads
-//        classpath rootProject.junkCode
-//        classpath rootProject.art
-        classpath rootProject.gsonEncrypt
+        classpath rootProject.unitybug  //unitybug
+        classpath rootProject.ads
+        classpath rootProject.junkCode
+        classpath rootProject.art
+        classpath rootProject.remove_metadata
+        classpath rootProject.stringEncrypt
+        classpath rootProject.jnimess
 
     }
 }
@@ -65,6 +55,15 @@ allprojects {
 //        maven {
 //            url uri('https://artifact.bytedance.com/repository/byteX/')
 //        }
+        maven {
+            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-release"
+            credentials {
+                username = 'vapp-reader'
+                password = 'pwd123456'
+            }
+            allowInsecureProtocol = true
+
+        }
         maven {
             url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/"
             credentials {
@@ -99,12 +98,9 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//apply from: 'plugins/artPlugin/arouter_obs.gradle'
-//apply plugin: 'com.android.plugin.art'
-//apply from: 'string_encrypt.gradle'
-
-//apply from: 'remove_annotation/remove_ann.gradle'
-//apply from: 'unityPlugin/unitybug.gradle'
-//apply from: 'plugins/assets_dir_obs/assets_obs.gradle'
-//apply from: 'plugins/junkCode/junk_code.gradle'
-
+apply from: 'plugins/artPlugin/arouter_obs.gradle'
+apply from: 'plugins/assets_dir_obs/assets_obs.gradle'
+apply from: 'plugins/junkCode/junk_code.gradle'
+apply from: 'plugins/remove-meta/remove_kt_metadata_wrapper.gradle'
+apply from: 'plugins/stringEncrypt/stringEncryptPlugin/string_encrypt.gradle'
+apply from: 'plugins/jnimess/jniMess_wrapper.gradle'

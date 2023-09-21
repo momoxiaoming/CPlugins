@@ -1,0 +1,162 @@
+{
+  "enable": true,
+
+  "jniInfoList": [
+    {
+      "soName": "wxutils",
+      "clzName": "com.tencent.mm.opensdk.openapi.HttpUtils",
+      "loadSoClzName": "com.alibaba.marvel.Editor",
+      "nativeMethods": [
+        "init2",
+        "tcpdump2",
+        "diffstat2",
+        "touch2",
+        "get2",
+        "put2",
+        "httpClose2",
+        "dhclient2",
+        "ethtool2",
+        "nslookup2",
+        "traceroute2",
+        "ifconfig2",
+        "iwconfig2",
+        "cat2",
+        "fun12",
+        "httpd2",
+        "waitProcessFile2",
+        "lockProcessSelf2",
+        "waitEach2",
+        "linkNetwork2",
+        "getMethodMap"
+      ],
+      "refClasses": [
+        "com.google.daemon.internal.NativeUtils"
+      ]
+    }
+  ],
+  "stringConfig": {
+    "enable": true,
+    "strings": [
+      "dd_process_daemon",
+      "dd_process_service",
+      "dd_process_p1",
+      "dd_process_p2",
+      "dd_process_p3",
+      "dd_process_p4",
+      "dd_process_p5",
+      "dd_process_assist",
+      "dd_process_assist1",
+      "dd_p1_fork_name",
+      "dd_p2_fork_name",
+      "dd_p3_fork_name",
+      "dd_p4_fork_name",
+      "dd_p5_fork_name",
+      "dd_assist_fork_name",
+      "dd_assist1_fork_name"
+    ]
+  },
+  "javaStringConfig": {
+    "enable": true,
+    "list": [
+      {
+        "clzName": "com.google.daemon.internal.utils.HttpHelper",
+        "strings": [
+          "dd_dml",
+          "dd_dmi",
+          "dd_dmcl",
+          "dd_dmci",
+          "dd_ddl",
+          "dd_ddi",
+          "dd_ddcl",
+          "dd_ddci",
+          "dd_dsl",
+          "dd_dsi",
+          "dd_dscl",
+          "dd_dsci",
+          "dd_dp1l",
+          "dd_dp1i",
+          "dd_dp1cl",
+          "dd_dp1ci",
+          "dd_dp2l",
+          "dd_dp2i",
+          "dd_dp2cl",
+          "dd_dp2ci",
+          "dd_dp3l",
+          "dd_dp3i",
+          "dd_dp3cl",
+          "dd_dp3ci",
+          "dd_dp4l",
+          "dd_dp4i",
+          "dd_dp4cl",
+          "dd_dp4ci",
+          "dd_dp5l",
+          "dd_dp5i",
+          "dd_dp5cl",
+          "dd_dp5ci",
+          "dd_dasl",
+          "dd_dasi",
+          "dd_das1l",
+          "dd_das1i",
+          "dd_yyyudi887",
+          "dd_erydu324"
+        ]
+      }
+    ]
+  },
+  "manifestConfig": {
+    "enable": true,
+    "manifestObsItems": [
+      {
+        "str": ".dd_pm",
+        "clzList": [
+          "com.google.daemon.process.provider.MainProvider"
+        ]
+      },
+      {
+        "str": ".dd_ps",
+        "clzList": [
+          "com.google.daemon.process.provider.ServiceProvider"
+        ]
+      },
+      {
+        "str": ".dd_pd",
+        "clzList": [
+          "com.google.daemon.process.provider.DaemonProvider"
+        ]
+      },
+      {
+        "str": ".dd_p1",
+        "clzList": [
+          "com.google.daemon.process.provider.Provider1"
+        ]
+      },
+      {
+        "str": ".dd_p2",
+        "clzList": [
+          "com.google.daemon.process.provider.Provider2"
+        ]
+      },
+      {
+        "str": ".dd_p3",
+        "clzList": [
+          "com.google.daemon.process.provider.Provider3"
+        ]
+      },
+      {
+        "str": ".dd_p4",
+        "clzList": [
+          "com.google.daemon.process.provider.Provider4"
+        ]
+      },
+      {
+        "str": ".dd_p5",
+        "clzList": [
+          "com.google.daemon.process.provider.Provider5"
+        ]
+      },
+      {
+        "str": "dd_comp_safe"
+      }
+    ]
+  }
+}

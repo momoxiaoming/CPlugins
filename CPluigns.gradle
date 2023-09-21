@@ -1,81 +1,39 @@
 ext {
-    //相关工具路径
-    buildtool = [
-            default: 'C:/Users/39568/AppData/Local/Android/Sdk/build-tools/28.0.3',//默认路径,本地测试可参考对应更改
-            linux  : '/opt/android_sdk/build-tools/28.0.3', //打包机上路径,!!!!非必要请勿更改
-    ]
-    paths = [
-
-            //默认路径,本地测试可参考对应更改
-            defaultPath: [
-                    apktool  : "C:/apktool.jar",
-                    zipalign : "${rootProject.buildtool.default}/zipalign.exe",
-                    apksigner: "${rootProject.buildtool.default}/lib/apksigner.jar",
-            ],
-            //打包机上路径,!!!!非必要请勿更改
-            linuxPath  : [
-                    apktool  : '/var/jenkins_home/apktool/apktool.jar',
-                    zipalign : "${rootProject.buildtool.linux}/zipalign",
-                    apksigner: "${rootProject.buildtool.linux}/lib/apksigner.jar",
-            ]
-    ]
-
-    main_module = "app"
 
     cPlugins = [
-            hdl: [
-                    group      : 'com.android.plugin',
-                    versionName: '2.0.7-bate8',
-                    artifactId : 'hdl',
-            ],
-            string_encrypt: [
-                    group      : 'com.android.plugin',
-                    versionName: '1.0.8',
-                    artifactId : 'byteEncrypt',
-            ],
-            artOBS: [
-                    group      : 'com.plugin.string',
-                    versionName: '1.1.0',
-                    artifactId : 'artOBS',
-            ],
-            artReplace: [
-                    group      : 'com.plugin.string',
-                    versionName: '1.1.0',
-                    artifactId : 'artReplace',
-            ],
             art: [
                     group      : 'com.android.plugin',
-                    versionName: '2.2.1', //
+                    versionName: '2.2.3', //
                     artifactId : 'art',
-            ],
-            ann: [
-                    group      : 'com.android.plugin',
-                    versionName: '1.0.1',
-                    artifactId : 'reann',
             ],
             aab: [
                     group      : 'com.android.plugin',
-                    versionName: '1.0.3.1',
+                    versionName: '1.0.3.3',
                     artifactId : 'aabResGuard-plugin',
             ],
             unitybug: [
                     group      : 'com.android.plugin',
-                    versionName: '1.1.0',
+                    versionName: '1.1.1',
                     artifactId : 'unitybug',
             ],
             ads: [
                     group      : 'com.android.plugin',
-                    versionName: '1.1.0',
+                    versionName: '1.1.2',
                     artifactId : 'assets_dir_obs',
             ],
             junkCode: [
                     group      : 'com.android.plugin',
-                    versionName: '1.2.0',
+                    versionName: '1.2.2',
                     artifactId : 'junkCode',
             ],
+            remove_metadata: [
+                    group      : 'com.google.plugin.kt',
+                    versionName: '1.0.9',
+                    artifactId : 'remove-metadata',
+            ],
             stringEncrypt: [
-                    group      : 'com.android.plugin',
-                    versionName: '1.1.2',
+                    group      : 'com.android.string.encrypt',
+                    versionName: '2.0.5.2',
                     artifactId : 'stringEncrypt',
             ],
             gsonEncrypt: [
@@ -88,44 +46,21 @@ ext {
                     versionName: '1.0.0',
                     artifactId : 'gsonTools',
             ],
-
+            jnimess: [
+                    group      : 'com.google.plugin',
+                    versionName: '1.1.5',
+                    artifactId : 'jnimess',
+            ],
     ]
 
-    hdl_plugin = "${cPlugins.hdl.group}:${cPlugins.hdl.artifactId}:${cPlugins.hdl.versionName}"
-    string_encrypt = "${cPlugins.string_encrypt.group}:${cPlugins.string_encrypt.artifactId}:${cPlugins.string_encrypt.versionName}"
-    artOBS = "${cPlugins.artOBS.group}:${cPlugins.artOBS.artifactId}:${cPlugins.artOBS.versionName}"
-    artReplace = "${cPlugins.artReplace.group}:${cPlugins.artReplace.artifactId}:${cPlugins.artReplace.versionName}"
     art = "${cPlugins.art.group}:${cPlugins.art.artifactId}:${cPlugins.art.versionName}"
-    ann = "${cPlugins.ann.group}:${cPlugins.ann.artifactId}:${cPlugins.ann.versionName}"
     aab = "${cPlugins.aab.group}:${cPlugins.aab.artifactId}:${cPlugins.aab.versionName}"
     unitybug = "${cPlugins.unitybug.group}:${cPlugins.unitybug.artifactId}:${cPlugins.unitybug.versionName}"
     ads = "${cPlugins.ads.group}:${cPlugins.ads.artifactId}:${cPlugins.ads.versionName}"
     junkCode = "${cPlugins.junkCode.group}:${cPlugins.junkCode.artifactId}:${cPlugins.junkCode.versionName}"
+    remove_metadata = "${cPlugins.remove_metadata.group}:${cPlugins.remove_metadata.artifactId}:${cPlugins.remove_metadata.versionName}"
     stringEncrypt = "${cPlugins.stringEncrypt.group}:${cPlugins.stringEncrypt.artifactId}:${cPlugins.stringEncrypt.versionName}"
     gsonEncrypt = "${cPlugins.gsonEncrypt.group}:${cPlugins.gsonEncrypt.artifactId}:${cPlugins.gsonEncrypt.versionName}"
-
-
-    AES = [
-            MODE: "AES/CBC/PKCS5Padding",
-            KEY : "1234567890123456",
-            IV  : "1234"
-    ]
-
-
-    common_proguard="-keepattributes InnerClasses\n-keep class androidx.databinding.**{*;}\n-keep class androidx.startup.**{*;}\n-keep class com.google.android.material.imageview.ShapeableImageView{*;}\n"
-    main_proguard = "${rootProject.common_proguard}"
-
-    modules = [
-            aos: [
-                    sourceId     : '0x6f',
-                    moduleName   : "testapp",
-                    modulePath   : ":testapp",
-                    versionCode  : 1,
-                    versionName  : '1.0.0',
-                    applicationid: "com.m.c.aos.app",
-                    proguard     : "-flattenpackagehierarchy aos.hdl\n${rootProject.common_proguard}"
-            ]
-    ]
-
+    jnimess = "${cPlugins.jnimess.group}:${cPlugins.jnimess.artifactId}:${cPlugins.jnimess.versionName}"
 
 }

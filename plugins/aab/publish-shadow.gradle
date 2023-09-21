@@ -69,6 +69,7 @@ publishing {
     if (!System.getProperty("uploadToBintray", "false").equalsIgnoreCase("true")) {
         repositories {
             maven {
+                allowInsecureProtocol=true
                 url = publishUrl
                 credentials {
                     username = publishUserName

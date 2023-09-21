@@ -1,28 +1,95 @@
-apply plugin: "com.bytedance.android.aabResGuard"
-aabResGuard {
-    enableObfuscate = true
-//    mappingFile = file("../mapping.txt").toPath()
-    whiteList = [
-            // keep resources
-            "*.R.raw.*",
-            "*.R.drawable.icon",
-            "*.R.drawable.ic_*",
-            "*.R.anim.abc*",
-            "*.R.xml.actions",
-            // keep resource file
-            "*/res/xml/actions.xml",
-    ]
-    obfuscatedBundleFileName = "obfuscated-app.aab"
-    mergeDuplicatedRes = false
-    enableFilterFiles = true
-    filterList = [
-            "*/arm64-v8a/*",
-            "META-INF/*",
-            "BUNDLE-METADATA/**/proguard.map",
-            "BUNDLE-METADATA/**/dependencies.pb"
+project.buildscript.dependencies {
+    add("classpath", "com.android.plugin:aabResGuard-plugin:1.0.3.3")
+}
 
-    ]
-    enableFilterStrings = false
-    unusedStringPath = "aab/unused.txt"
-    languageWhiteList = ["en", "zh"]
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.bytedance.android.aabResGuard")
+            def ext = project.extensions.getByName("aabResGuard")
+            /**
+             * 需要移除的类以及方法名
+             * ref_开头的资源不会被混淆
+             */
+            ext.whiteList = [ // 白名单规则
+                              "*.R.string.com.crashlytics.android.build_id",
+                              "*.R.string.google_app_id",
+                              "*.R.string.project_id",
+                              "*.R.drawable.ic_launcher",
+                              "*.R.mipmap.ic_launcher",
+                              "*.R.mipmap.icon",
+                              "*.R.drawable.icon",
+                              "*.R.string.app_name",
+
+                              //过滤使用ref_前缀资源。
+                              "*.R.anim.ref_*",
+                              "*.R.drawable.ref_*",
+                              "*.R.mipmap.ref_*",
+                              "*.R.id.ref_*",
+                              "*.R.string.ref_*",
+                              "*.R.layout.ref_*",
+                              "*.R.dimen.ref_*",
+                              "*.R.style.ref_*",
+                              "*.R.color.ref_*",
+
+                              // for fabric
+                              "*.R.string.com.crashlytics.*",
+
+                              // for google-services
+                              "*.R.string.google_app_id",
+                              "*.R.string.gcm_defaultSenderId",
+                              "*.R.string.default_web_client_id",
+                              "*.R.string.ga_trackingId",
+                              "*.R.string.firebase_database_url",
+                              "*.R.string.google_api_key",
+                              "*.R.string.google_crash_reporting_api_key",
+
+                              // Firebase
+                              "*.R.string.project_id",
+
+                              //mtg
+                              "*.R.layout.mtg_*",
+                              "*.R.anim.mbridge_*",
+                              "*.R.drawable.mbridge_*",
+                              "*.R.layout.mbridge_*",
+                              "*.R.string.mbridge_*",
+                              "*.R.id.mbridge_*",
+                              "*.R.color.mbridge_*",
+                              "*.R.dimen.mbridge_*",
+                              "*.R.style.mbridge_*",
+                              "*.R.anim.tt_*",
+                              "*.R.drawable.tt*", //R.drawable.tt_*,R.drawable.ttdownloader_*
+                              "*.R.layout.tt*", //R.layout.tt_*,R.layout.ttdownloader_*
+                              "*.R.string.tt_*",
+                              "*.R.color.tt_*",
+                              "*.R.dimen.tt_*",
+                              "*.R.id.tt*",//R.id.tt_browser_webview
+                              "*.R.integer.tt_*",
+
+                              "*.R.string.game_view_content_description",//游戏反射的名称，不能混淆
+                              "*.R.string.anythink_*",
+                              "*.R.drawable.anythink_*",
+                              "*.R.layout.anythink_*",
+                              "*.R.id.anythink_*",
+                              "*.R.dimen.anythink_*",
+                              "*.R.style.anythink_*",
+                              "*.R.color.anythink_*",
+                              "*.R.anim.antyhink_*"
+            ]
+
+            ext.obfuscatedBundleFileName = "duplicated-app.aab" // 混淆后的文件名称，必须以 `.aab` 结尾
+            ext.mergeDuplicatedRes = true // 是否允许去除重复资源
+            ext.enableFilterFiles = true // 是否允许过滤文件
+            ext.filterList = [ // 文件过滤规则
+                               "META-INF/*",
+                               "BUNDLE-METADATA/**/proguard.map",
+                               "BUNDLE-METADATA/**/dependencies.pb"
+            ]
+            ext.enableFilterStrings = false // 过滤文案
+            ext.unusedStringPath = file("unused.txt").toPath() // 过滤文案列表路径 默认在mapping同目录查找
+
+            //    languageWhiteList = ["en"] // 保留en,en-xx,zh,zh-xx等语言，其余均删除
+        }
+    }
 }

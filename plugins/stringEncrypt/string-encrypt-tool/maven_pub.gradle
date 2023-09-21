@@ -1,0 +1,39 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+publish.dependsOn clean
+
+version = '2.2.31'
+group = 'com.vi.security'
+
+afterEvaluate {
+
+    publishing {
+        publications {
+            string_encrypt(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+                artifactId = 'stringEncryptTool'
+            }
+        }
+
+        repositories {
+            maven {
+                if (isLocal.toBoolean()) {
+                    println("stringEncrypt tool upload to local maven")
+                    url = uri("${rootProject.projectDir}/repo")
+                } else {
+                    maven {
+                        allowInsecureProtocol = true
+                        url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                        credentials {
+                            it.username = "vapp-deployment"
+                            it.password = "pwd123456"
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

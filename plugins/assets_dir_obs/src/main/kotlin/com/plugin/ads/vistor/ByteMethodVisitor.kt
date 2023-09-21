@@ -17,7 +17,7 @@ class ByteMethodVisitor(
     val methodName: String,
     val owner: String?,
     val staticFinalStringFieldNodeList: List<FieldNode>
-) : MethodVisitor(Opcodes.ASM7, mv) {
+) : MethodVisitor(Opcodes.ASM9, mv) {
 
     override fun visitLdcInsn(value: Any?) {
         if (value is String) {

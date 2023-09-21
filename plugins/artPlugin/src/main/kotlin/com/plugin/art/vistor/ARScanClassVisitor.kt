@@ -11,7 +11,7 @@ import org.objectweb.asm.Opcodes
  * @author mmxm
  * @date 2022/6/1 11:45
  */
-class ARScanClassVisitor(cw: ClassWriter): ClassVisitor(Opcodes.ASM6, cw) {
+class ARScanClassVisitor(cw: ClassWriter): ClassVisitor(Opcodes.ASM9, cw) {
 
     override fun visit(
         version: Int,

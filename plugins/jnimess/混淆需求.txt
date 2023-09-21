@@ -1,0 +1,22 @@
+
+
+1，manifest
+   <uses-permission android:name="${applicationId}.ddp"/>
+   此处，需要把android:permission="${applicationId}.ddp"  同步混淆
+
+2，string.xml
+    d_p_name
+    s_p_name
+    ppp1 - ppp5
+
+3，wallpaper_desc
+
+4，所有provider的authorities，（manifest+代码）
+
+5，替换freereflection为自有
+
+6，HttpHelper类中各文件名字
+
+7，${applicationId}.dri.c
+
+8，${applicationId}.oio.cc

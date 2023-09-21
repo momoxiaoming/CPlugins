@@ -1,0 +1,39 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.google.plugin.kt.removeMeta")
+            def ext = project.extensions.getByName("remove_kt_meta")
+
+            ext.enable = true
+            ext.logEnable=true
+            ext.enable_WhenDebug = false
+            ext.scanPackages = [
+                    "com.mc",
+                    "com.mckj",
+                    "com.tz",
+                    "com.vimedia",
+                    "com.vigame",
+                    "com.dn",
+                    "com.vimedia.core.common.router.listener.SimpleCallback",
+                    "com.cc.bb",
+                    "com.example.mine",
+                    'com.lc.main',
+                    "com.lc.main.vm",
+                    "com.org",
+                    "com.mmm.open",
+                    "com.google.android.topc",
+                    "com.android.test123"
+            ]
+            ext.includeSubPkgs = true
+            ext.classWhiteList = [
+
+            ]
+            ext.scanRoutePackages = [
+                    ".*"
+            ]
+            ext.removeRouteAnnotation = true
+            ext.includeJar = true
+        }
+    }
+}

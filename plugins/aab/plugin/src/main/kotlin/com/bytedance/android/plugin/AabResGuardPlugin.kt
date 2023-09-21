@@ -3,6 +3,7 @@ package com.bytedance.android.plugin
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.bytedance.android.plugin.extensions.AabResGuardExtension
+import com.bytedance.android.plugin.extensions.ExtensionManager
 import com.bytedance.android.plugin.tasks.AabResGuardTask
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -21,6 +22,7 @@ class AabResGuardPlugin : Plugin<Project> {
 
         val android = project.extensions.getByName("android") as AppExtension
         project.afterEvaluate {
+            ExtensionManager.initExtension(project)
             android.applicationVariants.all { variant ->
                 createAabResGuardTask(project, variant)
             }

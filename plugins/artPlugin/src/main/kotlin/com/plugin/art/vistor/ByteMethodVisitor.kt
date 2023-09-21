@@ -15,7 +15,7 @@ class ByteMethodVisitor(
     val methodName: String,
     val owner: String,
     mv: MethodVisitor
-) : MethodVisitor(Opcodes.ASM5, mv) {
+) : MethodVisitor(Opcodes.ASM9, mv) {
 
     override fun visitInsn(opcode: Int) {
         if (opcode == Opcodes.RETURN && methodName == "<clinit>") {

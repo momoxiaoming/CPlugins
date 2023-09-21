@@ -15,7 +15,7 @@ import kotlin.random.Random
  * @author mmxm
  * @date 2023/7/11 12:04
  */
-class JunkCodeClassVisitor(cw: ClassWriter,val methodNodeList: List<MethodNode>) : org.objectweb.asm.ClassVisitor(Opcodes.ASM7, cw) {
+class JunkCodeClassVisitor(cw: ClassWriter,val methodNodeList: List<MethodNode>) : org.objectweb.asm.ClassVisitor(Opcodes.ASM9, cw) {
 
 
     var isInterface = false

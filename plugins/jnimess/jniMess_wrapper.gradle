@@ -1,0 +1,20 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            if (jniMess_enable.toBoolean()) {
+                project.pluginManager.apply("com.google.plugin.jnimess")
+                def obj = project.extensions.getByName("jniMess")
+                obj.enable = project.jniMess_enable
+                obj.logEnable = true
+                obj.configFile = project.jniMess_configFile
+                println("jniMess::enable=${obj.enable},configFile=${obj.configFile}")
+            }
+        }
+    }
+}
+
+ext {
+    jniMess_enable = true
+    jniMess_configFile = "${rootProject.projectDir}/plugins/jniMess/jniMess_config.json"
+}

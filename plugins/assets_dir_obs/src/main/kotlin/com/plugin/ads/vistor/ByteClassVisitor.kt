@@ -11,7 +11,7 @@ import org.objectweb.asm.tree.FieldNode
  * @date 2022/1/21 16:53
  */
 class ByteClassVisitor(cw: ClassWriter) :
-    ClassVisitor(Opcodes.ASM7, cw) {
+    ClassVisitor(Opcodes.ASM9, cw) {
     companion object{
         const val STRING_DESC = "Ljava/lang/String;"
     }
