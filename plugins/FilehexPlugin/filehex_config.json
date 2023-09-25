@@ -1,0 +1,19 @@
+{
+  "enable_whitelist": true,
+  "whitelist": [
+    "appcompat-",
+    "material-",
+    "core-",
+    "img_dd_0",
+    "img_dd_1",
+    "applovin_ic_mute_to_unmute",
+    "applovin_ic_unmute_to_mute",
+    "assets/release/out/web/",
+    "assets\\release\\out\\web\\",
+    "assets\\web\\",
+    "assets/web/"
+  ],
+  "mp3list": [
+    "assets/libcommon_gold.png"
+  ]
+}

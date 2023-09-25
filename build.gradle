@@ -7,7 +7,7 @@ buildscript {
 
     apply from: 'CPluigns.gradle'
     apply from: rootProject.file("plugins/aab/config.gradle")
-    apply from: rootProject.file("plugins/aab/aabResGuard.gradle")
+//    apply from: rootProject.file("plugins/aab/aabResGuard.gradle")
 
     repositories {
         google()
@@ -32,13 +32,15 @@ buildscript {
         classpath "com.alibaba:arouter-register:1.0.2"
         classpath deps.plugin.digital
         classpath deps.plugin.shadow
-        classpath rootProject.unitybug  //unitybug
-        classpath rootProject.ads
-        classpath rootProject.junkCode
-        classpath rootProject.art
-        classpath rootProject.remove_metadata
+//        classpath rootProject.unitybug  //unitybug
+//        classpath rootProject.ads
+//        classpath rootProject.junkCode
+//        classpath rootProject.art
+//        classpath rootProject.remove_metadata
         classpath rootProject.stringEncrypt
-        classpath rootProject.jnimess
+//        classpath rootProject.jnimess
+
+//        classpath rootProject.filehex
 
     }
 }
@@ -98,9 +100,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply from: 'plugins/artPlugin/arouter_obs.gradle'
-apply from: 'plugins/assets_dir_obs/assets_obs.gradle'
-apply from: 'plugins/junkCode/junk_code.gradle'
-apply from: 'plugins/remove-meta/remove_kt_metadata_wrapper.gradle'
+//apply from: 'plugins/artPlugin/arouter_obs.gradle'
+//apply from: 'plugins/assets_dir_obs/assets_obs.gradle'
+//apply from: 'plugins/junkCode/junk_code.gradle'
+//apply from: 'plugins/remove-meta/remove_kt_metadata_wrapper.gradle'
 apply from: 'plugins/stringEncrypt/stringEncryptPlugin/string_encrypt.gradle'
-apply from: 'plugins/jnimess/jniMess_wrapper.gradle'
+//apply from: 'plugins/jnimess/jniMess_wrapper.gradle'
+//apply from: 'plugins/FilehexPlugin/filehex_wrapper.gradle'

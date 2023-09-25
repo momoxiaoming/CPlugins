@@ -1,0 +1,19 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.dn.filehex")
+            def filehex_ext = project.extensions.getByName("filehex")
+            //是否开启插件
+            filehex_ext.enable = true
+            filehex_ext.logEnable = true
+            //白名单等配置
+            filehex_ext.configFile = "${rootProject.projectDir}/plugins/FilehexPlugin/filehex_config.json"
+            println("filehex enbable:${filehex_ext.enable} configFile path: ${filehex_ext.configFile}")
+        }
+    }
+}
+
+
+
+
