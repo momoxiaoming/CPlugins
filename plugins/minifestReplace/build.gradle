@@ -1,0 +1,57 @@
+plugins {
+    id 'java-gradle-plugin'  //Gradle开发插件
+    id 'kotlin'              //使用java
+    id 'maven-publish'       //插件发布
+}
+
+sourceCompatibility = "11"
+targetCompatibility = "11"
+
+dependencies {
+    implementation gradleApi()
+    implementation "com.android.tools.build:gradle:$gradleVersion"
+    implementation "commons-io:commons-io:2.13.0"
+    implementation "org.ow2.asm:asm-tree:9.2"
+
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.java
+            groupId = rootProject.cPlugins.manifest_edit.group
+            artifactId = rootProject.cPlugins.manifest_edit.artifactId
+            version = rootProject.cPlugins.manifest_edit.versionName
+        }
+    }
+    repositories {
+        if (!isLocal.toBoolean()) {
+            maven {
+                allowInsecureProtocol = true
+                url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                credentials {
+                    it.username = "vapp-deployment"
+                    it.password = "pwd123456"
+                }
+            }
+        } else {
+            maven {
+                url = rootProject.file("./repo").toURI()
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

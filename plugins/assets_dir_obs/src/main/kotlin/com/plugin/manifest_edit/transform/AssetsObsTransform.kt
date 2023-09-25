@@ -1,10 +1,10 @@
-package com.plugin.ads.transform
+package com.plugin.manifest_edit.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.plugin.ads.extension.ExtensionManager
-import com.plugin.ads.helpr.replace.DirReplaceHelper
-import com.plugin.ads.helpr.replace.JarHelper
+import com.plugin.manifest_edit.extension.ExtensionManager
+import com.plugin.manifest_edit.helpr.replace.DirReplaceHelper
+import com.plugin.manifest_edit.helpr.replace.JarHelper
 import org.gradle.api.Project
 import java.lang.Exception
 

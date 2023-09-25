@@ -1,7 +1,7 @@
-package com.plugin.ads.vistor
+package com.plugin.manifest_edit.vistor
 
-import com.plugin.ads.extension.ExtensionManager
-import com.plugin.ads.log.GLog
+import com.plugin.manifest_edit.extension.ExtensionManager
+import com.plugin.manifest_edit.log.GLog
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.FieldNode

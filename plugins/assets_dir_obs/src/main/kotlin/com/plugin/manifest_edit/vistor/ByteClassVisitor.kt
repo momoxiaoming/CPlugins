@@ -1,4 +1,4 @@
-package com.plugin.ads.vistor
+package com.plugin.manifest_edit.vistor
 
 
 import org.objectweb.asm.*

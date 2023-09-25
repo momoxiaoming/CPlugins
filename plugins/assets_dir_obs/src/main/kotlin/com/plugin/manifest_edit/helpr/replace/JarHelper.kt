@@ -1,10 +1,10 @@
-package com.plugin.ads.helpr.replace
+package com.plugin.manifest_edit.helpr.replace
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
-import com.plugin.ads.utils.ScanUtil
-import com.plugin.ads.vistor.ByteClassVisitor
+import com.plugin.manifest_edit.utils.ScanUtil
+import com.plugin.manifest_edit.vistor.ByteClassVisitor
 import org.objectweb.asm.*
 import org.apache.commons.io.IOUtils
 import java.util.jar.JarFile

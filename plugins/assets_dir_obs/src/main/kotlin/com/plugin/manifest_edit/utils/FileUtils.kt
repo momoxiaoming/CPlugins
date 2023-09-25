@@ -1,4 +1,4 @@
-package com.plugin.ads.utils
+package com.plugin.manifest_edit.utils
 
 import java.io.File
 

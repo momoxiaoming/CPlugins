@@ -56,6 +56,11 @@ ext {
                     versionName: '1.3.0',
                     artifactId : 'filehex',
             ],
+            manifest_edit: [
+                    group      : 'com.dn.plugin',
+                    versionName: '1.0.0',
+                    artifactId : 'manifest_edit',
+            ],
     ]
 
     art = "${cPlugins.art.group}:${cPlugins.art.artifactId}:${cPlugins.art.versionName}"
@@ -68,5 +73,6 @@ ext {
     gsonEncrypt = "${cPlugins.gsonEncrypt.group}:${cPlugins.gsonEncrypt.artifactId}:${cPlugins.gsonEncrypt.versionName}"
     jnimess = "${cPlugins.jnimess.group}:${cPlugins.jnimess.artifactId}:${cPlugins.jnimess.versionName}"
     filehex = "${cPlugins.filehex.group}:${cPlugins.filehex.artifactId}:${cPlugins.filehex.versionName}"
+    manifest_edit = "${cPlugins.manifest_edit.group}:${cPlugins.manifest_edit.artifactId}:${cPlugins.manifest_edit.versionName}"
 
 }

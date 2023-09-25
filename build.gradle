@@ -37,11 +37,10 @@ buildscript {
 //        classpath rootProject.junkCode
 //        classpath rootProject.art
 //        classpath rootProject.remove_metadata
-        classpath rootProject.stringEncrypt
+//        classpath rootProject.stringEncrypt
 //        classpath rootProject.jnimess
-
 //        classpath rootProject.filehex
-
+        classpath rootProject.manifest_edit
     }
 }
 
@@ -104,6 +103,7 @@ task clean(type: Delete) {
 //apply from: 'plugins/assets_dir_obs/assets_obs.gradle'
 //apply from: 'plugins/junkCode/junk_code.gradle'
 //apply from: 'plugins/remove-meta/remove_kt_metadata_wrapper.gradle'
-apply from: 'plugins/stringEncrypt/stringEncryptPlugin/string_encrypt.gradle'
+//apply from: 'plugins/stringEncrypt/stringEncryptPlugin/string_encrypt.gradle'
 //apply from: 'plugins/jnimess/jniMess_wrapper.gradle'
 //apply from: 'plugins/FilehexPlugin/filehex_wrapper.gradle'
+apply from: 'plugins/minifestReplace/manifest_edit.gradle'

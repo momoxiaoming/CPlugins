@@ -1,6 +1,6 @@
-package com.plugin.ads.log
+package com.plugin.manifest_edit.log
 
-import com.plugin.ads.extension.ExtensionManager
+import com.plugin.manifest_edit.extension.ExtensionManager
 
 /**
  * Log
@@ -11,7 +11,7 @@ import com.plugin.ads.extension.ExtensionManager
 object GLog {
     fun i(msg:String){
         if(ExtensionManager.extension?.logEnable==true){
-            println("art: $msg")
+            println("minifest_edit: $msg")
         }
     }
 }

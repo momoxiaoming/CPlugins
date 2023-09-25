@@ -1,7 +1,6 @@
-package com.plugin.ads.extension
+package com.plugin.manifest_edit.extension
 
 import org.gradle.api.Project
-import java.io.File
 import java.lang.StringBuilder
 import javax.lang.model.SourceVersion
 import kotlin.random.Random

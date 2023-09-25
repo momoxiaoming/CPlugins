@@ -1,0 +1,10 @@
+allprojects {
+    afterEvaluate { project ->
+        def hasApplication = project.plugins.hasPlugin("com.android.application")
+        if (hasApplication) {
+            project.pluginManager.apply("com.android.manifestEdit")
+            def ext = project.extensions.getByName("manifest_edit")
+            ext.logEnable=true
+        }
+    }
+}

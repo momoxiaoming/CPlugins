@@ -1,4 +1,4 @@
-package com.plugin.ads.extension
+package com.plugin.manifest_edit.extension
 
 /**
  * AnnRemoveExtension

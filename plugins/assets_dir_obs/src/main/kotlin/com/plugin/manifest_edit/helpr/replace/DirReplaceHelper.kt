@@ -1,10 +1,10 @@
-package com.plugin.ads.helpr.replace
+package com.plugin.manifest_edit.helpr.replace
 
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformOutputProvider
-import com.plugin.ads.utils.ScanUtil
-import com.plugin.ads.utils.eachFileRecurse
+import com.plugin.manifest_edit.utils.ScanUtil
+import com.plugin.manifest_edit.utils.eachFileRecurse
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.FileInputStream

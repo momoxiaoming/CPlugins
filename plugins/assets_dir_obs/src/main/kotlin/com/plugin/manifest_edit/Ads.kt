@@ -1,10 +1,10 @@
-package com.plugin.ads
+package com.plugin.manifest_edit
 
 import com.android.build.gradle.AppExtension
-import com.plugin.ads.extension.AssetsObsExtension
-import com.plugin.ads.extension.ExtensionManager
-import com.plugin.ads.log.GLog
-import com.plugin.ads.transform.AssetsObsTransform
+import com.plugin.manifest_edit.extension.AssetsObsExtension
+import com.plugin.manifest_edit.extension.ExtensionManager
+import com.plugin.manifest_edit.log.GLog
+import com.plugin.manifest_edit.transform.AssetsObsTransform
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File

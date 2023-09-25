@@ -1,8 +1,8 @@
-package com.plugin.ads.utils
+package com.plugin.manifest_edit.utils
 
 
-import com.plugin.ads.extension.ExtensionManager
-import com.plugin.ads.vistor.ByteClassVisitor
+import com.plugin.manifest_edit.extension.ExtensionManager
+import com.plugin.manifest_edit.vistor.ByteClassVisitor
 
 import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
