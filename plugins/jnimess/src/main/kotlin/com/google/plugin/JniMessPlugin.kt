@@ -281,8 +281,7 @@ class JniMessPlugin : Transform(), Plugin<Project> {
 
     override fun apply(project: Project) {
         log("apply")
-        project.dependencies.add("implementation", "com.vi.security:stringEncryptTool:2.2.30")
-
+        project.dependencies.add("implementation", "com.vi.security:stringEncryptTool:2.2.31")
         project.extensions.create(EXT_NAME, JniMessExtension::class.java)
         project.extensions.getByType(AppExtension::class.java).registerTransform(this)
         project.afterEvaluate { p ->

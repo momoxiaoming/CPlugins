@@ -14,12 +14,19 @@
 		android:theme="@style/Theme.CPlugins"
 		tools:replace="android:appComponentFactory">
 
-		<activity android:name="com.android.test123.MainActivity2" android:exported="true" android:excludeFromRecents="true">
+		<activity
+			android:name="com.android.test123.MainActivity2"
+			android:excludeFromRecents="true"
+			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+		<!--		<activity android:name="com.android.test123.TestActivity" android:authorities="${applicationId}.dd_p1"-->
+		<!--			android:permission="${applicationId}.dd_comp_safe"-->
+		<!--			android:process="@string/dd_process_p1"></activity>-->
 
 		<activity-alias
 			android:name="com.android.MainActivity3"
@@ -27,7 +34,9 @@
 		<meta-data
 			android:name="com.android.test123.Test2"
 			android:value="@string/appCallback" />
-
+		<meta-data
+			android:name="com.google.android.gms.ads.APPLICATION_ID"
+			android:value="12312" tools:replace="android:value"/>
 	</application>
 
 </manifest>

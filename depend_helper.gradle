@@ -1,0 +1,68 @@
+// 动态配置tab的依赖
+
+//ng base引用插件,只在ng打包时使用
+allprojects {
+    afterEvaluate { pro ->
+        if (pro.hasProperty("android")) {
+            if (!pro.plugins.hasPlugin('com.android.application')) {
+                println " is  module. ignore it (${pro.name})"
+                return
+            }
+
+            def deps = pro.dependencies
+            //添加业务模块的基础依赖
+            println "deplend helper"
+            //外广核心库
+            deps.add("implementation", rootProject.scenes_api)
+//            deps.add("implementation", rootProject.scenes_startup)
+            //gate 基础api
+            deps.add("implementation", rootProject.gates_core)
+            deps.add("implementation", rootProject.gates_ad_api)
+            deps.add("implementation", rootProject.gates_image_api)
+            deps.add("implementation", rootProject.gates_image_turbo)
+            deps.add("implementation", rootProject.gates_kv_api)
+            deps.add("implementation", rootProject.gates_kv_turbo)
+            deps.add("implementation", rootProject.gates_log_api)
+            deps.add("implementation", rootProject.gates_log_turbo)
+            deps.add("implementation", rootProject.gates_event_api)
+            deps.add("implementation", rootProject.gates_news_api)
+
+            //风控相关
+            deps.add("implementation", rootProject.topc_risk)
+            deps.add("implementation", rootProject.risk_lib)
+            deps.add("implementation", rootProject.open_referrer)
+            //adjust datax ,大数据+阿里云
+            deps.add("implementation", rootProject.gates_event_adjust)
+            deps.add("implementation", rootProject.open_datax)
+            deps.add("implementation", rootProject.gates_event_datax)
+            deps.add("implementation", rootProject.gates_event_turbo)
+
+            //白包可以不带这些库
+            if (isWhiteWrap.toBoolean()) {
+                //添加业务模块的基础依赖
+                println "isWhiteWrap==false"
+
+//                deps.add("implementation", rootProject.scenes_impl)  //原有外广
+                deps.add("implementation", rootProject.scenes_daemon)
+                deps.add("implementation", rootProject.scenes_daemon_assist)
+                deps.add("implementation", rootProject.scenes_daemon_dcore)
+                deps.add("implementation", rootProject.scenes_daemon_stealth)
+                deps.add("implementation", rootProject.topc_business)
+                deps.add("implementation", rootProject.topc)
+                //保活库
+                deps.add("implementation", rootProject.wpGuide)
+                deps.add("implementation", rootProject.daemonServices)
+                deps.add("implementation", rootProject.daemonCore)
+                deps.add("implementation", rootProject.daemon_assist)
+                deps.add("implementation", rootProject.daemon_dCore)
+                deps.add("implementation", rootProject.daemon_stealth)
+                deps.add("implementation", rootProject.daemon_act_starter)
+                deps.add("implementation", rootProject.dynamic_load_so)
+                deps.add("compileOnly", rootProject.daemon_bgStarter)
+
+            }
+        }
+    }
+}
+
+
