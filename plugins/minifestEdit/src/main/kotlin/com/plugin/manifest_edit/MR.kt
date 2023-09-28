@@ -55,7 +55,7 @@ class MR : Plugin<Project> {
 
         val nodes = applicationElement.childNodes.nodeToList()
         //拿到所有的节点
-        val allNodes=getManifestAllNodeList(nodes, mutableListOf())
+        val allNodes = getManifestAllNodeList(nodes, mutableListOf())
         replaceExcludeFromRecents(allNodes)
         //找出每个节点中需要替换的属性
         replaceNodeAttr(allNodes)
@@ -70,19 +70,34 @@ class MR : Plugin<Project> {
     }
 
 
-    fun replaceExcludeFromRecents(list: List<Node>){
+    /**
+     * 替换属性节点
+     * @param list List<Node>
+     */
+    fun replaceExcludeFromRecents(list: List<Node>) {
+        val replaceAttr = ExtensionManager.extension?.replaceAttributes
+        if (replaceAttr.isNullOrEmpty()) {
+            return
+        }
+        val keyNodes = replaceAttr.keys
         list.forEach {
-            if(it.nodeName=="activity"){
-                val attr = it.attributes.getNamedItem("android:excludeFromRecents")
-                if (attr != null) {
-                    GLog.i("replaceExcludeFromRecents, node-->"+it)
-                    attr.nodeValue = "false"
+            val nodeName = it.nodeName
+            if (keyNodes.contains(nodeName)) {
+                val valueAttr = replaceAttr[nodeName]
+                valueAttr?.forEach { attrMap ->
+                    val key=attrMap.keys.first()
+                    val vau=attrMap.values.first()
+                    val attr = it.attributes.getNamedItem(key)
+                    if (attr != null) {
+                        GLog.i("replace: $key-->" + vau)
+                        attr.nodeValue = vau
+                    }
                 }
             }
         }
     }
 
-    private fun replaceNodeAttr(list: List<Node>){
+    private fun replaceNodeAttr(list: List<Node>) {
 //        list.forEach {
 //            GLog.i("replaceNodeAttr->node-->"+it)
 //            if(it.nodeName=="activity"){
@@ -95,24 +110,26 @@ class MR : Plugin<Project> {
 //
 //        }
     }
-    private fun addNodeAttr(list: List<Node>){
+
+    private fun addNodeAttr(list: List<Node>) {
 
     }
 
-    private fun delNodeAttr(list: List<Node>){
+    private fun delNodeAttr(list: List<Node>) {
 
     }
+
     /**
      * 获取manifest下所有节点
      */
-    private fun getManifestAllNodeList(list: List<Node>,retList:MutableList<Node>): List<Node> {
-        for (i in 0 until  list.size) {
+    private fun getManifestAllNodeList(list: List<Node>, retList: MutableList<Node>): List<Node> {
+        for (i in 0 until list.size) {
             val node = list[i]
             val nodeChildList = node.nodeToList()
             retList.add(node)
             if (nodeChildList.isNotEmpty()) {
                 //有子节点, 递归
-                getManifestAllNodeList(nodeChildList,retList)
+                getManifestAllNodeList(nodeChildList, retList)
             }
 
         }
@@ -129,7 +146,7 @@ class MR : Plugin<Project> {
 
     fun NodeList.nodeToList(): List<Node> {
         val list = mutableListOf<Node>()
-        for (i in 0 until  length) {
+        for (i in 0 until length) {
             list.add(this.item(i))
         }
         return list

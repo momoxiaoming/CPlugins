@@ -4,7 +4,10 @@ allprojects {
         if (hasApplication) {
             project.pluginManager.apply("com.android.manifestEdit")
             def ext = project.extensions.getByName("manifest_edit")
-            ext.logEnable=true
+            ext.logEnable = true
+            ext.replaceAttributes = [
+                    "activity" : [ "android:excludeFromRecents" :"false" ]
+            ]
         }
     }
 }

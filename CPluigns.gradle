@@ -3,7 +3,7 @@ ext {
     cPlugins = [
             art: [
                     group      : 'com.android.plugin',
-                    versionName: '2.2.3', //
+                    versionName: '2.2.4', //
                     artifactId : 'art',
             ],
             aab: [
@@ -23,7 +23,7 @@ ext {
             ],
             junkCode: [
                     group      : 'com.android.plugin',
-                    versionName: '1.2.2',
+                    versionName: '1.2.3',
                     artifactId : 'junkCode',
             ],
             remove_metadata: [

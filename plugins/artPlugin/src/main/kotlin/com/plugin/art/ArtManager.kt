@@ -1,5 +1,6 @@
 package com.plugin.art
 
+import com.plugin.art.log.GLog
 import java.io.File
 
 /**
@@ -21,17 +22,23 @@ object ArtManager {
      */
     fun updateProguard(proguard: List<String>) {
         if (buildProguardFile == null) {
-            return
+            throw Exception("art->buildProguardFile not found")
         }
         if(!buildProguardFile!!.exists()){
             buildProguardFile!!.createNewFile()
         }
-        var fileText=buildProguardFile!!.readText()
-        proguard.forEach {
-            fileText += "\n $it"
-        }
-        buildProguardFile!!.writeText(fileText)
+        val lineList= mutableListOf<String>()
+        lineList.addAll(buildProguardFile!!.readLines())
 
+        proguard.forEach {
+            lineList.add("$it")
+        }
+        val fileText=StringBuilder()
+        lineList.forEach {
+            GLog.i("lineList, item->$it")
+            fileText.append("$it\n")
+        }
+        buildProguardFile!!.writeText(fileText.toString())
     }
 
 }

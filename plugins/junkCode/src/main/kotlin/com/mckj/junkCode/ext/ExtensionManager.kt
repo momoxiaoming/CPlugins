@@ -1,5 +1,6 @@
 package com.mckj.junkCode.ext
 
+import com.mckj.junkCode.util.logI
 import org.gradle.api.Project
 import java.io.File
 
@@ -19,11 +20,17 @@ object ExtensionManager {
      * 记录下混淆文件
      */
     var proguardFile:File?=null
-    /**
-     * 存放映射关系的类
-     */
-    var mappingMap= mutableListOf<String>()
 
+    /**
+     * 通过任务生成的规则
+     */
+    var taskProdList= mutableListOf<String>()
+
+
+    /**
+     * 通过transFrom生成的规则
+     */
+    var transFromProdList= mutableListOf<String>()
     fun initExtension(project: Project) {
         extension = project.extensions.getByName(extensionTagName) as JunkCodeExtension
     }
@@ -33,18 +40,27 @@ object ExtensionManager {
         return extension?.maxManifestJunkNodeNum ?: 0
     }
 
-
     /**
-     * 更新混淆文件,主要用于asm垃圾代码添加完毕, keep垃圾方法
+     * 更新proGuard,防止修改的mapping被优化
      */
-    fun updateProguardFile(){
-        if(proguardFile?.exists()==true){
-            var lines=""
-            ExtensionManager.mappingMap.forEach {
-                lines+="\n $it"
-            }
-            proguardFile!!.writeText(lines)
+    fun updateProguard(proguard: List<String>) {
+        if (proguardFile == null) {
+            throw Exception("junkcode->buildProguardFile not found")
         }
+        if (!proguardFile!!.exists()) {
+            proguardFile!!.createNewFile()
+        }
+        val lineList = mutableListOf<String>()
+        lineList.addAll(proguardFile!!.readLines())
+        proguard.forEach {
+            lineList.add("$it")
+        }
+        val fileText = StringBuilder()
+        lineList.forEach {
+            logI("lineList, item->$it")
+            fileText.append("$it\n")
+        }
+        proguardFile!!.writeText(fileText.toString())
     }
 
 }

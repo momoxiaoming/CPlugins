@@ -44,7 +44,7 @@ object JunkAssetsGenerateClassTask  {
         val dirCount = randomForArray(ExtensionManager.extension?.maxAssetsDirCount)
         logI("assets dir random count :$dirCount")
 
-        for (i in 0..dirCount) {
+        for (i in 0 until  dirCount) {
             val dirName=Helper.randomLengthName()
             val dirPath=resDir.path+File.separator+dirName
             val dirFileCount = randomForArray(ExtensionManager.extension?.maxAssetsDirFileCount)

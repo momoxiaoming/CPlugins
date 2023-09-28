@@ -85,7 +85,7 @@ class JunkCodeClassVisitor(cw: ClassWriter,val methodNodeList: List<MethodNode>)
         if (!isInterface) {
             //插入字段
             val ranFieldCount = Random.nextInt(maxFields)
-            for (i in 0..ranFieldCount) {
+            for (i in 0 until  ranFieldCount) {
                 val str = Helper.randomName()
                 fields.add(str)
                 val fv = cv.visitField(Helper.getOpcode(), str, Helper.getDescriptor(), null, null)
@@ -100,7 +100,7 @@ class JunkCodeClassVisitor(cw: ClassWriter,val methodNodeList: List<MethodNode>)
             if (!isInterface && !isAbstractClazz) {
                 //插入方法
                 val maxfunsSeed = Random.nextInt(maxfuns)
-                for (i in 0..maxfunsSeed) {
+                for (i in 0 until  maxfunsSeed) {
                     val methodName = Helper.randomName()
                     methods.add(methodName)
                     val mv = cv.visitMethod(Helper.getOpcode(), methodName, "()V", null, null)
@@ -121,6 +121,9 @@ class JunkCodeClassVisitor(cw: ClassWriter,val methodNodeList: List<MethodNode>)
                             }
                             3 -> {
                                 generateMethod(mv, i + 16, methodName)
+                            }
+                            else ->{
+
                             }
 
                         }
@@ -146,7 +149,7 @@ class JunkCodeClassVisitor(cw: ClassWriter,val methodNodeList: List<MethodNode>)
                 builder.append("}")
                 builder.append("\n")
                 //生成插入字段以及插入方法对应的keep 规则
-                ExtensionManager.mappingMap.add(builder.toString())
+                ExtensionManager.transFromProdList.add(builder.toString())
             }
         }
         super.visitEnd()

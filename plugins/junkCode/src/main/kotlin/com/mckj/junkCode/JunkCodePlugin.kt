@@ -107,20 +107,8 @@ class JunkCodePlugin : Plugin<Project> {
     }
 
     private fun addProguard(file: File) {
-        if(!file.exists()){
-            var lines=""
-            ExtensionManager.mappingMap.forEach {
-                lines+="\n $it"
-            }
-            file.writeText(lines)
-        }else{
-            var proguard=file.readText()
-            ExtensionManager.mappingMap.forEach {
-                proguard+="\n $it"
-            }
-            file.writeText(proguard)
-        }
         ExtensionManager.proguardFile=file
+        ExtensionManager.updateProguard( ExtensionManager.taskProdList)
     }
 
     private fun randomManifest(file: File) {
@@ -149,7 +137,7 @@ class JunkCodePlugin : Plugin<Project> {
         val nodeList = mutableListOf<Element>()
         val nodes = applicationElement.childNodes
         //打乱顺序
-        for (i in 0..nodes.length) {
+        for (i in 0 until  nodes.length) {
             val node = nodes.item(i)
             if (node is Element) {
                 nodeList.add(node)
@@ -188,7 +176,7 @@ class JunkCodePlugin : Plugin<Project> {
 
     private fun createAndroidElement(doc: Document, element: Element, num: Int, nodeName: String) {
         logI("随机$num 个 $nodeName")
-        for (i in 0..num) {
+        for (i in 0 until  num) {
             val clz = "${Helper.randomName(Random.nextInt(4, 8))}.${
                 Helper.randomName(
                     Random.nextInt(

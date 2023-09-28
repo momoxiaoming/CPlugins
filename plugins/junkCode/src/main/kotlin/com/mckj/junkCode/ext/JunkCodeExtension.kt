@@ -48,7 +48,7 @@ open class JunkCodeExtension {
     /**
      * 最多可以插入垃圾代码的方法个数
      */
-    var maxJunkCodeFunToModify = 5
+    var maxJunkCodeFunToModify = 0
 
     /**
      * 最多垃圾字段数

@@ -57,7 +57,8 @@ class JunkCodeTransForm : Transform() {
             DirReplaceHelper.scanDir(it, output)
             JarHelper.scanJar(it, output)
 
-            ExtensionManager.updateProguardFile()
+            ExtensionManager.updateProguard(ExtensionManager.transFromProdList)
+
         }
     }
 }

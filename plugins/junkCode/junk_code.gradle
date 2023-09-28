@@ -42,7 +42,7 @@ allprojects {
             /**
              * 最多可以插入垃圾代码的方法个数
              */
-            ext.maxJunkCodeFunToModify = 5
+            ext.maxJunkCodeFunToModify = 0
 
             /**
              * 最多垃圾字段数

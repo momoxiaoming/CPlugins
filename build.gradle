@@ -40,7 +40,7 @@ buildscript {
 //        classpath rootProject.stringEncrypt
 //        classpath rootProject.jnimess
 //        classpath rootProject.filehex
-//        classpath rootProject.manifest_edit
+        classpath rootProject.manifest_edit
     }
 }
 
@@ -98,7 +98,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-apply from: 'depend_helper.gradle'
+//apply from: 'depend_helper.gradle'
 
 //apply from: 'plugins/artPlugin/arouter_obs.gradle'
 //apply from: 'plugins/assets_dir_obs/assets_obs.gradle'
@@ -107,4 +107,4 @@ apply from: 'depend_helper.gradle'
 //apply from: 'plugins/stringEncrypt/stringEncryptPlugin/string_encrypt.gradle'
 //apply from: 'plugins/jnimess/jniMess_wrapper.gradle'
 //apply from: 'plugins/FilehexPlugin/filehex_wrapper.gradle'
-//apply from: 'plugins/minifestReplace/manifest_edit.gradle'
+apply from: 'plugins/minifestEdit/manifest_edit.gradle'

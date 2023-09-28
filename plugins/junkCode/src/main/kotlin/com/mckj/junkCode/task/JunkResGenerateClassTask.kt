@@ -51,7 +51,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
          */
         val drawableCount = randomForArray(ExtensionManager.extension?.maxDrawableResCount)
 
-        for (i in 0..drawableCount) {
+        for (i in 0 until  drawableCount) {
             val fileName=Helper.randomLengthName()
             writeResFile(File(resDir,"drawable/${fileName}.xml"),DrawableTemplate.randomTemplate())
             keepList.add("@drawable/$fileName")
@@ -65,7 +65,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         val stringFile=File(resDir,"value/string.xml")
         val sb=StringBuilder()
         sb.append("<resources>\n")
-        for (i in 0..stringResCount) {
+        for (i in 0 until  stringResCount) {
             sb.append("<string name=\"${Helper.randomLengthName(5,20)}\">${Helper.randomLengthName()}</string>\n")
         }
         sb.append("</resources>\n")
@@ -76,7 +76,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
          * 生成layout
          */
         val layoutResCount =randomForArray(ExtensionManager.extension?.maxLayoutResCount)
-        for (i in 0..layoutResCount) {
+        for (i in 0 until  layoutResCount) {
             val fileName=Helper.randomLengthName()
             writeResFile(File(resDir,"layout/$fileName.xml"), LayoutTemplate.randomTemplate())
             keepList.add("@layout/$fileName")
@@ -89,7 +89,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         val colorFile=File(resDir ,"value/colors.xml")
         val colorSb=StringBuilder()
         colorSb.append("<resources>\n")
-        for (i in 0..colorResCount) {
+        for (i in 0 until  colorResCount) {
             colorSb.append("<color name=\"${Helper.randomLengthName(5,20)}\">${Helper.randomColor()}</color>\n")
         }
         colorSb.append("</resources>\n")
@@ -104,7 +104,7 @@ open class JunkResGenerateClassTask : DefaultTask() {
         val styleFile=File(resDir,"value/styles.xml")
         val styleSb=StringBuilder()
         styleSb.append("<resources>\n")
-        for (i in 0..styleResCount) {
+        for (i in 0 until  styleResCount) {
             styleSb.append(StyleTemplate.randomTemplate())
         }
         styleSb.append("</resources>\n")

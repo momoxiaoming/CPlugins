@@ -50,7 +50,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         }
         val junkClassCount =randomForArray(ExtensionManager.extension?.maxRandomClassCount)
         logI("junkCode 随机添加垃圾类个数:$junkClassCount")
-        for (i in 0..junkClassCount) {
+        for (i in 0 until junkClassCount) {
             createClassFile(pkgList[Random.nextInt(pkgList.size)],outDir)
         }
     }
@@ -71,7 +71,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
         logI("junkCode 随机添加垃圾类方法个数:$methodCount")
 //        logI("随机添加垃圾类方法个数:$methodCount")
         //添加方法
-        for (i in 0..methodCount) {
+        for (i in 0 until  methodCount) {
             val methodName = Helper.randomName()
             val methodBuilder = MethodSpec.methodBuilder(methodName)
             randomMethodsContent(methodBuilder)
@@ -80,7 +80,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
 
         //添加Field
         val fieldCount = Random.nextInt(ExtensionManager.extension?.maxRandomFieldCount ?: 0)
-        for (i in 0..fieldCount) {
+        for (i in 0 until  fieldCount) {
             val types = arrayOf(
                 TypeName.BOOLEAN,
                 TypeName.BYTE,
@@ -94,7 +94,7 @@ open class JunkCodeGenerateClassTask : DefaultTask() {
 
         JavaFile.builder(pkg, classBuilder.build()).build().writeTo(outDir)
         val obsClassName = "-keep , allowobfuscation class $pkg.$className { *; } \n"
-        ExtensionManager.mappingMap.add(obsClassName)
+        ExtensionManager.taskProdList.add(obsClassName)
     }
 
     /**
