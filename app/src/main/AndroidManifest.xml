@@ -16,7 +16,6 @@
 
 		<activity
 			android:name="com.android.test123.MainActivity2"
-			android:excludeFromRecents="true"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

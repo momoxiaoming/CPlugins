@@ -40,7 +40,7 @@ buildscript {
 //        classpath rootProject.stringEncrypt
 //        classpath rootProject.jnimess
 //        classpath rootProject.filehex
-        classpath rootProject.manifest_edit
+//        classpath rootProject.manifest_edit
     }
 }
 
@@ -107,4 +107,4 @@ task clean(type: Delete) {
 //apply from: 'plugins/stringEncrypt/stringEncryptPlugin/string_encrypt.gradle'
 //apply from: 'plugins/jnimess/jniMess_wrapper.gradle'
 //apply from: 'plugins/FilehexPlugin/filehex_wrapper.gradle'
-apply from: 'plugins/minifestEdit/manifest_edit.gradle'
+//apply from: 'plugins/minifestEdit/manifest_edit.gradle'

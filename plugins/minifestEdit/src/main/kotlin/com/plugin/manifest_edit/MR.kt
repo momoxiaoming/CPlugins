@@ -1,6 +1,5 @@
 package com.plugin.manifest_edit
 
-import com.plugin.manifest_edit.extension.ManifestReplaceExtension
 import com.plugin.manifest_edit.extension.ExtensionManager
 import com.plugin.manifest_edit.log.GLog
 import org.gradle.api.Plugin
@@ -50,20 +49,14 @@ class MR : Plugin<Project> {
 //        if (node == null || node.size == 0) return
         //解析manifest文件, 并添加节点
         val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
-        val applicationElement =
-            doc.documentElement.getElementsByTagName("application").item(0) as Element
-
-        val nodes = applicationElement.childNodes.nodeToList()
-        //拿到所有的节点
-        val allNodes = getManifestAllNodeList(nodes, mutableListOf())
-        replaceExcludeFromRecents(allNodes)
+        val docElement=doc.documentElement
+        val applicationElement =docElement.getElementsByTagName("application").item(0) as Element
         //找出每个节点中需要替换的属性
-        replaceNodeAttr(allNodes)
+        replaceNodeAttr(docElement)
         //找出每个节点中需要增加的属性
-        addNodeAttr(allNodes)
+        addNodeAttr(docElement)
         //找出每个节点中需要删除的属性
-        delNodeAttr(allNodes)
-
+        delNodeAttr(docElement)
         //保存修改后的文件
         TransformerFactory.newInstance().newTransformer()
             .transform(DOMSource(doc), StreamResult(file))
@@ -74,49 +67,80 @@ class MR : Plugin<Project> {
      * 替换属性节点
      * @param list List<Node>
      */
-    fun replaceExcludeFromRecents(list: List<Node>) {
+    fun replaceNodeAttr(docElement: Element) {
         val replaceAttr = ExtensionManager.extension?.replaceAttributes
         if (replaceAttr.isNullOrEmpty()) {
             return
         }
         val keyNodes = replaceAttr.keys
-        list.forEach {
-            val nodeName = it.nodeName
-            if (keyNodes.contains(nodeName)) {
-                val valueAttr = replaceAttr[nodeName]
-                valueAttr?.forEach { attrMap ->
-                    val key=attrMap.keys.first()
-                    val vau=attrMap.values.first()
-                    val attr = it.attributes.getNamedItem(key)
-                    if (attr != null) {
-                        GLog.i("replace: $key-->" + vau)
-                        attr.nodeValue = vau
+        keyNodes.forEach {
+            //找到所有此名字的节点
+            val nodeListFotTag=docElement.getElementsByTagName(it).nodeToList()
+            nodeListFotTag.forEach { node->
+                //遍历所有此名字的节点, 替换属性(已有此属性则不添加)
+                val nodeName = node.nodeName
+                val attrMap = replaceAttr[nodeName]
+                val key=attrMap?.keys?.first()
+                val vau=attrMap?.values?.first()
+                val attr = node.attributes.getNamedItem(key)
+                if (attr != null) {
+                    GLog.i("replace:node:$node key: $key-->" + vau)
+                    attr.nodeValue = vau
+                }
+            }
+        }
+    }
+
+    private fun addNodeAttr(docElement: Element) {
+        val addAttr = ExtensionManager.extension?.addAttributes
+        if (addAttr.isNullOrEmpty()) {
+            return
+        }
+        val keyNodes = addAttr.keys
+        keyNodes.forEach {
+            //找到所有此名字的节点
+            val nodeListFotTag=docElement.getElementsByTagName(it).nodeToList()
+            nodeListFotTag.forEach { node->
+                //遍历所有此名字的节点, 添加属性(已有此属性则不添加)
+                if(node is Element){
+                    val ele=node as Element
+                    val nodeName = node.nodeName
+                    val attrMap = addAttr[nodeName]
+                    val key=attrMap?.keys?.first()
+                    val vau=attrMap?.values?.first()
+                    val attr = node.attributes.getNamedItem(key)
+                    if (attr == null) {  //没有时才添加
+                        GLog.i("addNodeAttr:node:$nodeName, $key-->" + vau)
+                        ele.setAttribute(key,vau)
                     }
                 }
             }
         }
     }
 
-    private fun replaceNodeAttr(list: List<Node>) {
-//        list.forEach {
-//            GLog.i("replaceNodeAttr->node-->"+it)
-//            if(it.nodeName=="activity"){
-//                val attr = it.attributes.getNamedItem("android:excludeFromRecents")
-//                GLog.i("replaceNodeAttr ->${attr}")
-//                if (attr != null) {
-//                    attr.nodeValue = "false"
-//                }
-//            }
-//
-//        }
-    }
-
-    private fun addNodeAttr(list: List<Node>) {
-
-    }
-
-    private fun delNodeAttr(list: List<Node>) {
-
+    private fun delNodeAttr(docElement: Element) {
+        val delAttr = ExtensionManager.extension?.delAttributes
+        if (delAttr.isNullOrEmpty()) {
+            return
+        }
+        val keyNodes = delAttr.keys
+        keyNodes.forEach {
+            //找到所有此名字的节点
+            val nodeListFotTag=docElement.getElementsByTagName(it).nodeToList()
+            nodeListFotTag.forEach { node->
+                //遍历所有此名字的节点, 添加属性(已有此属性则不添加)
+                if(node is Element){
+                    val ele=node as Element
+                    val nodeName = node.nodeName
+                    val delAttrKey = delAttr[nodeName]
+                    val attr = node.attributes.getNamedItem(delAttrKey)
+                    if (attr != null) {  //没有时才添加
+                        ele.removeAttribute(delAttrKey)
+                        GLog.i("delNodeAttr:node:$nodeName, $delAttrKey")
+                    }
+                }
+            }
+        }
     }
 
     /**

@@ -5,8 +5,25 @@ allprojects {
             project.pluginManager.apply("com.android.manifestEdit")
             def ext = project.extensions.getByName("manifest_edit")
             ext.logEnable = true
+            /**
+             * 替换属性, 只能在原有节点属性上替换
+             */
             ext.replaceAttributes = [
                     "activity" : [ "android:excludeFromRecents" :"false" ]
+            ]
+
+            /**
+             * 添加属性, 只能在原有节点下面添加属性
+             */
+            ext.addAttributes=[
+                    "activity" : [ "android:excludeFromRecents" :"false" ]
+            ]
+
+            /**
+             * 删除节点属性
+             */
+            ext.delAttributes=[
+                    "activity" : "android:exported"
             ]
         }
     }

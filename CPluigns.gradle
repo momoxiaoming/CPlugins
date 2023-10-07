@@ -58,7 +58,7 @@ ext {
             ],
             manifest_edit: [
                     group      : 'com.dn.plugin',
-                    versionName: '1.0.0',
+                    versionName: '1.1.0',
                     artifactId : 'manifest_edit',
             ],
     ]
