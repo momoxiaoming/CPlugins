@@ -15,15 +15,7 @@ buildscript {
             url uri('./repo')
         }
         mavenCentral()
-        maven {
-            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-release"
-            credentials {
-                username = 'vapp-reader'
-                password = 'pwd123456'
-            }
-            allowInsecureProtocol = true
 
-        }
         jcenter()
     }
     dependencies {
@@ -56,33 +48,7 @@ allprojects {
 //        maven {
 //            url uri('https://artifact.bytedance.com/repository/byteX/')
 //        }
-        maven {
-            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-release"
-            credentials {
-                username = 'vapp-reader'
-                password = 'pwd123456'
-            }
-            allowInsecureProtocol = true
 
-        }
-        maven {
-            url "http://dnsdk.vimedia.cn:8081/repository/Viapp-public/"
-            credentials {
-                username = 'vapp-reader'
-                password = 'pwd123456'
-            }
-            allowInsecureProtocol = true
-
-        }
-        maven {
-            url "http://dnsdk.vimedia.cn:8081/repository/vimedia-public/"
-            credentials {
-                username = 'vapp-reader'
-                password = 'pwd123456'
-            }
-            allowInsecureProtocol = true
-
-        }
         mavenCentral()
         maven { url 'https://repo1.maven.org/maven2/' }
         jcenter()

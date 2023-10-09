@@ -28,10 +28,10 @@ publishing {
         if (!isLocal.toBoolean()) {
             maven {
                 allowInsecureProtocol = true
-                url = uri('http://dnsdk.vimedia.cn:8081/repository/Viapp-release')
+                url = uri('http://xxxx')
                 credentials {
-                    it.username = "vapp-deployment"
-                    it.password = "pwd123456"
+                    it.username = "xxx"
+                    it.password = "xxx"
                 }
             }
         } else {
